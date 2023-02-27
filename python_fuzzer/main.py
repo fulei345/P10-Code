@@ -8,6 +8,7 @@ import os
 import argparse
 from typing import List
 
+# TODO Add types to everything without and change existing types
 
 def main(log_optional: bool, verbose: bool) -> None:
     # Get current working directory to create folders
@@ -16,6 +17,7 @@ def main(log_optional: bool, verbose: bool) -> None:
         cwd_path = os.path.join(cwd_path, "python_fuzzer")
 
     # Initialize the logger
+    # Maybe used for logging the good files that make it crash
     logger_path: str = os.path.join(cwd_path, "log_files")
     log: SimpleLogger = SimpleLogger(logger_path, log_optional, verbose)
 
@@ -23,7 +25,7 @@ def main(log_optional: bool, verbose: bool) -> None:
     process_path: str = os.path.join(cwd_path, "executables", "ClientExample")
     run: RaspRunner = RaspRunner(log, process_path, verbose)
 
-    # Parse the intercepted packets - or previously saved packets
+    # Parse OIOUBL documents
     document_path: str = os.path.join(cwd_path, "documents")
     parser: PacketParser = PacketParser(document_path, verbose)
     seed = parser.load_seed()
@@ -38,8 +40,9 @@ def main(log_optional: bool, verbose: bool) -> None:
 
 
 if __name__ == '__main__':
-    p = argparse.ArgumentParser(description="Arguments for network protocol fuzzing harness")
+    p = argparse.ArgumentParser(description="Arguments for fuzzing harness")
 
+    # This should maybe not be here
     p.add_argument("--log",
                    default=False,
                    action="store_true",

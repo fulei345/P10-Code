@@ -9,10 +9,6 @@ class SimpleLogger(Logger):
         self.log_optional: bool = log_optional
         self.verbose: bool = verbose
 
-    def log_traffic(self, document) -> None:
-        # TODO: Implement
-        pass
-
     def log_crash(self, inp: Any) -> None:
         # TODO: Implement
         pass
