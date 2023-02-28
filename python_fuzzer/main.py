@@ -1,16 +1,17 @@
-from parsers import PacketParser
+from parsers import DocumentParser
 from loggers import SimpleLogger
 from fuzzers import RaspFuzzer
 from runners import RaspRunner
-from mutators import PacketMutator
+from mutators import DocumentMutator
 
 import os
 import argparse
 from typing import List
 
+
 # TODO Add types to everything without and change existing types
 
-def main(log_optional: bool, verbose: bool) -> None:
+def main(verbose: bool) -> None:
     # Get current working directory to create folders
     cwd_path: str = os.getcwd()
     if not cwd_path.endswith("python_fuzzer"):
@@ -19,7 +20,7 @@ def main(log_optional: bool, verbose: bool) -> None:
     # Initialize the logger
     # Maybe used for logging the good files that make it crash
     logger_path: str = os.path.join(cwd_path, "log_files")
-    log: SimpleLogger = SimpleLogger(logger_path, log_optional, verbose)
+    log: SimpleLogger = SimpleLogger(logger_path, verbose)
 
     # Initialize the runner
     process_path: str = os.path.join(cwd_path, "executables", "ClientExample")
@@ -27,11 +28,11 @@ def main(log_optional: bool, verbose: bool) -> None:
 
     # Parse OIOUBL documents
     document_path: str = os.path.join(cwd_path, "documents")
-    parser: PacketParser = PacketParser(document_path, verbose)
+    parser: DocumentParser = DocumentParser(document_path, verbose)
     seed = parser.load_seed()
 
     # Initialize the mutator
-    mut: PacketMutator = PacketMutator(verbose)
+    mut: DocumentMutator = DocumentMutator(verbose)
 
     # Initialize and run the fuzzer
     fuzz: RaspFuzzer = RaspFuzzer(seed, run, mut, log, verbose, mutation_count=1)
@@ -42,12 +43,6 @@ def main(log_optional: bool, verbose: bool) -> None:
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description="Arguments for fuzzing harness")
 
-    # This should maybe not be here
-    p.add_argument("--log",
-                   default=False,
-                   action="store_true",
-                   help="Enable the logging, where logging is optional")
-
     p.add_argument("--verbose",
                    default=False,
                    action="store_true",
@@ -55,4 +50,4 @@ if __name__ == '__main__':
 
     args = p.parse_args()
 
-    main(args.log, args.verbose)
+    main(args.verbose)

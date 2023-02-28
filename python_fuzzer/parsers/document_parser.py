@@ -8,7 +8,7 @@ else:
     from .input_parser import InputParser
 
 
-class PacketParser(InputParser):
+class DocumentParser(InputParser):
     def __init__(self, path: str, verbose: bool) -> None:
         self.path: str = path
         self.verbose: bool = verbose
@@ -25,14 +25,5 @@ class PacketParser(InputParser):
 
 
 if __name__ == "__main__":
-    path: str = os.getcwd()
-    path = os.path.dirname(path)
-    path = os.path.join(path, "documents")
-
-    parser: PacketParser = PacketParser(path)
-    # The seed is a list of packet lists, which can contain packet lists themselves
-    seed = parser.load_seed()
-    # Here we access the first packet list of the seed
-    packet = seed[0]
-
-    print(packet.src, packet.dport, packet.sport)
+    # Just for testing this class
+    pass

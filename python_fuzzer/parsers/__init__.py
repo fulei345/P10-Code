@@ -1,4 +1,4 @@
 from .input_parser import InputParser as Parser
-from .packet_parser import PacketParser
+from .document_parser import DocumentParser
 
-__all__ = ["Parser", "PacketParser"]
+__all__ = ["Parser", "DocumentParser"]

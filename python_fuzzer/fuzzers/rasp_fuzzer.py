@@ -8,7 +8,7 @@ else:
 
 import sys
 sys.path.append("..")
-from mutators import PacketMutator
+from mutators import DocumentMutator
 from runners import RaspRunner
 from loggers import SimpleLogger
 
@@ -17,12 +17,12 @@ class RaspFuzzer(Fuzzer):
     def __init__(self,
                  seed,
                  runner: RaspRunner,
-                 mutator: PacketMutator,
+                 mutator: DocumentMutator,
                  logger: SimpleLogger,
                  verbose: bool,
                  mutation_count: int) -> None:
 
-        self.seed: seed
+        self.seed = seed
         self.seed_length: int = len(self.seed)
         self.seed_index: int = 0
         self.population = []
@@ -31,7 +31,7 @@ class RaspFuzzer(Fuzzer):
 
         self.runner: RaspRunner = runner
         self.logger: SimpleLogger = logger
-        self.mutator: PacketMutator = mutator
+        self.mutator: DocumentMutator = mutator
         self.mutation_count: int = mutation_count
 
     def reset(self) -> None:

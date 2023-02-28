@@ -4,7 +4,7 @@ from typing import Any, List, Callable
 from .mutator import Mutator
 
 
-class PacketMutator(Mutator):
+class DocumentMutator(Mutator):
     def __init__(self, verbose: bool) -> None:
         self.verbose: bool = verbose
         # List mutator functions here
@@ -14,7 +14,7 @@ class PacketMutator(Mutator):
 
         # TODO Update this when know type of input
     def mutate(self, document):
-        data: bytes  = None
+        data: bytes = None
         mutator: Callable[[Any], Any] = random.choice(self.mutators)
         data = mutator(data)
         return data

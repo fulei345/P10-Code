@@ -1,12 +1,14 @@
 from typing import Any
 
-from .logger import Logger
+if __name__ == "__main__":
+    from logger import Logger
+else:
+    from .logger import Logger
 
 
 class SimpleLogger(Logger):
-    def __init__(self, path: str, log_optional: bool, verbose: bool) -> None:
+    def __init__(self, path: str, verbose: bool) -> None:
         self.path: str = path
-        self.log_optional: bool = log_optional
         self.verbose: bool = verbose
 
     def log_crash(self, inp: Any) -> None:
