@@ -1,6 +1,6 @@
 import os
 from typing import List, Any
-from xml.etree.ElementTree import Element, ElementTree, parse, ParseError
+from xml.etree.ElementTree import ElementTree, parse, ParseError
 
 if __name__ == "__main__":
     from input_parser import InputParser

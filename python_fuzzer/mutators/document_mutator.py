@@ -1,5 +1,6 @@
 import random
 from typing import Any, List, Callable
+from xml.etree.ElementTree import ElementTree, tostring
 
 from .mutator import Mutator
 
@@ -12,12 +13,17 @@ class DocumentMutator(Mutator):
                                                      self.add_to_byte_mutator,
                                                      self.remove_from_byte_mutator]
 
-        # TODO Update this when know type of input
-    def mutate(self, document):
-        data: bytes = None
+    def mutate(self, document: ElementTree) -> ElementTree:
+        """
+        Mutate fields i OIOUBL document ??.
+        :return: Mutated documents.
+        """
+        data: bytes = tostring(document.getroot())
         mutator: Callable[[Any], Any] = random.choice(self.mutators)
-        data = mutator(data)
-        return data
+        # data = mutator(data)
+        # lol: ElementTree = fromstring(data)
+        # document.write("myfile.xml", encoding="UTF-8")
+        return document
 
     #string methods of this
     def flip_bit_mutator(self, data: bytes) -> bytes:
