@@ -4,5 +4,5 @@ from abc import ABC, abstractmethod
 
 class InputParser(ABC):
     @abstractmethod
-    def load_seed(self) -> List[Any]:
+    def load_corpus(self) -> List[Any]:
         pass

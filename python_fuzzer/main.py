@@ -7,7 +7,7 @@ from mutators import DocumentMutator
 import os
 import argparse
 from typing import List
-
+from xml.etree.ElementTree import Element, ElementTree, parse, ParseError
 
 # TODO Add types to everything without and change existing types
 
@@ -29,14 +29,14 @@ def main(verbose: bool) -> None:
     # Parse OIOUBL documents
     document_path: str = os.path.join(cwd_path, "documents")
     parser: DocumentParser = DocumentParser(document_path, verbose)
-    seed = parser.load_seed()
+    corpus: List[ElementTree] = parser.load_corpus()
 
     # Initialize the mutator
     mut: DocumentMutator = DocumentMutator(verbose)
 
     # Initialize and run the fuzzer
-    fuzz: RaspFuzzer = RaspFuzzer(seed, run, mut, log, verbose, mutation_count=1)
-    result = fuzz.multiple_runs(run_count=len(seed))
+    fuzz: RaspFuzzer = RaspFuzzer(corpus, run, mut, log, verbose, mutation_count=1)
+    result = fuzz.multiple_runs(run_count=len(corpus))
     print(result)
 
 
