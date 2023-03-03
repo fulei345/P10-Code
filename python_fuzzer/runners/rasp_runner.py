@@ -27,7 +27,7 @@ class RaspRunner(Runner):
         self.verbose: bool = verbose
 
     def run(self, document: ElementTree) -> Tuple[Any, str]:
-        document_path = join(self.executable_path, "Resources", "Documents", "Examples")
+        document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi")
         document.write(join(document_path,"OIOUBL_Invoice_v2p2.xml"))
         self.start_process()
         # TODO Write ElementTree to XML file and send that to the ClientExample
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     cwd_path = getcwd()
     # Get path to the folder of the ClientExample
     process_path: str = join(cwd_path, "..", "executables", "ClientExample")
-    logger: SimpleLogger = SimpleLogger(cwd_path)
+    logger: SimpleLogger = SimpleLogger(cwd_path, True)
     runner: RaspRunner = RaspRunner(logger, process_path, True)
 
     # Test that python does not crash

@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Callable
-from xml.etree.ElementTree import ElementTree, tostring
+from xml.etree.ElementTree import ElementTree, tostring, fromstring, Element
 
 from .mutator import Mutator
 
@@ -10,19 +10,21 @@ class DocumentMutator(Mutator):
         self.verbose: bool = verbose
         # List mutator functions here
         self.mutators: List[Callable[[Any], Any]] = [self.flip_bit_mutator,
-                                                     self.add_to_byte_mutator,
-                                                     self.remove_from_byte_mutator]
+                                                     self.add_to_byte_mutator,]
 
     def mutate(self, document: ElementTree) -> ElementTree:
         """
         Mutate fields i OIOUBL document ??.
         :return: Mutated documents.
         """
-        data: bytes = tostring(document.getroot())
-        mutator: Callable[[Any], Any] = random.choice(self.mutators)
-        # data = mutator(data)
-        # lol: ElementTree = fromstring(data)
-        # document.write("myfile.xml", encoding="UTF-8")
+        root:Element = document.getroot()
+        for elem in root.iter():
+            mutator: Callable[[Any], Any] = random.choice(self.mutators)
+            text = elem.text
+            if "\n" not in text:
+                field: bytes = bytes(elem.text, 'utf-8')
+                field = mutator(field)
+                elem.text = str(field)
         return document
 
     #string methods of this
