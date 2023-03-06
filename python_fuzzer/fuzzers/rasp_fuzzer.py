@@ -46,7 +46,8 @@ class RaspFuzzer(Fuzzer):
         return document
 
     def choose_candidate(self) -> Any:
-        if len(self.corpus) > 0:
+
+        if len(self.corpus) > 0 and self.seed_index < len(self.corpus):
             candidate: ElementTree = self.corpus[self.seed_index]
             self.seed_index += 1
             self.population.append(candidate)

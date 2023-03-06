@@ -24,7 +24,8 @@ class DocumentMutator(Mutator):
             if "\n" not in text:
                 field: bytes = bytes(elem.text, 'utf-8')
                 field = mutator(field)
-                elem.text = str(field)
+                temp = str(field)
+                elem.text = temp[2:]
         return document
 
     #string methods of this

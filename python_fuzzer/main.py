@@ -36,7 +36,7 @@ def main(verbose: bool) -> None:
 
     # Initialize and run the fuzzer
     fuzz: RaspFuzzer = RaspFuzzer(corpus, run, mut, log, verbose, mutation_count=1)
-    result = fuzz.multiple_runs(run_count=len(corpus))
+    result = fuzz.multiple_runs(run_count=3)
     print(result)
 
 

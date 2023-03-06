@@ -29,11 +29,11 @@ class RaspRunner(Runner):
     def run(self, document: ElementTree) -> Tuple[Any, str]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi")
         document.write(join(document_path,"OIOUBL_Invoice_v2p2.xml"))
-        self.start_process()
+        code, message = self.start_process()
         # TODO Write ElementTree to XML file and send that to the ClientExample
-        return None, None
+        return document, code
 
-    def start_process(self) -> None:
+    def start_process(self) -> tuple[str, str]:
         try:
             # Input is the options chosen in the Client
             process = run(["dk.gov.oiosi.samples.ClientExample.exe"],
@@ -48,8 +48,14 @@ class RaspRunner(Runner):
 
                 self.logger.log_crash(process.stderr)
             else:
+                standard_out = process.stdout.decode("utf-8")
+                if -1 != standard_out.find("FaultReturnedException"):
+                    # This just means that we found the same fault
+                    print("Fault")
+                    return self.FAIL, standard_out
+
                 if self.verbose:
-                    print(process.stdout.decode("utf-8"))
+                    print(standard_out)
         except:
             # TODO handle this better
             pass
