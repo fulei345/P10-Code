@@ -49,10 +49,12 @@ class RaspRunner(Runner):
                 self.logger.log_crash(process.stderr)
             else:
                 standard_out = process.stdout.decode("utf-8")
-                if -1 != standard_out.find("FaultReturnedException"):
-                    # This just means that we found the same fault
-                    print("Fault")
-                    return self.FAIL, standard_out
+                index = standard_out.find("dk.gov.oiosi.communication.FaultReturnedException")
+                if -1 != index:
+                    # This just means that we found the fault
+                    fault_message = standard_out[index:]
+                    print(fault_message)
+                    return self.FAIL, fault_message
 
                 if self.verbose:
                     print(standard_out)
