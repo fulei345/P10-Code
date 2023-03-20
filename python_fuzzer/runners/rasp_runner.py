@@ -33,7 +33,7 @@ class RaspRunner(Runner):
         # TODO Write ElementTree to XML file and send that to the ClientExample
         return document, code
 
-    def start_process(self) -> tuple[str, str]:
+    def start_process(self) -> Tuple[str, str]:
         try:
             # Input is the options chosen in the Client
             process = run(["dk.gov.oiosi.samples.ClientExample.exe"],
