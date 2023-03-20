@@ -29,14 +29,15 @@ class RaspRunner(Runner):
     def run(self, document: ElementTree) -> Tuple[Any, str]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi")
         document.write(join(document_path,"OIOUBL_Invoice_v2p2.xml"))
-        code, message = self.start_process()
+        code, message = self.start_process(join(document_path,"OIOUBL_Invoice_v2p2.xml"))
         # TODO Write ElementTree to XML file and send that to the ClientExample
         return document, code
 
-    def start_process(self) -> Tuple[str, str]:
+    def start_process(self, doc_path: str) -> Tuple[str, str]:
         try:
             # Input is the options chosen in the Client
-            process = run(["dk.gov.oiosi.samples.ClientExample.exe"],
+            print("hej")
+            process = run(["dk.gov.oiosi.samples.ClientExample.exe", doc_path],
                           shell=True,
                           cwd=self.executable_path,
                           timeout=30,
@@ -58,6 +59,7 @@ class RaspRunner(Runner):
 
                 if self.verbose:
                     print(standard_out)
+            return self.PASS, ""
         except:
             # TODO handle this better
             pass
