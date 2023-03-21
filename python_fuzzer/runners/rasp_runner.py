@@ -36,7 +36,6 @@ class RaspRunner(Runner):
     def start_process(self, doc_path: str) -> Tuple[str, str]:
         try:
             # Input is the options chosen in the Client
-            print("hej")
             process = run(["dk.gov.oiosi.samples.ClientExample.exe", doc_path],
                           shell=True,
                           cwd=self.executable_path,
@@ -73,6 +72,6 @@ if __name__ == '__main__':
     runner: RaspRunner = RaspRunner(logger, process_path, True)
 
     # Test that python does not crash
-    for _ in range(3):
+    for _ in range(1):
         print(_)
         runner.start_process()
