@@ -10,7 +10,7 @@ class DocumentMutator(Mutator):
         self.verbose: bool = verbose
         # List mutator functions here
         self.mutators: List[Callable[[Any], Any]] = [self.flip_bit_mutator,
-                                                     self.add_to_byte_mutator,]
+                                                     self.add_to_byte_mutator]
 
     def mutate(self, document: ElementTree) -> ElementTree:
         """
