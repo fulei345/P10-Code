@@ -29,14 +29,14 @@ def main(verbose: bool) -> None:
     # Parse OIOUBL documents
     document_path: str = os.path.join(cwd_path, "documents")
     parser: DocumentParser = DocumentParser(document_path, verbose)
-    corpus: List[ElementTree] = parser.load_corpus()
+    corpus: List[str] = parser.load_corpus()
 
     # Initialize the mutator
     mut: DocumentMutator = DocumentMutator(verbose)
 
     # Initialize and run the fuzzer
-    fuzz: RaspFuzzer = RaspFuzzer(corpus, run, mut, log, verbose, mutation_count=1)
-    result = fuzz.multiple_runs(run_count=len(corpus))
+    fuzz: RaspFuzzer = RaspFuzzer(corpus, run, mut, log, verbose, parser, mutation_count=1)
+    result = fuzz.multiple_runs(run_count=3)
     print(result)
 
 

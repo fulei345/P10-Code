@@ -12,6 +12,7 @@ sys.path.append("..")
 from mutators import DocumentMutator
 from runners import RaspRunner
 from loggers import SimpleLogger
+from parsers import DocumentParser
 
 
 class RaspFuzzer(Fuzzer):
@@ -21,22 +22,24 @@ class RaspFuzzer(Fuzzer):
                  mutator: DocumentMutator,
                  logger: SimpleLogger,
                  verbose: bool,
+                 parser: DocumentParser,
                  mutation_count: int) -> None:
 
-        self.corpus: ElementTree = corpus
+        self.corpus: list[str] = corpus
         self.corpus_size: int = len(self.corpus)
         self.seed_index: int = 0
-        self.population: List[ElementTree] = []
+        self.population: List[str] = []
 
         self.verbose: bool = verbose
 
         self.runner: RaspRunner = runner
         self.logger: SimpleLogger = logger
         self.mutator: DocumentMutator = mutator
+        self.parser: DocumentParser = parser
         self.mutation_count: int = mutation_count
 
     def reset(self) -> None:
-        self.population = []
+        self.population: List[str] = []
         self.seed_index = 0
 
     def fuzz(self, document: ElementTree) -> ElementTree:
@@ -45,24 +48,26 @@ class RaspFuzzer(Fuzzer):
             document = self.mutator.mutate(document)
         return document
 
-    def choose_candidate(self) -> Any:
-        if len(self.corpus) > 0:
-            candidate: ElementTree = self.corpus[self.seed_index]
+    def choose_candidate(self) -> str:
+
+        if len(self.corpus) > 0 and self.seed_index < len(self.corpus):
+            candidate: str = self.corpus[self.seed_index]
             self.seed_index += 1
             self.population.append(candidate)
             return candidate
         else:
             index: int = random.randint(0, len(self.population)-1)
-            candidate: ElementTree = self.population[index]
+            candidate: str = self.population[index]
             return candidate
 
     # TODO: Update when mutator is done
     def run(self) -> Tuple[Any, str]:
-        document: ElementTree = self.choose_candidate()
+        path: str = self.choose_candidate()
+        document = self.parser.parse_document(path)
         document = self.fuzz(document)
         result, outcome = self.runner.run(document)
         if outcome == "FAIL":
-            self.population.append(document)
+            self.population.append(path)
         return result, outcome
 
     def multiple_runs(self, run_count: int) -> List[Tuple[Any, str]]:

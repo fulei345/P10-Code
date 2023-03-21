@@ -27,16 +27,16 @@ class RaspRunner(Runner):
         self.verbose: bool = verbose
 
     def run(self, document: ElementTree) -> Tuple[Any, str]:
-        document_path = join(self.executable_path, "Resources", "Documents", "Examples")
+        document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi")
         document.write(join(document_path,"OIOUBL_Invoice_v2p2.xml"))
-        self.start_process()
+        code, message = self.start_process(join(document_path,"OIOUBL_Invoice_v2p2.xml"))
         # TODO Write ElementTree to XML file and send that to the ClientExample
-        return None, None
+        return document, code
 
-    def start_process(self) -> None:
+    def start_process(self, doc_path: str) -> Tuple[str, str]:
         try:
             # Input is the options chosen in the Client
-            process = run(["dk.gov.oiosi.samples.ClientExample.exe"],
+            process = run(["dk.gov.oiosi.samples.ClientExample.exe", doc_path],
                           shell=True,
                           cwd=self.executable_path,
                           timeout=30,
@@ -48,8 +48,17 @@ class RaspRunner(Runner):
 
                 self.logger.log_crash(process.stderr)
             else:
+                standard_out = process.stdout.decode("utf-8")
+                index = standard_out.find("dk.gov.oiosi.communication.FaultReturnedException")
+                if -1 != index:
+                    # This just means that we found the fault
+                    fault_message = standard_out[index:]
+                    print(fault_message)
+                    return self.FAIL, fault_message
+
                 if self.verbose:
-                    print(process.stdout.decode("utf-8"))
+                    print(standard_out)
+            return self.PASS, ""
         except:
             # TODO handle this better
             pass
@@ -59,10 +68,10 @@ if __name__ == '__main__':
     cwd_path = getcwd()
     # Get path to the folder of the ClientExample
     process_path: str = join(cwd_path, "..", "executables", "ClientExample")
-    logger: SimpleLogger = SimpleLogger(cwd_path)
+    logger: SimpleLogger = SimpleLogger(cwd_path, True)
     runner: RaspRunner = RaspRunner(logger, process_path, True)
 
     # Test that python does not crash
-    for _ in range(3):
+    for _ in range(1):
         print(_)
         runner.start_process()
