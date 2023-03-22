@@ -28,7 +28,7 @@ class RaspRunner(Runner):
 
     def run(self, document: ElementTree) -> Tuple[Any, str]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi")
-        document.write(join(document_path,"OIOUBL_Invoice_v2p2.xml"))
+        document.write(join(document_path,"OIOUBL_Invoice_v2p2.xml"), encoding="utf-8", xml_declaration=True)
         code, message = self.start_process(join(document_path,"OIOUBL_Invoice_v2p2.xml"))
         # TODO Write ElementTree to XML file and send that to the ClientExample
         return document, code
@@ -48,7 +48,8 @@ class RaspRunner(Runner):
 
                 self.logger.log_crash(process.stderr)
             else:
-                standard_out = process.stdout.decode("utf-8")
+                standard_out = process.stdout.decode("utf-8", errors="replace") 
+                #TODO find better way to handle decode error for ø (+ æ and å, i suppose)
                 index = standard_out.find("dk.gov.oiosi.communication.FaultReturnedException")
                 if -1 != index:
                     # This just means that we found the fault
