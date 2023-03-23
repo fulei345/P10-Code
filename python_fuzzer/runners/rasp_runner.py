@@ -25,11 +25,12 @@ class RaspRunner(Runner):
 
         self.executable_path: str = path
         self.verbose: bool = verbose
+        self.index: int = 1
 
     def run(self, document: ElementTree) -> Tuple[Any, str]:
-        document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi")
-        document.write(join(document_path,"OIOUBL_Invoice_v2p2.xml"), encoding="utf-8", xml_declaration=True)
-        code, message = self.start_process(join(document_path,"OIOUBL_Invoice_v2p2.xml"))
+        document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", ("fuzzed_document_" + str(self.index) + ".xml"))
+        document.write(document_path, encoding="utf-8", xml_declaration=True)
+        code, message = self.start_process(document_path)
         # TODO Write ElementTree to XML file and send that to the ClientExample
         return document, code
 
