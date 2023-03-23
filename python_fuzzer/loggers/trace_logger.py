@@ -11,6 +11,9 @@ class TraceLogger(Logger):
         self.path: str = path
         self.verbose: bool = verbose
 
-    def log_crash(self, inp: Any) -> None:
-        # TODO: Implement
+    def log_crash(self, inp: Any, out: Any) -> None:
+        """
+        Logs the crash in log_files (copy trace), (and copies crashing files to where ??)
+        :input: inp name of the OIOUBL document to be copied, out ´(idk what out should be)
+        """
         pass

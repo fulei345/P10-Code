@@ -11,6 +11,12 @@ class FeedbackLogger(Logger):
         self.path: str = path
         self.verbose: bool = verbose
 
-    def log_crash(self, inp: Any) -> None:
-        # TODO: Implement
+    def log_crash(self, inp: Any, out: Any) -> None:
+        """
+        Logs the crash in log_files, (and copies crashing files to where ??)
+        :input: inp name of the OIOUBL document to be copied, out feedback
+        """
+        # Write a crash file with the file name and write crashing file
+
+
         pass
