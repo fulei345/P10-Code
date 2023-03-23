@@ -6,7 +6,7 @@ else:
     from .logger import Logger
 
 
-class SimpleLogger(Logger):
+class TraceLogger(Logger):
     def __init__(self, path: str, verbose: bool) -> None:
         self.path: str = path
         self.verbose: bool = verbose
