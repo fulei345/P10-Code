@@ -60,6 +60,7 @@ class RaspRunner(Runner):
                 if -1 != index:
                     # This just means that we found the fault
                     fault_message = standard_out[index:]
+                    self.index += 1
                     self.logger.log_crash(doc_path, fault_message)
                     print(fault_message)
                 else: 
