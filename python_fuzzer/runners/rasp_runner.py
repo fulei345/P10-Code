@@ -53,7 +53,6 @@ class RaspRunner(Runner):
             
             if self.verbose:
                 #TODO find better way to handle decode error for ø (+ æ and å, i suppose)
-
                 standard_out = process.stdout.decode("utf-8", errors="replace") 
                 # finds the second instance of the substring, which is the start of the error message
                 index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
@@ -67,8 +66,6 @@ class RaspRunner(Runner):
             return self.PASS, ""
         except:
             # TODO handle this better
-            self.logger.log_crash(doc_path, process.stdout)
-            return self.PASS, ""
             pass
 
 
