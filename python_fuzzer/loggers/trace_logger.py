@@ -13,7 +13,7 @@ class TraceLogger(Logger):
 
     def log_crash(self, inp: Any, out: Any) -> None:
         """
-        Logs the crash in log_files (copy trace), (and copies crashing files to where ??)
-        :input: inp name of the OIOUBL document to be copied, out ´(idk what out should be)
+        Idk what we should do, to combine a trace with a document seems a lot
+        Like make a log document, and save the traces and documents
         """
         pass
