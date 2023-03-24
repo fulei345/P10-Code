@@ -12,23 +12,24 @@ else:
 import sys
 
 sys.path.append("..")
-from loggers import SimpleLogger
+from loggers import FeedbackLogger
 
 
 class RaspRunner(Runner):
-    def __init__(self, log: SimpleLogger, path: str, verbose: bool) -> None:
+    def __init__(self, log: FeedbackLogger, path: str, verbose: bool) -> None:
         self.PASS: str = 'PASS'
         self.FAIL: str = 'FAIL'
         self.UNRESOLVED: str = 'UNRESOLVED'
 
-        self.logger: SimpleLogger = log
+        self.logger: FeedbackLogger = log
 
         self.executable_path: str = path
         self.verbose: bool = verbose
         self.index: int = 1
 
     def run(self, document: ElementTree) -> Tuple[Any, str]:
-        document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", ("fuzzed_document_" + str(self.index) + ".xml"))
+        filename = "fuzzed_document_" + str(self.index) + ".xml"
+        document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
         document.write(document_path, encoding="utf-8", xml_declaration=True)
         code, message = self.start_process(document_path)
         # TODO Write ElementTree to XML file and send that to the ClientExample
@@ -47,18 +48,22 @@ class RaspRunner(Runner):
                 if self.verbose:
                     print(process.stderr.decode("utf-8"))
 
-                self.logger.log_crash(process.stderr)
-            else:
-                standard_out = process.stdout.decode("utf-8", errors="replace") 
+                self.logger.log_crash(doc_path, process.stderr)
+                self.index += 1
+                return self.FAIL, process.stderr
+            
+            if self.verbose:
                 #TODO find better way to handle decode error for ø (+ æ and å, i suppose)
-                index = standard_out.find("dk.gov.oiosi.communication.FaultReturnedException")
+                standard_out = process.stdout.decode("utf-8", errors="replace") 
+                # finds the second instance of the substring, which is the start of the error message
+                index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
                 if -1 != index:
                     # This just means that we found the fault
                     fault_message = standard_out[index:]
+                    self.index += 1
+                    self.logger.log_crash(doc_path, fault_message)
                     print(fault_message)
-                    return self.FAIL, fault_message
-
-                if self.verbose:
+                else: 
                     print(standard_out)
             return self.PASS, ""
         except:
@@ -70,7 +75,7 @@ if __name__ == '__main__':
     cwd_path = getcwd()
     # Get path to the folder of the ClientExample
     process_path: str = join(cwd_path, "..", "executables", "ClientExample")
-    logger: SimpleLogger = SimpleLogger(cwd_path, True)
+    logger: FeedbackLogger = FeedbackLogger(cwd_path, True)
     runner: RaspRunner = RaspRunner(logger, process_path, True)
 
     # Test that python does not crash

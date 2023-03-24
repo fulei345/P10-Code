@@ -5,5 +5,5 @@ from typing import Any
 class Logger(ABC):
 
     @abstractmethod
-    def log_crash(self, inp: Any) -> None:
+    def log_crash(self, inp: Any, out: Any) -> None:
         pass

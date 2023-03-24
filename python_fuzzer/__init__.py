@@ -4,7 +4,7 @@ from .parsers import *
 from .runners import *
 from .fuzzers import *
 
-__all__ = ["Logger", "SimpleLogger",
+__all__ = ["Logger", "FeedbackLogger",
            "Mutator", "DocumentMutator",
            "Parser", "DocumentParser",
            "Runner", "RaspRunner",

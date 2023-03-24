@@ -1,4 +1,4 @@
 from .logger import Logger
-from .simple_logger import SimpleLogger
+from .feedback_logger import FeedbackLogger
 
-__all__ = ["Logger", "SimpleLogger"]
+__all__ = ["Logger", "FeedbackLogger"]
