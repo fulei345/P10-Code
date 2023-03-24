@@ -28,7 +28,8 @@ class RaspRunner(Runner):
         self.index: int = 1
 
     def run(self, document: ElementTree) -> Tuple[Any, str]:
-        document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", ("fuzzed_document_" + str(self.index) + ".xml"))
+        filename = "fuzzed_document_" + str(self.index) + ".xml"
+        document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
         document.write(document_path, encoding="utf-8", xml_declaration=True)
         code, message = self.start_process(document_path)
         # TODO Write ElementTree to XML file and send that to the ClientExample
@@ -47,9 +48,9 @@ class RaspRunner(Runner):
                 if self.verbose:
                     print(process.stderr.decode("utf-8"))
 
-                self.logger.log_crash(process.stderr)
+                self.logger.log_crash(doc_path, process.stderr)
                 self.index += 1
-                return self.FAIL, fault_message
+                return self.FAIL, process.stderr
             
             if self.verbose:
                 #TODO find better way to handle decode error for ø (+ æ and å, i suppose)

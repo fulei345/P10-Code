@@ -170,3 +170,6 @@ dmypy.json
 
 # executables
 python_fuzzer/executables/ClientExample/*
+
+# txt
+*.txt
