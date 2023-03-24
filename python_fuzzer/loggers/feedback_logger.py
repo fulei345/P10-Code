@@ -28,7 +28,7 @@ class FeedbackLogger(Logger):
 
         # Line with name and divider and the error message
         log_name = join(self.path,filename + ".txt")
-        with open(log_name, "w") as file:
+        with open(log_name, "w", encoding="utf-8") as file:
             # set a list of lines to add:
             lines = [filename + "\n", "-------------------------------------------------\n", out]
             file.writelines(lines)
