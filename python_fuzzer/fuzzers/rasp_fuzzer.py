@@ -11,7 +11,7 @@ import sys
 sys.path.append("..")
 from mutators import DocumentMutator
 from runners import RaspRunner
-from loggers import SimpleLogger
+from loggers import FeedbackLogger
 from parsers import DocumentParser
 
 
@@ -20,7 +20,7 @@ class RaspFuzzer(Fuzzer):
                  corpus: ElementTree,
                  runner: RaspRunner,
                  mutator: DocumentMutator,
-                 logger: SimpleLogger,
+                 logger: FeedbackLogger,
                  verbose: bool,
                  parser: DocumentParser,
                  mutation_count: int) -> None:
@@ -33,7 +33,7 @@ class RaspFuzzer(Fuzzer):
         self.verbose: bool = verbose
 
         self.runner: RaspRunner = runner
-        self.logger: SimpleLogger = logger
+        self.logger: FeedbackLogger = logger
         self.mutator: DocumentMutator = mutator
         self.parser: DocumentParser = parser
         self.mutation_count: int = mutation_count

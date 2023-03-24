@@ -1,4 +1,7 @@
 from typing import Any
+from shutil import copy2
+from os.path import split, join
+from os import getcwd
 
 if __name__ == "__main__":
     from logger import Logger
@@ -17,6 +20,11 @@ class FeedbackLogger(Logger):
         :input: inp name of the OIOUBL document to be copied, out feedback
         """
         # Write a crash file with the file name and write crashing file
+
+        filename = split(inp)[-1]
+        fuzzed_path: str = join(getcwd(), "documents", "fuzzed_documents")
+        # Copy file from
+        copy2(inp, join(fuzzed_path, filename))
 
 
         pass

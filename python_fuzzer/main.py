@@ -1,5 +1,5 @@
 from parsers import DocumentParser
-from loggers import SimpleLogger
+from loggers import FeedbackLogger
 from fuzzers import RaspFuzzer
 from runners import RaspRunner
 from mutators import DocumentMutator
@@ -20,7 +20,7 @@ def main(verbose: bool) -> None:
     # Initialize the logger
     # Maybe used for logging the good files that make it crash
     logger_path: str = os.path.join(cwd_path, "log_files")
-    log: SimpleLogger = SimpleLogger(logger_path, verbose)
+    log: FeedbackLogger = FeedbackLogger(logger_path, verbose)
 
     # Initialize the runner
     process_path: str = os.path.join(cwd_path, "executables", "ClientExample")

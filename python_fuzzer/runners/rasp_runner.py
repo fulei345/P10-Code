@@ -12,16 +12,16 @@ else:
 import sys
 
 sys.path.append("..")
-from loggers import SimpleLogger
+from loggers import FeedbackLogger
 
 
 class RaspRunner(Runner):
-    def __init__(self, log: SimpleLogger, path: str, verbose: bool) -> None:
+    def __init__(self, log: FeedbackLogger, path: str, verbose: bool) -> None:
         self.PASS: str = 'PASS'
         self.FAIL: str = 'FAIL'
         self.UNRESOLVED: str = 'UNRESOLVED'
 
-        self.logger: SimpleLogger = log
+        self.logger: FeedbackLogger = log
 
         self.executable_path: str = path
         self.verbose: bool = verbose
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     cwd_path = getcwd()
     # Get path to the folder of the ClientExample
     process_path: str = join(cwd_path, "..", "executables", "ClientExample")
-    logger: SimpleLogger = SimpleLogger(cwd_path, True)
+    logger: FeedbackLogger = FeedbackLogger(cwd_path, True)
     runner: RaspRunner = RaspRunner(logger, process_path, True)
 
     # Test that python does not crash
