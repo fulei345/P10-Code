@@ -1,5 +1,5 @@
 from typing import Any
-from shutil import copy2
+from shutil import copy2, copyfile
 from os.path import split, join
 from os import getcwd
 
@@ -19,12 +19,16 @@ class FeedbackLogger(Logger):
         Logs the crash in log_files, (and copies crashing files to where ??)
         :input: inp name of the OIOUBL document to be copied, out feedback
         """
-        # Write a crash file with the file name and write crashing file
+        cwd_path = getcwd()
 
+        # Copy fuzzed document from ClientExample
         filename = split(inp)[-1]
-        fuzzed_path: str = join(getcwd(), "documents", "fuzzed_documents")
-        # Copy file from
-        copy2(inp, join(fuzzed_path, filename))
+        fuzzed_path: str = join(cwd_path, "documents", "fuzzed_documents")
+        copyfile(inp, join(fuzzed_path, filename))
 
-
-        pass
+        # Line with name and divider and the error message
+        log_name = join(self.path,filename + ".txt")
+        with open(log_name, "w") as file:
+            # set a list of lines to add:
+            lines = [filename + "\n", "-------------------------------------------------\n", out]
+            file.writelines(lines)

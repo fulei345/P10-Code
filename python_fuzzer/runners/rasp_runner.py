@@ -51,10 +51,11 @@ class RaspRunner(Runner):
             else:
                 standard_out = process.stdout.decode("utf-8", errors="replace") 
                 #TODO find better way to handle decode error for ø (+ æ and å, i suppose)
-                index = standard_out.find("dk.gov.oiosi.communication.FaultReturnedException")
+                index = standard_out.find("Exception")
                 if -1 != index:
                     # This just means that we found the fault
                     fault_message = standard_out[index:]
+                    self.logger.log_crash(doc_path, fault_message)
                     print(fault_message)
                     return self.FAIL, fault_message
 
@@ -63,6 +64,8 @@ class RaspRunner(Runner):
             return self.PASS, ""
         except:
             # TODO handle this better
+            self.logger.log_crash(doc_path, process.stdout)
+            return self.PASS, ""
             pass
 
 

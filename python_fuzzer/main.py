@@ -27,7 +27,7 @@ def main(verbose: bool) -> None:
     run: RaspRunner = RaspRunner(log, process_path, verbose)
 
     # Parse OIOUBL documents
-    document_path: str = os.path.join(cwd_path, "documents")
+    document_path: str = os.path.join(cwd_path, "documents", "existing")
     parser: DocumentParser = DocumentParser(document_path, verbose)
     corpus: List[str] = parser.load_corpus()
 
