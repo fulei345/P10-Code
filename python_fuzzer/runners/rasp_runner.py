@@ -48,17 +48,19 @@ class RaspRunner(Runner):
                     print(process.stderr.decode("utf-8"))
 
                 self.logger.log_crash(process.stderr)
-            else:
-                standard_out = process.stdout.decode("utf-8", errors="replace") 
+                self.index += 1
+                return self.FAIL, fault_message
+            
+            if self.verbose:
                 #TODO find better way to handle decode error for ø (+ æ and å, i suppose)
-                index = standard_out.find("dk.gov.oiosi.communication.FaultReturnedException")
+                standard_out = process.stdout.decode("utf-8", errors="replace") 
+                # finds the second instance of the substring, which is the start of the error message
+                index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
                 if -1 != index:
                     # This just means that we found the fault
                     fault_message = standard_out[index:]
                     print(fault_message)
-                    return self.FAIL, fault_message
-
-                if self.verbose:
+                else: 
                     print(standard_out)
             return self.PASS, ""
         except:
