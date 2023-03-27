@@ -22,7 +22,7 @@ class DocumentMutator(Mutator):
             mutator: Callable[[Any], Any] = random.choice(self.mutators)
             text = elem.text
             # random variable to determine whether the element should be mutated - 15% probability currently
-            i = random.randint(0, 99)
+            i: int = random.randint(0, 99)
             if "\n" not in text and i > 84: 
                 field: bytes = bytes(elem.text, 'utf-8')
                 field = mutator(field)
