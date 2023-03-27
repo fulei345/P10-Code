@@ -1,8 +1,9 @@
-from typing import Any, Tuple, Callable
+from typing import Any, Tuple, Callable, List
 from subprocess import run
 from os import getcwd
 from os.path import join
 from xml.etree.ElementTree import ElementTree
+from re import search
 
 if __name__ == "__main__":
     from runner import Runner
@@ -22,6 +23,7 @@ class RaspRunner(Runner):
         self.UNRESOLVED: str = 'UNRESOLVED'
 
         self.logger: FeedbackLogger = log
+        self.ersp_nums: List[str] = []
 
         self.executable_path: str = path
         self.verbose: bool = verbose
@@ -57,14 +59,21 @@ class RaspRunner(Runner):
                 standard_out = process.stdout.decode("utf-8", errors="replace") 
                 # finds the second instance of the substring, which is the start of the error message
                 index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
+                # Check if we found it
                 if -1 != index:
-                    # This just means that we found the fault
+                    # Do some regex to see if new E-RSP
+                    # Log if new, do not if not
                     fault_message = standard_out[index:]
-                    self.index += 1
-                    self.logger.log_crash(doc_path, fault_message)
-                    print(fault_message)
-                else: 
-                    print(standard_out)
+                    ersp_num = search(r" E-RSP\d+", fault_message)
+                    if ersp_num.group(0) not in self.ersp_nums:
+                        self.ersp_nums.append(ersp_num.group(0))
+                        self.index += 1
+                        self.logger.log_crash(doc_path, fault_message)
+                        if self.verbose:
+                            print(fault_message)
+                else:
+                    if self.verbose:
+                        print(standard_out)
             return self.PASS, ""
         except:
             # TODO handle this better
