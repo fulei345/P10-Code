@@ -53,8 +53,8 @@ class RaspRunner(Runner):
                 self.logger.log_crash(doc_path, process.stderr)
                 self.index += 1
                 return self.FAIL, process.stderr
-            
-            if self.verbose:
+
+            elif process.returncode == 0:
                 #TODO find better way to handle decode error for ø (+ æ and å, i suppose)
                 standard_out = process.stdout.decode("utf-8", errors="replace") 
                 # finds the second instance of the substring, which is the start of the error message
