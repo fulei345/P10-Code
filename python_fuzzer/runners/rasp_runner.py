@@ -21,20 +21,19 @@ class RaspRunner(Runner):
         self.PASS: str = 'PASS'
         self.FAIL: str = 'FAIL'
         self.UNRESOLVED: str = 'UNRESOLVED'
+        self.EXCEPTION: str = 'EXCEPTION'
+        self.UNKNOWN: str = 'UNKNOWN'
 
         self.logger: FeedbackLogger = log
         self.ersp_nums: List[str] = []
 
         self.executable_path: str = path
         self.verbose: bool = verbose
-        self.index: int = 1
 
-    def run(self, document: ElementTree) -> Tuple[Any, str]:
-        filename = "fuzzed_document_" + str(self.index) + ".xml"
+    def run(self, document: ElementTree, filename: str) -> Tuple[Any, str]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
         document.write(document_path, encoding="utf-8", xml_declaration=True)
         code, message = self.start_process(document_path)
-        # TODO Write ElementTree to XML file and send that to the ClientExample
         return document, code
 
     def start_process(self, doc_path: str) -> Tuple[str, str]:
@@ -47,34 +46,40 @@ class RaspRunner(Runner):
                           capture_output=True)
 
             if process.returncode != 0:
+                standard_error = process.stderr.decode("utf-8", errors="replace")
                 if self.verbose:
-                    print(process.stderr.decode("utf-8"))
+                    print(standard_error)
 
-                self.logger.log_crash(doc_path, process.stderr)
-                self.index += 1
-                return self.FAIL, process.stderr
+                self.logger.log_crash(doc_path, standard_error)
+                return self.FAIL, standard_error
 
             elif process.returncode == 0:
                 #TODO find better way to handle decode error for ø (+ æ and å, i suppose)
                 standard_out = process.stdout.decode("utf-8", errors="replace") 
                 # finds the second instance of the substring, which is the start of the error message
-                index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
+                erro_index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
                 # Check if we found it
-                if -1 != index:
+                if -1 != erro_index:
                     # Do some regex to see if new E-RSP
                     # Log if new, do not if not
-                    fault_message = standard_out[index:]
+                    fault_message = standard_out[erro_index:]
                     ersp_num = search(r" E-RSP\d+", fault_message)
                     if ersp_num.group(0) not in self.ersp_nums:
                         self.ersp_nums.append(ersp_num.group(0))
-                        self.index += 1
                         self.logger.log_crash(doc_path, fault_message)
                         if self.verbose:
                             print(fault_message)
+                        # If it was an E-RSP fault
+                        return self.EXCEPTION,fault_message
+                    if self.verbose:
+                        print(fault_message)
+                    # If it was not E-RSP
+                    return self.UNKNOWN, fault_message
                 else:
                     if self.verbose:
                         print(standard_out)
-            return self.PASS, ""
+                    # If there is no error
+                    return self.PASS, standard_out
         except:
             # TODO handle this better
             pass
