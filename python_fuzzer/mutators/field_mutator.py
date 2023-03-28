@@ -27,7 +27,7 @@ class DocumentMutator(Mutator):
                 field: bytes = bytes(elem.text, 'utf-8')
                 field = mutator(field)
                 temp = str(field)
-                elem.text = temp[2:]
+                elem.text = temp[2:-1]
         return document
 
     #string methods of this
