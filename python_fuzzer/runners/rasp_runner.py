@@ -67,7 +67,7 @@ class RaspRunner(Runner):
                     fault_message = standard_out[erro_index:]
                     #ersp_num = search(r" E-RSP\d+", fault_message)
                     f_num = search(r"\[F-\w+\]", fault_message)
-                    if f_num.group(0) not in self.ersp_nums:
+                    if f_num != None and f_num.group(0) not in self.ersp_nums:
                         self.ersp_nums.append(f_num.group(0))
                         self.logger.log_crash(doc_path, fault_message)
                         if self.verbose:
