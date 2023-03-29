@@ -26,7 +26,7 @@ class DocumentMutator(Mutator):
             text = elem.text
             # random variable to determine whether the element should be mutated - 15% probability currently
             i: int = random.randint(0, 99)
-            if "\n" not in text and i > 0 and elem.tag.split("}")[1] not in self.dont_mutate: #elem.tag.split("}")[1]
+            if "\n" not in text and i > 84 and elem.tag.split("}")[1] not in self.dont_mutate: #elem.tag.split("}")[1]
                 field: bytes = bytes(elem.text, 'utf-8')
                 field = mutator(field)
                 temp = str(field)
