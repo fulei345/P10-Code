@@ -30,13 +30,13 @@ class RaspRunner(Runner):
         self.executable_path: str = path
         self.verbose: bool = verbose
 
-    def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, list[str]]:
+    def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, List[str]]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
         document.write(document_path, encoding="utf-8", xml_declaration=True)
         message, code, code_coverage = self.start_process(document_path)
         return message, code, code_coverage
 
-    def start_process(self, doc_path: str) -> Tuple[str, str, list[str]]:
+    def start_process(self, doc_path: str) -> Tuple[str, str, List[str]]:
         try:
             # Input is the options chosen in the Client
             process = run(["dk.gov.oiosi.samples.ClientExample.exe", doc_path],
