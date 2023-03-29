@@ -70,6 +70,7 @@ class RaspFuzzer(Fuzzer):
         # Make new name
         filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
         result, outcome = self.runner.run(document, filename)
+        # Do something depending on the code coverage
         if outcome == "FAIL":
             document_path = join(self.path, filename)
             document.write(document_path, encoding="utf-8", xml_declaration=True)
@@ -80,6 +81,5 @@ class RaspFuzzer(Fuzzer):
     def multiple_runs(self, run_count: int) -> List[Tuple[Any, str]]:
         results = [self.run() for _ in range(run_count)]
         # Filter results marked as "PASS"
-        # TODO Better filter? Perhaps look at respones from runner
+        # TODO Better filter? Perhaps look at response from runner
         return [result for result in results if result[1] != "PASS"]
-

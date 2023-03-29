@@ -1,4 +1,4 @@
-from typing import Any, Tuple, Callable, List
+from typing import Any, Tuple, List
 from subprocess import run
 from os import getcwd
 from os.path import join
@@ -54,7 +54,7 @@ class RaspRunner(Runner):
                 return self.FAIL, standard_error
 
             elif process.returncode == 0:
-                #TODO find better way to handle decode error for ø (+ æ and å, i suppose)
+                # TODO find better way to handle decode error for ø (+ æ and å, i suppose)
                 standard_out = process.stdout.decode("utf-8", errors="replace") 
                 # finds the second instance of the substring, which is the start of the error message
                 erro_index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
@@ -70,7 +70,7 @@ class RaspRunner(Runner):
                         if self.verbose:
                             print(fault_message)
                         # If it was an E-RSP fault
-                        return self.EXCEPTION,fault_message
+                        return self.EXCEPTION, fault_message
                     if self.verbose:
                         print(fault_message)
                     # If it was not E-RSP
@@ -91,8 +91,3 @@ if __name__ == '__main__':
     process_path: str = join(cwd_path, "..", "executables", "ClientExample")
     logger: FeedbackLogger = FeedbackLogger(cwd_path, True)
     runner: RaspRunner = RaspRunner(logger, process_path, True)
-
-    # Test that python does not crash
-    for _ in range(1):
-        print(_)
-        runner.start_process()
