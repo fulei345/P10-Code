@@ -69,7 +69,7 @@ class RaspFuzzer(Fuzzer):
         document: ElementTree  = self.fuzz(document)
         # Make new name
         filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
-        result, outcome = self.runner.run(document, filename)
+        result, outcome, code_coverage = self.runner.run(document, filename)
         # Do something depending on the code coverage
         if outcome == "FAIL":
             document_path = join(self.path, filename)

@@ -3,7 +3,7 @@ from subprocess import run
 from os import getcwd
 from os.path import join
 from xml.etree.ElementTree import ElementTree
-from re import search
+from re import search, findall
 
 if __name__ == "__main__":
     from runner import Runner
@@ -30,13 +30,13 @@ class RaspRunner(Runner):
         self.executable_path: str = path
         self.verbose: bool = verbose
 
-    def run(self, document: ElementTree, filename: str) -> Tuple[Any, str]:
+    def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, list[str]]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
         document.write(document_path, encoding="utf-8", xml_declaration=True)
-        code, message = self.start_process(document_path)
-        return document, code
+        message, code, code_coverage = self.start_process(document_path)
+        return message, code, code_coverage
 
-    def start_process(self, doc_path: str) -> Tuple[str, str]:
+    def start_process(self, doc_path: str) -> Tuple[str, str, list[str]]:
         try:
             # Input is the options chosen in the Client
             process = run(["dk.gov.oiosi.samples.ClientExample.exe", doc_path],
@@ -51,11 +51,13 @@ class RaspRunner(Runner):
                     print(standard_error)
 
                 self.logger.log_crash(doc_path, standard_error)
-                return self.FAIL, standard_error
+                return standard_error, self.FAIL, []
 
             elif process.returncode == 0:
                 # TODO find better way to handle decode error for ø (+ æ and å, i suppose)
-                standard_out = process.stdout.decode("utf-8", errors="replace") 
+                standard_out = process.stdout.decode("utf-8", errors="replace")
+                # Find code coverage
+                code_coverage = findall(r"BLOCK:\d+", standard_out)
                 # finds the second instance of the substring, which is the start of the error message
                 erro_index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
                 # Check if we found it
@@ -70,16 +72,16 @@ class RaspRunner(Runner):
                         if self.verbose:
                             print(fault_message)
                         # If it was an E-RSP fault
-                        return self.EXCEPTION, fault_message
+                        return fault_message, self.EXCEPTION, code_coverage
                     if self.verbose:
                         print(fault_message)
                     # If it was not E-RSP
-                    return self.UNKNOWN, fault_message
+                    return fault_message, self.UNKNOWN, code_coverage
                 else:
                     if self.verbose:
                         print(standard_out)
                     # If there is no error
-                    return self.PASS, standard_out
+                    return standard_out, self.PASS, code_coverage
         except:
             # TODO handle this better
             pass
