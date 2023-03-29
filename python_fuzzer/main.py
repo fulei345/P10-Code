@@ -35,7 +35,7 @@ def main(verbose: bool) -> None:
     mut: DocumentMutator = DocumentMutator(verbose)
 
     # Initialize and run the fuzzer
-    fuzz: RaspFuzzer = RaspFuzzer(corpus, run, mut, log, verbose, parser, mutation_count=1)
+    fuzz: RaspFuzzer = RaspFuzzer(corpus, run, mut, log, verbose, parser, document_path, mutation_count=1)
     result = fuzz.multiple_runs(run_count=3)
     print(result)
 
