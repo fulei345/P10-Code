@@ -3,6 +3,8 @@ from loggers import FeedbackLogger
 from fuzzers import RaspFuzzer
 from runners import RaspRunner
 from mutators import DocumentMutator
+from scheduler import PowerSchedule
+from utils import Seed
 
 import os
 import argparse
@@ -12,6 +14,7 @@ from xml.etree.ElementTree import Element, ElementTree, parse, ParseError
 # TODO Add types to everything without and change existing types
 
 def main(verbose: bool) -> None:
+
     # Get current working directory to create folders
     cwd_path: str = os.getcwd()
     if not cwd_path.endswith("python_fuzzer"):

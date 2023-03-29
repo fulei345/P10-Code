@@ -1,9 +1,8 @@
 from typing import List, Sequence, Dict
 import random
-
 import sys
 sys.path.append("..")
-from .seed import Seed
+from utils import Seed
 
 
 class PowerSchedule:
