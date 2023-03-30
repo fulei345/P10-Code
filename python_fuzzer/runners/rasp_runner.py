@@ -11,7 +11,6 @@ else:
     from .runner import Runner
 
 import sys
-
 sys.path.append("..")
 from loggers import FeedbackLogger
 
@@ -29,6 +28,7 @@ class RaspRunner(Runner):
 
         self.executable_path: str = path
         self.verbose: bool = verbose
+        self.code_covereage = []
 
     def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, list[str]]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
@@ -57,7 +57,7 @@ class RaspRunner(Runner):
                 # TODO find better way to handle decode error for ø (+ æ and å, i suppose)
                 standard_out = process.stdout.decode("utf-8", errors="replace")
                 # Find code coverage
-                code_coverage = findall(r"BLOCK:\d+", standard_out)
+                self.code_coverage = findall(r"BLOCK:\d+", standard_out)
                 # finds the second instance of the substring, which is the start of the error message
                 erro_index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
                 # Check if we found it
@@ -72,16 +72,16 @@ class RaspRunner(Runner):
                         if self.verbose:
                             print(fault_message)
                         # If it was an E-RSP fault
-                        return fault_message, self.EXCEPTION, code_coverage
+                        return fault_message, self.EXCEPTION, self.code_coverage
                     if self.verbose:
                         print(fault_message)
                     # If it was not E-RSP
-                    return fault_message, self.UNKNOWN, code_coverage
+                    return fault_message, self.UNKNOWN, self.code_coverage
                 else:
                     if self.verbose:
                         print(standard_out)
                     # If there is no error
-                    return standard_out, self.PASS, code_coverage
+                    return standard_out, self.PASS, self.code_coverage
         except:
             # TODO handle this better
             pass

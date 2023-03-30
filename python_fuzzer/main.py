@@ -1,9 +1,9 @@
 from parsers import DocumentParser
 from loggers import FeedbackLogger
-from fuzzers import RaspFuzzer
+from fuzzers import RaspFuzzer, GreyboxFuzzer
 from runners import RaspRunner
 from mutators import DocumentMutator
-from scheduler import PowerSchedule
+from scheduler import  PowerSchedule
 from utils import Seed
 
 import os
@@ -32,16 +32,21 @@ def main(verbose: bool) -> None:
     # Parse OIOUBL documents
     document_path: str = os.path.join(cwd_path, "documents", "existing")
     parser: DocumentParser = DocumentParser(document_path, verbose)
-    corpus: List[str] = parser.load_corpus()
+    corpus_str, corpus = parser.load_corpus()
 
     # Initialize the mutator
     mut: DocumentMutator = DocumentMutator(verbose)
 
+    population_path: str = os.path.join(cwd_path, "documents", "population")
     # Initialize and run the fuzzer
-    fuzz: RaspFuzzer = RaspFuzzer(corpus, run, mut, log, verbose, parser, document_path, mutation_count=1)
-    result = fuzz.multiple_runs(run_count=3)
-    print(result)
+    # fuzz: RaspFuzzer = RaspFuzzer(corpus_str, run, mut, log, verbose, parser, document_path, mutation_count=1)
+    # result = fuzz.multiple_runs(run_count=3)
+    # print(result)
 
+    # Greybox fuzzer
+    fuzz: GreyboxFuzzer = GreyboxFuzzer(corpus, run, mut, log, PowerSchedule(), verbose, population_path, mutation_count=1)
+    result = fuzz.multiple_runs(run_count=3)
+    # print(result)
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description="Arguments for fuzzing harness")

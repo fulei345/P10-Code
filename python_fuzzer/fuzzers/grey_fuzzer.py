@@ -13,7 +13,6 @@ sys.path.append("..")
 from mutators import DocumentMutator
 from runners import RaspRunner
 from loggers import FeedbackLogger
-from parsers import DocumentParser
 from utils import Seed
 from scheduler import PowerSchedule
 
@@ -25,7 +24,7 @@ class GreyboxFuzzer(Fuzzer):
                  logger: FeedbackLogger,
                  schedule: PowerSchedule,
                  verbose: bool,
-                 existing_path: str,
+                 population_path: str,
                  mutation_count: int) -> None:
 
         self.seeds: list[ElementTree] = seeds
@@ -33,7 +32,7 @@ class GreyboxFuzzer(Fuzzer):
         self.seed_index: int = 0
         self.population: List[ElementTree] = []
         self.inputs: List[ElementTree] = []
-        self.existing_path: str = existing_path
+        self.population_path: str = population_path
         self.verbose: bool = verbose
 
         self.schedule: PowerSchedule = schedule
@@ -56,13 +55,12 @@ class GreyboxFuzzer(Fuzzer):
 
         # Stacking: Apply multiple mutations to generate the candidate
         candidate = seed.data
-
         num_mutations = random.randint(1, self.mutation_count)
         for _ in range(num_mutations):
             candidate = self.mutator.mutate(candidate)
         return candidate
 
-    def fuzz(self) -> ElementTree:
+    def fuzz(self, inp: Any) -> ElementTree:
         """Returns first each seed once and then generates new inputs"""
         if self.seed_index < len(self.seeds):
             # Still seeding
@@ -77,30 +75,30 @@ class GreyboxFuzzer(Fuzzer):
 
     # TODO: Update when mutator is done
     def run(self) -> Tuple[Any, str]:
-        document: ElementTree = self.fuzz()
+        document: ElementTree = self.fuzz("")
         # Make new name
         filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
-        result, outcome, code_coverage = self.runner.run(document, filename)
-
-        new_coverage = frozenset(self.runner.coverage())
+        result, outcome, _ = self.runner.run(document, filename)
+        new_coverage = frozenset(self.runner.code_coverage)
         if new_coverage not in self.coverages_seen:
             # We have new coverage
             seed = Seed(self.inp)
-            seed.coverage = self.runner.coverage()
+            seed.coverage = self.runner.code_coverage
             self.coverages_seen.add(new_coverage)
             self.population.append(seed)
-        return result, outcome
-        # what now ?
-        # Do something depending on the code coverage
-        if outcome == "FAIL":
-            document_path = join(self.existing_path, filename)
-            document.write(document_path, encoding="utf-8", xml_declaration=True)
-            self.seed_index += 1
-            self.population.append(path)
         return result, outcome
 
     def multiple_runs(self, run_count: int) -> List[Tuple[Any, str]]:
         results = [self.run() for _ in range(run_count)]
         # Filter results marked as "PASS"
+        # Write all in population
+        index = 0
+        for seed in self.population:
+            filename: str = "fuzzed_document_" + str(index) + ".xml"
+            index += 1
+            document_path = join(self.population_path, filename)
+            seed.data.write(document_path, encoding="utf-8", xml_declaration=True)
+        for cov in self.coverages_seen:
+            print(cov)
         # TODO Better filter? Perhaps look at response from runner
         return [result for result in results if result[1] != "PASS"]
