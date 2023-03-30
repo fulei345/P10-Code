@@ -12,10 +12,6 @@ class Fuzzer(ABC):
         pass
 
     @abstractmethod
-    def choose_candidate(self) -> Any:
-        pass
-
-    @abstractmethod
     def run(self) -> None:
         pass
 

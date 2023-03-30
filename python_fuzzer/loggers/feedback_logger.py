@@ -10,8 +10,8 @@ else:
 
 
 class FeedbackLogger(Logger):
-    def __init__(self, path: str, verbose: bool) -> None:
-        self.path: str = path
+    def __init__(self, log_path: str, verbose: bool) -> None:
+        self.log_path: str = log_path
         self.verbose: bool = verbose
 
     def log_crash(self, inp: Any, out: Any) -> None:
@@ -28,6 +28,18 @@ class FeedbackLogger(Logger):
 
         # Line with name and divider and the error message
         log_name = join(self.path,filename + ".txt")
+        with open(log_name, "w", encoding="utf-8") as file:
+            # set a list of lines to add:
+            lines = [filename + "\n", "-------------------------------------------------\n", out]
+            file.writelines(lines)
+
+    def log_crash(self, filename: str, out: Any) -> None:
+        """
+            Logs the crash in log_files, (and copies crashing files to where ??)
+            :input: inp name of the OIOUBL document to be copied, out feedback
+            """
+        # Line with name and divider and the error message
+        log_name = join(self.log_path, filename + ".txt")
         with open(log_name, "w", encoding="utf-8") as file:
             # set a list of lines to add:
             lines = [filename + "\n", "-------------------------------------------------\n", out]
