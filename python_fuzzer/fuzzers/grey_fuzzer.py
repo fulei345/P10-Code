@@ -2,6 +2,7 @@ import random
 from typing import Any, List, Tuple
 from xml.etree.ElementTree import ElementTree
 from os.path import join
+from copy import deepcopy
 
 if __name__ == "__main__":
     from fuzzer import Fuzzer
@@ -54,7 +55,7 @@ class GreyboxFuzzer(Fuzzer):
         seed = self.schedule.choose(self.population)
 
         # Stacking: Apply multiple mutations to generate the candidate
-        candidate = seed.data
+        candidate = deepcopy(seed.data)
         num_mutations = random.randint(1, self.mutation_count)
         for _ in range(num_mutations):
             candidate = self.mutator.mutate(candidate)
@@ -86,19 +87,19 @@ class GreyboxFuzzer(Fuzzer):
             seed.coverage = self.runner.code_coverage
             self.coverages_seen.add(new_coverage)
             self.population.append(seed)
+            filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
+            document_path = join(self.population_path, filename)
+            seed.data.write(document_path, encoding="utf-8", xml_declaration=True)
+            self.logger.log_crash(filename,result)
+            self.seed_index += 1
         return result, outcome
 
     def multiple_runs(self, run_count: int) -> List[Tuple[Any, str]]:
         results = [self.run() for _ in range(run_count)]
         # Filter results marked as "PASS"
-        # Write all in population
-        index = 0
-        for seed in self.population:
-            filename: str = "fuzzed_document_" + str(index) + ".xml"
-            index += 1
-            document_path = join(self.population_path, filename)
-            seed.data.write(document_path, encoding="utf-8", xml_declaration=True)
-        for cov in self.coverages_seen:
-            print(cov)
+        if self.verbose:
+            for cov in self.coverages_seen:
+                print(cov)
+            print(len(self.population))
         # TODO Better filter? Perhaps look at response from runner
         return [result for result in results if result[1] != "PASS"]

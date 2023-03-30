@@ -82,9 +82,9 @@ class RaspRunner(Runner):
                         print(standard_out)
                     # If there is no error
                     return standard_out, self.PASS, self.code_coverage
-        except:
+        except Exception as e:
             # TODO handle this better
-            pass
+            print(e)
 
 
 if __name__ == '__main__':
