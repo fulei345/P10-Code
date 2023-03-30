@@ -20,3 +20,4 @@ class Seed:
         return self.data.__str__()
 
     __repr__ = __str__
+    
