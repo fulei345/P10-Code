@@ -11,5 +11,6 @@ __all__ = ["Logger", "FeedbackLogger",
            "Parser", "DocumentParser",
            "Runner", "RaspRunner",
            "Fuzzer", "RaspFuzzer",
-           "Seed", "PowerSchedule"]
+           "Seed", "PowerSchedule",
+           "Ddos"]
            
