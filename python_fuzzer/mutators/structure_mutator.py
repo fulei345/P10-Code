@@ -7,8 +7,11 @@ from .mutator import Mutator
 class StructureMutator(Mutator):
     def __init__(self, verbose: bool) -> None:
         self.verbose: bool = verbose
+        self.root = None
+        self.parent_map = dict()
+        self.root_size = 0
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [self.duplicate_field,
+        self.mutators: List[Callable[[Any], Any]] = [self.add_field,
                                                      self.delete_field,
                                                      self.move_field]
 
@@ -17,64 +20,50 @@ class StructureMutator(Mutator):
         Mutate the structure of fields in an OIOUBL document.
         :return: Mutated documents.
         """
-        #if(elem): # checks if the element has children, is true if it has
         root:Element = document.getroot()
-        count = sum(1 for _ in root.iter())
-        parent_map = {c:p for p in root.iter() for c in p}
-        i: int = random.randint(0, count)
+        self.root_size = sum(1 for _ in root.iter())
+        self.parent_map = {c:p for p in root.iter() for c in p}
+        self.root = root
+        i: int = random.randint(0, self.root_size)
         j: int = 0
-        parent = root
-        print(i)
         for elem in root.iter():
-            #if(elem): # checks if the element has children, is true if it has
-            #    parent = elem
             if j == i:
                 mutator: Callable[[Any], Any] = random.choice(self.mutators)
-                print(elem)
-        
-                print(parent_map[elem], "\n")
-                mutator(parent_map[elem], elem)
-                print("\ngambling\n")
-                for elem in root.iter():
-                    print(elem)
+                mutator(self.parent_map[elem], elem)
                 return document
             j += 1
         return document
 
-    def duplicate_field(self, element: Element, subelement: Element) -> Element:
-        index = 5 #random 
-        print("yo")
-        element.insert(index, subelement) #insert field in parent class(or the other)
-        for elem in element.iter():
-            print(elem)
+    def add_field(self, parent: Element, subelement: Element) -> Element:
+        lollllllll = random.randint(0, 1)    
 
-        return element
+        if(lollllllll):
+            index = random.randint(0, len(parent))
+            parent.insert(index, subelement) #insert field in parent class
+        else:
+            index = random.randint(0, self.root_size)
+            l = 0
+            for elem in self.root.iter():
+                if l == index:
+                    parent = self.parent_map[elem]
+                    k = random.randint(0, len(parent))
+                    parent.insert(k, subelement)
+                l += 1
+
+        return parent
 
 
-    def delete_field(self, element: Element, subelement: Element) -> ElementTree:
+    def delete_field(self, parent: Element, subelement: Element) -> Element:
         
-        element.remove(subelement)
+        parent.remove(subelement)
         
-        for elem in element.iter():
-            print(elem)  
-        
-        return element
+        return parent
     
 
-    def move_field(self, element: Element, subelement: Element) -> ElementTree:
-                
-        print(element)
-        print(len(element))
-        print(subelement)
-        print(len(subelement))
+    def move_field(self, parent: Element, subelement: Element) -> Element:
         
-        element.remove(subelement)
+        parent.remove(subelement)
         
-        index = 5 #random 
+        self.add_field(parent, subelement)
         
-        element.insert(index, subelement) #insert field in parent class(or the other)
-        
-        #for elem in element.iter():
-        #    print(elem)  
-        
-        return element
+        return parent
