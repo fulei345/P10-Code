@@ -24,31 +24,29 @@ class StructureMutator(Mutator):
         self.root_size = sum(1 for _ in root.iter())
         self.parent_map = {c:p for p in root.iter() for c in p}
         self.root = root
-        i: int = random.randint(0, self.root_size)
-        j: int = 0
+        index: int = random.randint(0, self.root_size)
+        counter: int = 0
         for elem in root.iter():
-            if j == i:
+            if counter == index:
                 mutator: Callable[[Any], Any] = random.choice(self.mutators)
                 mutator(self.parent_map[elem], elem)
                 return document
-            j += 1
+            counter += 1
         return document
 
     def add_field(self, parent: Element, subelement: Element) -> Element:
-        lollllllll = random.randint(0, 1)    
-
-        if(lollllllll):
+        if(random.random() < 0.5 ):
             index = random.randint(0, len(parent))
             parent.insert(index, subelement) #insert field in parent class
         else:
             index = random.randint(0, self.root_size)
-            l = 0
+            counter = 0
             for elem in self.root.iter():
-                if l == index:
+                if counter == index:
                     parent = self.parent_map[elem]
-                    k = random.randint(0, len(parent))
-                    parent.insert(k, subelement)
-                l += 1
+                    insert_index = random.randint(0, len(parent))
+                    parent.insert(insert_index, subelement)
+                counter += 1
 
         return parent
 
