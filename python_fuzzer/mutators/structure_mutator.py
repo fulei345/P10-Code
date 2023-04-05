@@ -9,7 +9,7 @@ class StructureMutator(Mutator):
         self.verbose: bool = verbose
         self.root = None
         self.parent_map = dict()
-        self.root_size = 0
+        self.total_size = 0
         # List mutator functions here
         self.mutators: List[Callable[[Any], Any]] = [self.add_field,
                                                      self.delete_field,
@@ -21,10 +21,10 @@ class StructureMutator(Mutator):
         :return: Mutated documents.
         """
         root:Element = document.getroot()
-        self.root_size = sum(1 for _ in root.iter())
+        self.total_size = sum(1 for _ in root.iter())
         self.parent_map = {c:p for p in root.iter() for c in p}
         self.root = root
-        index: int = random.randint(0, self.root_size)
+        index: int = random.randint(0, self.total_size)
         counter: int = 0
         for elem in root.iter():
             if counter == index:
@@ -39,7 +39,7 @@ class StructureMutator(Mutator):
             index = random.randint(0, len(parent))
             parent.insert(index, subelement) #insert field in parent class
         else:
-            index = random.randint(0, self.root_size)
+            index = random.randint(0, self.total_size)
             counter = 0
             for elem in self.root.iter():
                 if counter == index:
@@ -65,3 +65,4 @@ class StructureMutator(Mutator):
         self.add_field(parent, subelement)
         
         return parent
+        

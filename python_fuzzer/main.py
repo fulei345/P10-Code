@@ -6,7 +6,6 @@ from mutators import DocumentMutator, StructureMutator
 from scheduler import  PowerSchedule
 from utils import Seed, Ddos
 
-
 import os
 import argparse
 from typing import List
