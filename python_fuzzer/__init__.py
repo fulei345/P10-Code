@@ -5,7 +5,7 @@ from .runners import *
 from .fuzzers import *
 
 __all__ = ["Logger", "FeedbackLogger",
-           "Mutator", "DocumentMutator",
+           "Mutator", "DocumentMutator", "StructureMutator",
            "Parser", "DocumentParser",
            "Runner", "RaspRunner",
            "Fuzzer", "RaspFuzzer"]

@@ -2,7 +2,7 @@ from parsers import DocumentParser
 from loggers import FeedbackLogger
 from fuzzers import RaspFuzzer
 from runners import RaspRunner
-from mutators import DocumentMutator
+from mutators import DocumentMutator, StructureMutator
 
 import os
 import argparse
@@ -32,7 +32,7 @@ def main(verbose: bool) -> None:
     corpus: List[str] = parser.load_corpus()
 
     # Initialize the mutator
-    mut: DocumentMutator = DocumentMutator(verbose)
+    mut: StructureMutator = StructureMutator(verbose)
 
     # Initialize and run the fuzzer
     fuzz: RaspFuzzer = RaspFuzzer(corpus, run, mut, log, verbose, parser, document_path, mutation_count=1)
