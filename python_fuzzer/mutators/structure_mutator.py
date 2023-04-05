@@ -22,6 +22,7 @@ class StructureMutator(Mutator):
         """
         root:Element = document.getroot()
         self.total_size = sum(1 for _ in root.iter())
+        # mapper alle elementer til deres parent element
         self.parent_map = {c:p for p in root.iter() for c in p}
         self.root = root
         index: int = random.randint(0, self.total_size)
@@ -35,6 +36,7 @@ class StructureMutator(Mutator):
         return document
 
     def add_field(self, parent: Element, subelement: Element) -> Element:
+        # 50% sætte i parent eller uniformt i hele file
         if(random.random() < 0.5 ):
             index = random.randint(0, len(parent))
             parent.insert(index, subelement) #insert field in parent class
