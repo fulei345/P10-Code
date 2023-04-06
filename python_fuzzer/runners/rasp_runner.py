@@ -30,13 +30,13 @@ class RaspRunner(Runner):
         self.verbose: bool = verbose
         self.code_covereage = []
 
-    def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, list[str]]:
+    def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, List[str]]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
         document.write(document_path, encoding="utf-8", xml_declaration=True)
         message, code, code_coverage = self.start_process(document_path)
         return message, code, code_coverage
 
-    def start_process(self, doc_path: str) -> Tuple[str, str, list[str]]:
+    def start_process(self, doc_path: str) -> Tuple[str, str, List[str]]:
         try:
             # Input is the options chosen in the Client
             process = run(["dk.gov.oiosi.samples.ClientExample.exe", doc_path],
@@ -68,6 +68,9 @@ class RaspRunner(Runner):
                     ersp_num = search(r" E-RSP\d+", fault_message)
                     if ersp_num.group(0) not in self.ersp_nums:
                         self.ersp_nums.append(ersp_num.group(0))
+                    # f_num = search(r"\[F-\w+\]", fault_message)
+                    # if f_num != None and f_num.group(0) not in self.ersp_nums:
+                        # self.ersp_nums.append(f_num.group(0))
                         self.logger.log_crash(doc_path, fault_message)
                         if self.verbose:
                             print(fault_message)

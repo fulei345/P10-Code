@@ -2,7 +2,7 @@ from parsers import DocumentParser
 from loggers import FeedbackLogger
 from fuzzers import RaspFuzzer, GreyboxFuzzer
 from runners import RaspRunner
-from mutators import DocumentMutator
+from mutators import DocumentMutator, StructureMutator
 from scheduler import  PowerSchedule
 from utils import Seed, Ddos
 

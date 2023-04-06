@@ -18,7 +18,7 @@ from parsers import DocumentParser
 
 class RaspFuzzer(Fuzzer):
     def __init__(self,
-                 corpus: list[str],
+                 corpus: List[str],
                  runner: RaspRunner,
                  mutator: DocumentMutator,
                  logger: FeedbackLogger,
@@ -27,7 +27,7 @@ class RaspFuzzer(Fuzzer):
                  path: str,
                  mutation_count: int) -> None:
 
-        self.corpus: list[str] = corpus
+        self.corpus: List[str] = corpus
         self.corpus_size: int = len(self.corpus)
         self.seed_index: int = 0
         self.population: List[str] = []

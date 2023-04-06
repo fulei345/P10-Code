@@ -11,6 +11,9 @@ class DocumentMutator(Mutator):
         # List mutator functions here
         self.mutators: List[Callable[[Any], Any]] = [self.flip_bit_mutator,
                                                      self.add_to_byte_mutator]
+#        self.dont_mutate: List[str] = ["CustomizationID", 
+#                                       "CopyIndicator", "FreeOfChargeIndicator", "CatalogueIndicator", "HazardousRiskIndicator"
+#                                       "IssueDate", "TaxPointDate", "ActualDeliveryDate", "LatestDeliveryDate", "Date", "TaxPointDate"]
 
     def mutate(self, document: ElementTree) -> ElementTree:
         """
@@ -23,7 +26,7 @@ class DocumentMutator(Mutator):
             text = elem.text
             # random variable to determine whether the element should be mutated - 15% probability currently
             i: int = random.randint(0, 99)
-            if "\n" not in text and i > 84: 
+            if "\n" not in text and i > 84: # and elem.tag.split("}")[1] not in self.dont_mutate: 
                 field: bytes = bytes(elem.text, 'utf-8')
                 field = mutator(field)
                 temp = str(field)

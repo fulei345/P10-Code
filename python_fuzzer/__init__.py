@@ -7,7 +7,7 @@ from .scheduler import *
 from .utils import *
 
 __all__ = ["Logger", "FeedbackLogger",
-           "Mutator", "DocumentMutator",
+           "Mutator", "DocumentMutator", "StructureMutator",
            "Parser", "DocumentParser",
            "Runner", "RaspRunner",
            "Fuzzer", "RaspFuzzer",
