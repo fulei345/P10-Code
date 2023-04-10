@@ -20,3 +20,31 @@ class Invoice():
     AccountingCostCode: str #code
     AccountingCost: str
     LineCountNumeric: int #numeric: int?
+    # UBLExtensions
+    # InvoicePeriod
+    # OrderReference
+    # BillingReference
+    # DespatchDocumentReference
+    # ReceiptDocumentReference
+    # OriginatorDocumentReference
+    # ContractDocumentReference
+    # AdditionalDocumentReference 
+    # Signature 
+    # AccountingSupplierParty
+    # AccountingCustomerParty
+    # PayeeParty
+    # BuyerCustomerParty
+    # SellerSupplierParty
+    # Delivery
+    # DeliveryTerms
+    # PaymentMeans
+    # PaymentTerms
+    # PrepaidPayment
+    # AllowanceCharge
+    # TaxExchangeRate
+    # PricingExchangeRate
+    # PaymentExchangeRate
+    # PaymentAlternativeExchangeRate
+    # TaxTotal
+    # LegalMonetaryTotal
+    # InvoiceLine
