@@ -1,5 +1,5 @@
 from datetime import date, time
-from typing import Optional
+from typing import Optional, List
 from dataclasses import dataclass
 
 @dataclass #provide automatic generation of __init__(), among other things
@@ -14,7 +14,7 @@ class Invoice():
     IssueDate: date #date type (yyyy-mm-dd)
     IssueTime: Optional[time] #time type (00:00:00)
     InvoiceTypeCode: Optional[str] #code type (example doc has e.g. 380 and DKK, so string to generalize)
-    Note: Optional[str] #multiple - list of?
+    Note: Optional[List[str]] #multiple - list of?
     TaxPointDate: Optional[date]
     DocumentCurrencyCode: str #code
     TaxCurrencyCode: Optional[str] #code
