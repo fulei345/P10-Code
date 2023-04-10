@@ -2,6 +2,31 @@ from datetime import date, time
 from typing import Optional, List
 from dataclasses import dataclass
 
+@dataclass 
+class Attachment():
+    EmbeddedDocumentBinaryObject: Optional[bytes] # binary type
+    #ExternalReference Optional[
+
+@dataclass 
+class DocumentReference():
+    ID: int
+    CopyIndicator: Optional[bool]
+    UUID: Optional[int]
+    IssueDate: Optional[date] #date type (yyyy-mm-dd)
+    XPath: Optional[List[str]] #multiple instances possible
+    Attachment: Optional[Attachment]
+
+@dataclass 
+class OrderReference():
+    ID: int
+    CopyIndicator: Optional[bool]
+    UUID: Optional[int]
+    IssueDate: Optional[date] #date type (yyyy-mm-dd)
+    IssueTime: Optional[time] #time type (00:00:00)
+    SalesOrderID: Optional[int]
+    CustomerReference: Optional[str]
+    DocumentReference: Optional[DocumentReference]
+
 @dataclass #provide automatic generation of __init__(), among other things
 class Invoice():
     # UBLExtensions Optional[
@@ -14,7 +39,7 @@ class Invoice():
     IssueDate: date #date type (yyyy-mm-dd)
     IssueTime: Optional[time] #time type (00:00:00)
     InvoiceTypeCode: Optional[str] #code type (example doc has e.g. 380 and DKK, so string to generalize)
-    Note: Optional[List[str]] #multiple - list of?
+    Note: Optional[List[str]] #multiple instances possible - list of?
     TaxPointDate: Optional[date]
     DocumentCurrencyCode: str #code
     TaxCurrencyCode: Optional[str] #code
@@ -25,7 +50,7 @@ class Invoice():
     AccountingCost: Optional[str]
     LineCountNumeric: Optional[int] #numeric: int?
     # InvoicePeriod Optional[
-    # OrderReference Optional[
+    OrderReference: Optional[OrderReference]
     # BillingReference Optional[ - multiple
     # DespatchDocumentReference Optional[ - multiple
     # ReceiptDocumentReference Optional[ - multiple
