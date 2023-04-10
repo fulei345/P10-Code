@@ -1,6 +1,8 @@
 from datetime import date, time
 from typing import Optional
+from dataclasses import dataclass
 
+@dataclass #provide automatic generation of __init__(), among other things
 class Invoice():
     # UBLExtensions Optional[
     UBLVersionID: int # identifiers (alle int (undtagen den med numeric)) string giver ikke schema fejl, kun schematron, så kan måske ændres til det 
