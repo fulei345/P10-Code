@@ -11,7 +11,7 @@ class StructureMutator(Mutator):
         self.parent_map = dict()
         self.total_size = 0
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [self.add_field,
+        self.mutators: List[Callable[[Any], Any]] = [self.insert_field,
                                                      self.delete_field,
                                                      self.move_field]
 
@@ -35,7 +35,8 @@ class StructureMutator(Mutator):
             counter += 1
         return document
 
-    def add_field(self, parent: Element, subelement: Element) -> Element:
+    # when used directly it insert duplicate of the field - is also used to insert fields when moving fields or add new fields
+    def insert_field(self, parent: Element, subelement: Element) -> Element:
         # 50% sætte i parent eller uniformt i hele file
         if(random.random() < 0.5 ):
             index = random.randint(0, len(parent))
@@ -64,7 +65,17 @@ class StructureMutator(Mutator):
         
         parent.remove(subelement)
         
-        self.add_field(parent, subelement)
+        self.insert_field(parent, subelement)
+        
+        return parent
+        
+    #create new field and insert in the document
+    def add_field(self, parent: Element, subelement: Element) -> Element:
+        
+
+
+
+        self.insert_field(parent, subelement)
         
         return parent
         
