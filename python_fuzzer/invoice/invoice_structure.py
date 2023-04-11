@@ -19,6 +19,21 @@ class Contact():
     OtherCommunication: Optional[OtherCommunication]
 
 @dataclass 
+class PayeeParty():
+    WebsiteURI: Optional[int]
+    LogoReferenceID: Optional[int]
+    EndpointID: Optional[int]
+    #PartyIdentification Optional[ #multiple instances possible
+    #PartyName Optional[ #multiple instances possible
+    #Language Optional[
+    #PostalAddress Optional[
+    #PhysicalLocation Optional[
+    #PartyTaxScheme Optional[ #multiple instances possible
+    #PartyLegalEntity
+    Contact: Optional[Contact]
+    #Person Optional[
+
+@dataclass 
 class Party():
     WebsiteURI: Optional[int]
     LogoReferenceID: Optional[int]
@@ -51,10 +66,6 @@ class AccountingSupplierParty():
     #DeliveryContact: Optional[
     #AccountingContact: Optional[
     #BuyerContact: Optional[
-
-@dataclass 
-class PayeeParty(Party):
-    pass
 
 @dataclass 
 class Attachment():
