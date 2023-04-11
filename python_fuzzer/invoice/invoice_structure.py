@@ -17,6 +17,22 @@ class DocumentReference():
     Attachment: Optional[Attachment]
 
 @dataclass 
+class ContractDocumentReference(DocumentReference):
+    pass
+
+@dataclass 
+class OriginatorDocumentReference(DocumentReference):
+    pass
+
+@dataclass 
+class ReceiptDocumentReference(DocumentReference):
+    pass
+
+@dataclass 
+class DespatchDocumentReference(DocumentReference):
+    pass
+
+@dataclass 
 class ReminderDocumentReference(DocumentReference):
     pass
 
@@ -80,10 +96,10 @@ class Invoice():
     # InvoicePeriod Optional[
     OrderReference: Optional[OrderReference]
     BillingReference: Optional[List[BillingReference]] # multiple instances possible
-    # DespatchDocumentReference Optional[ - multiple instances possible
-    # ReceiptDocumentReference Optional[ - multiple instances possible
-    # OriginatorDocumentReference Optional[ - multiple instances possible
-    # ContractDocumentReference Optional[
+    DespatchDocumentReference: Optional[List[DespatchDocumentReference]] # multiple instances possible
+    ReceiptDocumentReference: Optional[List[ReceiptDocumentReference]] # multiple instances possible
+    OriginatorDocumentReference: Optional[List[OriginatorDocumentReference]] # multiple instances possible
+    ContractDocumentReference: Optional[ContractDocumentReference]
     # AdditionalDocumentReference Optional[ - multiple instances possible
     # Signature Optional[ - multiple instances possible
     # AccountingSupplierParty 
