@@ -53,6 +53,10 @@ class AccountingSupplierParty():
     #BuyerContact: Optional[
 
 @dataclass 
+class PayeeParty(Party):
+    pass
+
+@dataclass 
 class Attachment():
     EmbeddedDocumentBinaryObject: Optional[bytes] # binary type
     #ExternalReference Optional[
@@ -152,9 +156,9 @@ class Invoice():
     ContractDocumentReference: Optional[ContractDocumentReference]
     # AdditionalDocumentReference Optional[ - multiple instances possible
     # Signature Optional[ - multiple instances possible
-    # AccountingSupplierParty 
-    # AccountingCustomerParty 
-    # PayeeParty Optional[ 
+    AccountingSupplierParty: AccountingSupplierParty
+    AccountingCustomerParty: AccountingCustomerParty
+    PayeeParty: Optional[PayeeParty]
     # BuyerCustomerParty Optional[
     # SellerSupplierParty Optional[
     # Delivery Optional[ - multiple instances possible
