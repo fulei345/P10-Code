@@ -17,6 +17,34 @@ class DocumentReference():
     Attachment: Optional[Attachment]
 
 @dataclass 
+class ReminderDocumentReference(DocumentReference):
+    pass
+
+@dataclass 
+class SelfBilledCreditNoteDocumentReference(DocumentReference):
+    pass
+
+@dataclass 
+class CreditNoteDocumentReference(DocumentReference):
+    pass
+
+@dataclass 
+class SelfBilledInvoiceDocumentReference(DocumentReference):
+    pass
+
+@dataclass 
+class InvoiceDocumentReference(DocumentReference):
+    pass
+    
+@dataclass 
+class BillingReference():
+    InvoiceDocumentReference: Optional[InvoiceDocumentReference]
+    SelfBilledInvoiceDocumentReference: Optional[SelfBilledInvoiceDocumentReference]
+    CreditNoteDocumentReference: Optional[CreditNoteDocumentReference]
+    SelfBilledCreditNoteDocumentReference: Optional[SelfBilledCreditNoteDocumentReference]
+    ReminderDocumentReference: Optional[ReminderDocumentReference]
+
+@dataclass 
 class OrderReference():
     ID: int
     CopyIndicator: Optional[bool]
@@ -51,28 +79,28 @@ class Invoice():
     LineCountNumeric: Optional[int] #numeric: int?
     # InvoicePeriod Optional[
     OrderReference: Optional[OrderReference]
-    # BillingReference Optional[ - multiple
-    # DespatchDocumentReference Optional[ - multiple
-    # ReceiptDocumentReference Optional[ - multiple
-    # OriginatorDocumentReference Optional[ - multiple
+    BillingReference: Optional[List[BillingReference]] # multiple instances possible
+    # DespatchDocumentReference Optional[ - multiple instances possible
+    # ReceiptDocumentReference Optional[ - multiple instances possible
+    # OriginatorDocumentReference Optional[ - multiple instances possible
     # ContractDocumentReference Optional[
-    # AdditionalDocumentReference Optional[ - multiple
-    # Signature Optional[ - multiple
+    # AdditionalDocumentReference Optional[ - multiple instances possible
+    # Signature Optional[ - multiple instances possible
     # AccountingSupplierParty 
     # AccountingCustomerParty 
     # PayeeParty Optional[ 
     # BuyerCustomerParty Optional[
     # SellerSupplierParty Optional[
-    # Delivery Optional[ - multiple
+    # Delivery Optional[ - multiple instances possible
     # DeliveryTerms Optional[
-    # PaymentMeans Optional[ - multiple
-    # PaymentTerms Optional[ - multiple
-    # PrepaidPayment Optional[ - multiple
-    # AllowanceCharge Optional[ - multiple
+    # PaymentMeans Optional[ - multiple instances possible
+    # PaymentTerms Optional[ - multiple instances possible
+    # PrepaidPayment Optional[ - multiple instances possible
+    # AllowanceCharge Optional[ - multiple instances possible
     # TaxExchangeRate Optional[
     # PricingExchangeRate Optional[
     # PaymentExchangeRate Optional[
     # PaymentAlternativeExchangeRate Optional[
-    # TaxTotal - multiple
+    # TaxTotal - multiple instances possible
     # LegalMonetaryTotal
-    # InvoiceLine - multiple
+    # InvoiceLine - multiple instances possible
