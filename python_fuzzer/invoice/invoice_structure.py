@@ -3,6 +3,56 @@ from typing import Optional, List
 from dataclasses import dataclass
 
 @dataclass 
+class OtherCommunication():
+    ChannelCode: Optional[str] #datatype code? (dokumentationen beskriver ikke datatypen for denne klasse)
+    Channel: Optional[str] #datatype text?
+    Value: str #datatype text?
+
+@dataclass 
+class Contact():
+    ID: int
+    Name: Optional[str] #datatype: name
+    Telephone: Optional[str]
+    Telefax: Optional[str]
+    ElectronicMail: Optional[str]
+    Note: Optional[str]
+    OtherCommunication: Optional[OtherCommunication]
+
+@dataclass 
+class Party():
+    WebsiteURI: Optional[int]
+    LogoReferenceID: Optional[int]
+    EndpointID: int
+    #PartyIdentification Optional[ #multiple instances possible
+    #PartyName Optional[ #multiple instances possible
+    #Language Optional[
+    #PostalAddress Optional[
+    #PhysicalLocation Optional[
+    #PartyTaxScheme Optional[ #multiple instances possible
+    #PartyLegalEntity
+    Contact: Contact #(Optional for AccountingSupplierParty, but mandatory for AccountingCustomerParty)
+    #Person Optional[
+
+@dataclass 
+class AccountingCustomerParty():
+    CustomerAssignedAccountID: Optional[int]
+    SupplierAssignedAccountID: Optional[int]
+    AdditionalAccountID: Optional[List[int]] #multiple instances possible
+    Party: Party
+    #DespatchContact: Optional[
+    #AccountingContact: Optional[
+    #SellerContact: Optional[
+
+@dataclass 
+class AccountingSupplierParty():
+    CustomerAssignedAccountID: Optional[int]
+    AdditionalAccountID: Optional[List[int]] #multiple instances possible
+    Party: Party
+    #DeliveryContact: Optional[
+    #AccountingContact: Optional[
+    #BuyerContact: Optional[
+
+@dataclass 
 class Attachment():
     EmbeddedDocumentBinaryObject: Optional[bytes] # binary type
     #ExternalReference Optional[
@@ -74,7 +124,7 @@ class OrderReference():
 @dataclass #provide automatic generation of __init__(), among other things
 class Invoice():
     # UBLExtensions Optional[
-    UBLVersionID: int # identifiers (alle int (undtagen den med numeric)) string giver ikke schema fejl, kun schematron, så kan måske ændres til det 
+    UBLVersionID: int # identifiers (alle int er indentifiers, undtagen den med numeric) strings giver ikke schema fejl, kun schematron, så kan måske ændres til det 
     CustomizationID: int
     ProfileID: int
     ID: int
