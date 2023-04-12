@@ -35,6 +35,7 @@ class GreyboxFuzzer(Fuzzer):
         self.inputs: List[ElementTree] = []
         self.population_path: str = population_path
         self.verbose: bool = verbose
+        self.total_coverage = set()
 
         self.schedule: PowerSchedule = schedule
         self.runner: RaspRunner = runner
@@ -90,16 +91,29 @@ class GreyboxFuzzer(Fuzzer):
             filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
             document_path = join(self.population_path, filename)
             seed.data.write(document_path, encoding="utf-8", xml_declaration=True)
-            self.logger.log_crash(filename,result)
+            self.logger.log_crash(filename, result)
             self.seed_index += 1
+            # Add maybe new coverage to the total code blocks seen
+            self.total_coverage = self.total_coverage.union(self.runner.code_coverage)
         return result, outcome
 
-    def multiple_runs(self, run_count: int) -> List[Tuple[Any, str]]:
+    def multiple_runs(self, run_count: int, stats: bool) -> List[Tuple[Any, str]]:
         results = []
+        result_num = 0
+        code_block_total = 55
         for i in range(run_count):
             result = self.run()
-            results.append(result)
             run_num = i + 1
+            path_num = len(self.coverages_seen)
+            if result[0] not in results:
+                results.append(result[0])
+                result_num += 1
+            percent_coverage = len(self.total_coverage)/code_block_total * 100
+            to_print = "Run: " + str(run_num) + " Paths: " + str(path_num)
+            to_print += " Coverage: " + str(format(percent_coverage, '.2f')) + " %"
+            if stats:
+                print(to_print,  end='\r')
+
         # Filter results marked as "PASS"
         if self.verbose:
             for cov in self.coverages_seen:

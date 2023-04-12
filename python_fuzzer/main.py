@@ -12,7 +12,7 @@ from utils import Ddos
 
 # TODO Add types to everything without and change existing types
 
-def main(verbose: bool, state: bool) -> None:
+def main(verbose: bool, stats: bool) -> None:
     # Get current working directory to create folders
     cwd_path: str = os.getcwd()
     if not cwd_path.endswith("python_fuzzer"):
@@ -44,7 +44,7 @@ def main(verbose: bool, state: bool) -> None:
     # Greybox fuzzer
     fuzz: GreyboxFuzzer = GreyboxFuzzer(corpus, run, mut, log, PowerSchedule(), verbose, population_path,
                                         mutation_count=1)
-    result = fuzz.multiple_runs(run_count=5)
+    result = fuzz.multiple_runs(run_count=1000, stats=stats)
     # print(result)
 
 
