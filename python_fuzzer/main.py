@@ -1,20 +1,18 @@
-from parsers import DocumentParser
-from loggers import FeedbackLogger
-from fuzzers import RaspFuzzer, GreyboxFuzzer
-from runners import RaspRunner
-from mutators import DocumentMutator, StructureMutator
-from scheduler import PowerSchedule
-from utils import Seed, Ddos
-
-import os
 import argparse
-from typing import List
-from xml.etree.ElementTree import Element, ElementTree, parse, ParseError
+import os
+
+from fuzzers import GreyboxFuzzer
+from loggers import FeedbackLogger
+from mutators import DocumentMutator
+from parsers import DocumentParser
+from runners import RaspRunner
+from scheduler import PowerSchedule
+from utils import Ddos
 
 
 # TODO Add types to everything without and change existing types
 
-def main(verbose: bool) -> None:
+def main(verbose: bool, state: bool) -> None:
     # Get current working directory to create folders
     cwd_path: str = os.getcwd()
     if not cwd_path.endswith("python_fuzzer"):
@@ -75,10 +73,15 @@ if __name__ == '__main__':
                    action="store_true",
                    help="Use this flag if you want to ddos the ClientExample")
 
+    p.add_argument("--stats",
+                   default=False,
+                   action="store_true",
+                   help="Use this flag if you want to see stats while running")
+
     args = p.parse_args()
 
     # Run ddos code
     if args.ddos:
         ddos()
     else:
-        main(args.verbose)
+        main(args.verbose, args.stats)

@@ -95,7 +95,11 @@ class GreyboxFuzzer(Fuzzer):
         return result, outcome
 
     def multiple_runs(self, run_count: int) -> List[Tuple[Any, str]]:
-        results = [self.run() for _ in range(run_count)]
+        results = []
+        for i in range(run_count):
+            result = self.run()
+            results.append(result)
+            run_num = i + 1
         # Filter results marked as "PASS"
         if self.verbose:
             for cov in self.coverages_seen:
