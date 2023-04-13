@@ -7,11 +7,9 @@ import string
 
 from .mutator import Mutator
 
-
 import sys
 sys.path.append("..")
 from invoice import Invoice
-
 
 
 class StructureMutator(Mutator):
