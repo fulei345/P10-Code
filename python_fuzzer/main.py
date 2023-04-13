@@ -44,7 +44,7 @@ def main(verbose: bool, stats: bool) -> None:
     # Greybox fuzzer
     fuzz: GreyboxFuzzer = GreyboxFuzzer(corpus, run, mut, log, PowerSchedule(), verbose, population_path,
                                         mutation_count=1)
-    result = fuzz.multiple_runs(run_count=1000, stats=stats)
+    result = fuzz.multiple_runs(run_count=5, stats=stats)
     # print(result)
 
 
