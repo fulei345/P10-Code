@@ -21,7 +21,10 @@ class StructureMutator(Mutator):
         self.parent_map = dict()
         self.total_size = 0
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [self.add_field]
+        self.mutators: List[Callable[[Any], Any]] = [self.insert_field,
+                                                     self.delete_field,
+                                                     self.move_field,
+                                                     self.add_field]
 
     def mutate(self, document: ElementTree) -> ElementTree:
         """
@@ -39,10 +42,6 @@ class StructureMutator(Mutator):
             if counter == index:
                 mutator: Callable[[Any], Any] = random.choice(self.mutators)
                 mutator(self.parent_map[elem], elem)
-                #for elem in root.iter():
-                #    print(elem)
-                #    if elem.tag == 'test':
-                #        print(elem.text)
                 return document
             counter += 1
         return document
@@ -84,40 +83,11 @@ class StructureMutator(Mutator):
     #create new field and insert in the document
     def add_field(self, parent: Element, subelement: Element) -> Element:
         
-        #f = fields(Invoice)
-        
+        #TODO probably make this general so it could be other types of documents as well (if their structure was made lol)
+        #randomly choose one of the Invoice direct subelements to create        
         field = random.choice(fields(Invoice))
         
-        print(field)
-        
         elem = self.make_element(field)
-
-            
-        #for field in f:
-        #    print(field.name, field.type)
-        #    if field.type == date or field.type == Optional[date]:
-        #        print("\nyo\n")
-
-        # chose one randomly
-            # just from toplevel (invoice)? 
-                # list with direct subelements for invoice (+their types?)
-            # or from all? 
-                # then all subclasses also needs lists :(
-        # if field is just an element
-            # build element (make a random variable with the according type, make element with the variable as its text value)
-        # if it is a subclass 
-            # build class (build all its subelements iteratively)
-
-        #xml.etree.ElementTree.SubElement(parent, tag, attrib={}, **extra)
-            #Subelement factory. This function creates an element instance, and appends it to an existing element.
-
-        #a = SubElement(parent, 'test')
-        #a.text = 'bob'
-        
-        print(elem.text)
-        
-        for sub in elem.iter():
-            print(sub)
 
         self.insert_field(parent, elem)
 
@@ -125,42 +95,37 @@ class StructureMutator(Mutator):
     
     def make_element(self, field) -> Element:
         
+        #make element with the name
         elem = Element(field.name)
 
+        #makes text for element according to its field type
         if field.type == str: #or field.type == Optional[str]:
             elem.text = self.make_string()
-            print("\n1\n")
         elif field.type == int: #or field.type == Optional[int]:
             elem.text = self.make_int()
-            print("\n2\n")
         elif field.type == bool: #or field.type == Optional[bool]:
             elem.text = self.make_bool()
-            print("\n3\n")
         elif field.type == time: #or field.type == Optional[time]:
             elem.text = self.make_time()
-            print("\n4\n")
         elif field.type == date: #or field.type == Optional[date]:
             elem.text = self.make_date()
-            print("\n5\n")
-        elif field.type == bytes: #or field.type == Optional[date]:
+        elif field.type == bytes: #or field.type == Optional[bytes]:
             elem.text = self.make_string() #TODO change this (look at oioubl documentation for attachement binary object)
-            print("\n7\n")
         else:
-            print("\n6\n")
             elem = self.make_subclass(elem, field.type)
             
         return elem   
     
     def make_subclass(self, elem: Element, type) -> Element:   
-           
+
+        # finds the fields of the dataclass type          
         names = fields(type) 
         
+        # make elements for all the class fields iteratively
         for field in names:
             subelem = self.make_element(field)
             elem.append(subelem)
-        
-        print(elem)
-        
+                
         return elem
             
         
@@ -168,7 +133,8 @@ class StructureMutator(Mutator):
 
         length = random.randint(0, 100)     
 
-        text = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
+        #random string of legnth composed of printable string chararcters (letters, digits, punctuation, whitespace) - alternatively string.ascii_letters + string.digits (+string.punctuation)
+        text = ''.join(random.choice(string.printable) for _ in range(length))
         
         return text
     
@@ -186,13 +152,13 @@ class StructureMutator(Mutator):
         return text
             
     def make_time(self) -> str:
-        #creat time with random values, first argument is hours, second argument is minutes, and last argument is seconds 
+        #create time with random values, first argument is hours, second argument is minutes, and last argument is seconds 
         text = time(random.randint(0, 23), random.randint(0, 60), random.randint(0, 60)) 
         
         return str(text)
             
     def make_date(self) -> str:
-        #creat date with random values, first argument is year with the range for datetime modules minyear and maxyear, second argument is month, and last argument is day 
+        #create date with random values, first argument is year with the range for datetime modules minyear and maxyear, second argument is month, and last argument is day 
         text = date(random.randint(1, 9999), random.randint(1, 12), random.randint(1, 31)) 
         
         return str(text)
