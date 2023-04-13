@@ -19,7 +19,7 @@ from scheduler import PowerSchedule
 
 class GreyboxFuzzer(Fuzzer):
     def __init__(self,
-                 seeds: list[ElementTree],
+                 seeds: List[ElementTree],
                  runner: RaspRunner,
                  mutator: DocumentMutator,
                  logger: FeedbackLogger,
@@ -28,7 +28,7 @@ class GreyboxFuzzer(Fuzzer):
                  population_path: str,
                  mutation_count: int) -> None:
 
-        self.seeds: list[ElementTree] = seeds
+        self.seeds: List[ElementTree] = seeds
 
         self.seed_index: int = 0
         self.population: List[ElementTree] = []

@@ -66,7 +66,8 @@ class RaspRunner(Runner):
                     # Log if new, do not if not
                     fault_message = standard_out[erro_index:]
                     ersp_num = search(r" E-RSP\d+", fault_message)
-                    if ersp_num.group(0) not in self.ersp_nums:
+                    #TODO maybe do something for parser exceptions as well
+                    if ersp_num != None and ersp_num.group(0) not in self.ersp_nums:
                         self.ersp_nums.append(ersp_num.group(0))
                     # f_num = search(r"\[F-\w+\]", fault_message)
                     # if f_num != None and f_num.group(0) not in self.ersp_nums:
@@ -88,6 +89,7 @@ class RaspRunner(Runner):
         except Exception as e:
             # TODO handle this better
             print(e)
+            return "", self.FAIL, []
 
 
 if __name__ == '__main__':
