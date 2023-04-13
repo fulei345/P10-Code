@@ -37,7 +37,7 @@ class RaspRunner(Runner):
         return message, code, code_coverage
 
     def start_process(self, doc_path: str) -> Tuple[str, str, List[str]]:
-        try:
+        #try:
             # Input is the options chosen in the Client
             process = run(["dk.gov.oiosi.samples.ClientExample.exe", doc_path],
                           shell=True,
@@ -66,7 +66,8 @@ class RaspRunner(Runner):
                     # Log if new, do not if not
                     fault_message = standard_out[erro_index:]
                     ersp_num = search(r" E-RSP\d+", fault_message)
-                    if ersp_num.group(0) not in self.ersp_nums:
+                    #TODO maybe do something for parser exceptions as well
+                    if ersp_num != None and ersp_num.group(0) not in self.ersp_nums:
                         self.ersp_nums.append(ersp_num.group(0))
                     # f_num = search(r"\[F-\w+\]", fault_message)
                     # if f_num != None and f_num.group(0) not in self.ersp_nums:
@@ -85,9 +86,9 @@ class RaspRunner(Runner):
                         print(standard_out)
                     # If there is no error
                     return standard_out, self.PASS, self.code_coverage
-        except Exception as e:
-            # TODO handle this better
-            print(e)
+        #except Exception as e:
+        #    # TODO handle this better
+        #    print(e)
 
 
 if __name__ == '__main__':
