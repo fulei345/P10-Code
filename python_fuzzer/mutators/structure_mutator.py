@@ -7,11 +7,9 @@ import string
 
 from .mutator import Mutator
 
-
 import sys
 sys.path.append("..")
 from invoice import Invoice
-
 
 
 class StructureMutator(Mutator):
@@ -162,4 +160,3 @@ class StructureMutator(Mutator):
         text = date(random.randint(1, 9999), random.randint(1, 12), random.randint(1, 31)) 
         
         return str(text)
-    
