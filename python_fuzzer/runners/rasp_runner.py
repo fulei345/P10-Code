@@ -37,7 +37,7 @@ class RaspRunner(Runner):
         return message, code, code_coverage
 
     def start_process(self, doc_path: str) -> Tuple[str, str, List[str]]:
-        #try:
+        try:
             # Input is the options chosen in the Client
             process = run(["dk.gov.oiosi.samples.ClientExample.exe", doc_path],
                           shell=True,
@@ -86,9 +86,10 @@ class RaspRunner(Runner):
                         print(standard_out)
                     # If there is no error
                     return standard_out, self.PASS, self.code_coverage
-        #except Exception as e:
-        #    # TODO handle this better
-        #    print(e)
+        except Exception as e:
+            # TODO handle this better
+            print(e)
+            return "", self.FAIL, []
 
 
 if __name__ == '__main__':
