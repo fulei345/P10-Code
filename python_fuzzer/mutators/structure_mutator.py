@@ -160,4 +160,3 @@ class StructureMutator(Mutator):
         text = date(random.randint(1, 9999), random.randint(1, 12), random.randint(1, 31)) 
         
         return str(text)
-    
