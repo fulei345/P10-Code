@@ -56,40 +56,56 @@ class RaspRunner(Runner):
             elif process.returncode == 0:
                 # TODO find better way to handle decode error for ø (+ æ and å, i suppose)
                 standard_out = process.stdout.decode("utf-8", errors="replace")
-                # Find code coverage
-                self.code_coverage = findall(r"BLOCK:\d+", standard_out)
-                # finds the second instance of the substring, which is the start of the error message
-                erro_index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi")+1)
-                # Check if we found it
-                if -1 != erro_index:
-                    # Do some regex to see if new E-RSP
-                    # Log if new, do not if not
-                    fault_message = standard_out[erro_index:]
-                    ersp_num = search(r" E-RSP\d+", fault_message)
-                    #TODO maybe do something for parser exceptions as well
-                    if ersp_num != None and ersp_num.group(0) not in self.ersp_nums:
-                        self.ersp_nums.append(ersp_num.group(0))
-                    # f_num = search(r"\[F-\w+\]", fault_message)
-                    # if f_num != None and f_num.group(0) not in self.ersp_nums:
-                        # self.ersp_nums.append(f_num.group(0))
-                        self.logger.log_crash(doc_path, fault_message)
-                        if self.verbose:
-                            print(fault_message)
-                        # If it was an E-RSP fault
-                        return fault_message, self.EXCEPTION, self.code_coverage
-                    if self.verbose:
-                        print(fault_message)
-                    # If it was not E-RSP
-                    return fault_message, self.UNKNOWN, self.code_coverage
-                else:
-                    if self.verbose:
-                        print(standard_out)
-                    # If there is no error
-                    return standard_out, self.PASS, self.code_coverage
+                return self.handle_feedback(standard_out, doc_path)
         except Exception as e:
             # TODO handle this better
             print(e)
             return "", self.FAIL, []
+
+    def handle_feedback(self, standard_out: str, doc_path: str) -> Tuple[str, str, List[str]]:
+        # Find code blocks for code coverage
+        self.code_coverage = findall(r"BLOCK:\d+", standard_out)
+
+        # finds the second instance of the substring, which is the start of the error message
+        erro_index = standard_out.find("dk.gov.oiosi", standard_out.find("dk.gov.oiosi") + 1)
+
+        # Check if we found it the start of an error
+        if -1 != erro_index:
+
+            # Find the fault message in the standard out
+            fault_message = standard_out[erro_index:]
+
+            # Regex to find E-RSP num
+            ersp_num = search(r" E-RSP\d+", fault_message)
+
+            # If it is E-RSP and not already seen number
+            if ersp_num != None and ersp_num.group(0) not in self.ersp_nums:
+                self.ersp_nums.append(ersp_num.group(0))
+
+                ## F fault code
+                # f_num = search(r"\[F-\w+\]", fault_message)
+                # if f_num != None and f_num.group(0) not in self.ersp_nums:
+                # self.ersp_nums.append(f_num.group(0))
+
+                # Should be removed, only for compatibility med OG fuzzer
+                self.logger.log_crash(doc_path, fault_message)
+                if self.verbose:
+                    print(fault_message)
+
+                # If it was an E-RSP fault
+                return fault_message, self.EXCEPTION, self.code_coverage
+
+            if self.verbose:
+                print(fault_message)
+            # If it was not E-RSP
+            return fault_message, self.UNKNOWN, self.code_coverage
+
+        else:
+            if self.verbose:
+                print(standard_out)
+            # If we did not find any error
+            return standard_out, self.PASS, self.code_coverage
+
 
 
 if __name__ == '__main__':
