@@ -34,14 +34,17 @@ class StructureMutator(Mutator):
         # mapper alle elementer til deres parent element
         self.parent_map = {c:p for p in root.iter() for c in p}
         self.root = root
-        index: int = random.randint(0, self.total_size)
-        counter: int = 0
-        for elem in root.iter():
-            if counter == index:
-                mutator: Callable[[Any], Any] = random.choice(self.mutators)
-                mutator(self.parent_map[elem], elem)
-                return document
-            counter += 1
+        mutator: Callable[[Any], Any] = random.choice(self.mutators)
+        if mutator == self.add_field:
+            mutator(root)
+        else:
+            index: int = random.randint(1, self.total_size)
+            counter: int = 0
+            for elem in root.iter():
+                if counter == index:
+                    mutator(self.parent_map[elem], elem)
+                    return document
+                counter += 1
         return document
 
     # when used directly it insert duplicate of the field - is also used to insert fields when moving fields or add new fields
@@ -79,8 +82,7 @@ class StructureMutator(Mutator):
         return parent
         
     #create new field and insert in the document
-    def add_field(self, parent: Element, subelement: Element) -> Element:
-        
+    def add_field(self, parent: Element) -> Element:
         #TODO probably make this general so it could be other types of documents as well (if their structure was made lol)
         #randomly choose one of the Invoice direct subelements to create        
         field = random.choice(fields(Invoice))
