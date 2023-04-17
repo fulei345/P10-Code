@@ -83,7 +83,6 @@ class StructureMutator(Mutator):
         
     #create new field and insert in the document
     def add_field(self, parent: Element) -> Element:
-                
         #TODO probably make this general so it could be other types of documents as well (if their structure was made lol)
         #randomly choose one of the Invoice direct subelements to create        
         field = random.choice(fields(Invoice))
