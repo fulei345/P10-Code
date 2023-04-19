@@ -37,7 +37,7 @@ class PayeeParty():
 class Party():
     WebsiteURI: int #Optional[int]
     LogoReferenceID: int #Optional[int]
-    EndpointID: int
+    EndpointID: int #optional for BuyerCustomerParty, and SellerSupplierParty
     #PartyIdentification Optional[ #multiple instances possible
     #PartyName Optional[ #multiple instances possible
     #Language Optional[
@@ -45,13 +45,23 @@ class Party():
     #PhysicalLocation Optional[
     #PartyTaxScheme Optional[ #multiple instances possible
     #PartyLegalEntity
-    Contact: Contact #(Optional for AccountingSupplierParty, but mandatory for AccountingCustomerParty)
+    Contact: Contact #(Optional for AccountingSupplierParty, BuyerCustomerParty, and SellerSupplierParty, but mandatory for AccountingCustomerParty)
     #Person Optional[
+
+@dataclass 
+class SellerSupplierParty():
+    CustomerAssignedAccountID: int #Optional[int]
+    AdditionalAccountID: int #Optional[List[int]] #multiple instances possible
+    Party: Party
+    #DespatchContact: Optional[
+    #AccountingContact: Optional[
+    #SellerContact: Optional[
 
 @dataclass 
 class BuyerCustomerParty():
     CustomerAssignedAccountID: int #Optional[int]
     SupplierAssignedAccountID: int #Optional[List[int]] #multiple instances possible
+    AdditionalAccountID: int #Optional[List[int]] #multiple instances possible
     Party: Party
     #DeliveryContact: Optional[
     #AccountingContact: Optional[
@@ -180,7 +190,7 @@ class Invoice():
     AccountingCustomerParty: AccountingCustomerParty
     PayeeParty: PayeeParty #Optional[PayeeParty]
     BuyerCustomerParty: BuyerCustomerParty #Optional[BuyerCustomerParty]
-    # SellerSupplierParty Optional[
+    SellerSupplierParty: SellerSupplierParty #Optional[SellerSupplierParty]
     # Delivery Optional[ - multiple instances possible
     # DeliveryTerms Optional[
     # PaymentMeans Optional[ - multiple instances possible
