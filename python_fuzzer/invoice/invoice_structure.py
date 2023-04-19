@@ -2,22 +2,23 @@ from datetime import date, time
 from typing import Optional, List, Union, Any
 from dataclasses import dataclass, fields
 
+@dataclass 
+class DeliveryLocation():
+    ID: int 
+    Description: str #Optional[str] 
+    Conditions: str #Optional[str] 
+    CountrySubentity: str #Optional[str] 
+    CountrySubentityCode: str #Optional[str] # code
+    #ValidityPeriod #Optional[
+    #Address #Optional[
 
 @dataclass 
-class Delivery():
-    ID: int #Optional[int]
-    Quantity: float #Optional[float] #datatype: quantity
-    MinimumQuantity: float #Optional[float] #datatype: quantity
-    MaximumQuantity: float #Optional[float] #datatype: quantity
-    ActualDeliveryDate: date #Optional[date]
-    ActualDeliveryTime: time #Optional[time]
-    LatestDeliveryDate: date #Optional[date]
-    LatestDeliveryTime: time #Optional[time]
-    TrackingID: int #Optional[str]
-    #DeliveryLocation
-    #RequestedDeliveryPeriod
-    #DeliveryParty
-    #Despatch
+class DeliveryTerms():
+    ID: int #Optional[int]  
+    SpecialTerms: str #Optional[str] 
+    LossRiskResponsibilityCode: str #Optional[str] # code
+    LossRisk: str #Optional[str]  
+    DeliveryLocation: DeliveryLocation #Optional[DeliveryLocation]
 
 @dataclass 
 class OtherCommunication():
@@ -64,6 +65,23 @@ class Party():
     #PartyLegalEntity
     Contact: Contact #(Optional for AccountingSupplierParty, BuyerCustomerParty, and SellerSupplierParty, but mandatory for AccountingCustomerParty)
     #Person Optional[
+
+
+@dataclass 
+class Delivery():
+    ID: int #Optional[int]
+    Quantity: float #Optional[float] #datatype: quantity
+    MinimumQuantity: float #Optional[float] #datatype: quantity
+    MaximumQuantity: float #Optional[float] #datatype: quantity
+    ActualDeliveryDate: date #Optional[date]
+    ActualDeliveryTime: time #Optional[time]
+    LatestDeliveryDate: date #Optional[date]
+    LatestDeliveryTime: time #Optional[time]
+    TrackingID: int #Optional[str]
+    #DeliveryLocation #Optional[
+    #RequestedDeliveryPeriod #Optional[
+    #DeliveryParty #Optional[
+    #Despatch #Optional[
 
 @dataclass 
 class SellerSupplierParty():
@@ -208,8 +226,8 @@ class Invoice():
     PayeeParty: PayeeParty #Optional[PayeeParty]
     BuyerCustomerParty: BuyerCustomerParty #Optional[BuyerCustomerParty]
     SellerSupplierParty: SellerSupplierParty #Optional[SellerSupplierParty]
-    # Delivery Optional[ - multiple instances possible
-    # DeliveryTerms Optional[
+    Delivery: Delivery #Optional[ - multiple instances possible
+    DeliveryTerms: DeliveryTerms #Optional[
     # PaymentMeans Optional[ - multiple instances possible
     # PaymentTerms Optional[ - multiple instances possible
     # PrepaidPayment Optional[ - multiple instances possible
