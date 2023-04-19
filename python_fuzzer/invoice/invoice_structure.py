@@ -194,6 +194,10 @@ class TaxExchangeRate():
     ForeignExchangeContract: ForeignExchangeContract #Optional[ForeignExchangeContract]
 
 @dataclass 
+class PaymentExchangeRate(TaxExchangeRate):
+    pass
+
+@dataclass 
 class PricingExchangeRate(TaxExchangeRate):
     pass
 
@@ -259,8 +263,8 @@ class Invoice():
     # PrepaidPayment Optional[ - multiple instances possible
     # AllowanceCharge Optional[ - multiple instances possible
     TaxExchangeRate: TaxExchangeRate #Optional[TaxExchangeRate]
-    # PricingExchangeRate Optional[
-    # PaymentExchangeRate Optional[
+    PricingExchangeRate: PricingExchangeRate #Optional[PricingExchangeRate]
+    PaymentExchangeRate: PaymentExchangeRate #Optional[PaymentExchangeRate]
     # PaymentAlternativeExchangeRate Optional[
     # TaxTotal - multiple instances possible
     # LegalMonetaryTotal
