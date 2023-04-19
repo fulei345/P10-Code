@@ -49,6 +49,15 @@ class Party():
     #Person Optional[
 
 @dataclass 
+class BuyerCustomerParty():
+    CustomerAssignedAccountID: int #Optional[int]
+    SupplierAssignedAccountID: int #Optional[List[int]] #multiple instances possible
+    Party: Party
+    #DeliveryContact: Optional[
+    #AccountingContact: Optional[
+    #BuyerContact: Optional[
+
+@dataclass 
 class AccountingCustomerParty():
     CustomerAssignedAccountID: int #Optional[int]
     SupplierAssignedAccountID: int #Optional[int]
@@ -170,7 +179,7 @@ class Invoice():
     AccountingSupplierParty: AccountingSupplierParty
     AccountingCustomerParty: AccountingCustomerParty
     PayeeParty: PayeeParty #Optional[PayeeParty]
-    # BuyerCustomerParty Optional[
+    BuyerCustomerParty: BuyerCustomerParty #Optional[BuyerCustomerParty]
     # SellerSupplierParty Optional[
     # Delivery Optional[ - multiple instances possible
     # DeliveryTerms Optional[
