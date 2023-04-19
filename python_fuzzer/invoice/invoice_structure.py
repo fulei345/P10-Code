@@ -214,6 +214,26 @@ class BillingReference():
     ReminderDocumentReference: ReminderDocumentReference #Optional[ReminderDocumentReference]
 
 @dataclass 
+class OrderReference():
+    ID: int
+    SalesOrderID: int #Optional[int]
+    CopyIndicator: bool #Optional[bool]
+    UUID: int #Optional[int]
+    IssueDate: date #Optional[date] #date type (yyyy-mm-dd)
+    IssueTime: time #Optional[time] #time type (00:00:00)
+    SalesOrderID: int #Optional[int]
+    CustomerReference: str #Optional[str]
+    DocumentReference: DocumentReference #Optional[DocumentReference]
+
+@dataclass 
+class OrderLineReference():
+    LineID: int
+    SalesOrderLineID: int #Optional[int]
+    UUID: int #Optional[int]
+    LineStatusCode: str #Optional[str] #datatype: code
+    OrderReference: OrderReference #Optional[OrderReference]
+
+@dataclass 
 class InvoiceLine():
     ID: int 
     UUID: int #Optional[int]
@@ -224,7 +244,7 @@ class InvoiceLine():
     AccountingCostCode: str #Optional[str] #datatype: code
     AccountingCost: str #Optional[str]
     FreeOfChargeIndicator: bool #Optional[bool]
-    #OrderLineReference #Optional[
+    OrderLineReference: OrderLineReference #Optional[OrderLineReference]
     #DespatchLineReference #Optional[ #multiple instances possible
     #ReceiptLineReference #Optional[ #multiple instances possible
     BillingReference: BillingReference #Optional[List[BillingReference]] #multiple instances possible
@@ -236,17 +256,6 @@ class InvoiceLine():
     #TaxTotal #multiple instances possible
     #Item 
     #Price
-
-@dataclass 
-class OrderReference():
-    ID: int
-    CopyIndicator: bool #Optional[bool]
-    UUID: int #Optional[int]
-    IssueDate: date #Optional[date] #date type (yyyy-mm-dd)
-    IssueTime: time #Optional[time] #time type (00:00:00)
-    SalesOrderID: int #Optional[int]
-    CustomerReference: str #Optional[str]
-    DocumentReference: DocumentReference #Optional[DocumentReference]
 
 @dataclass #provide automatic generation of __init__(), among other things
 class Invoice():
