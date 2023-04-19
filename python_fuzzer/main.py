@@ -3,7 +3,7 @@ import os
 
 from fuzzers import GreyboxFuzzer
 from loggers import FeedbackLogger
-from mutators import DocumentMutator
+from mutators import GeneralMutator
 from parsers import DocumentParser
 from runners import RaspRunner
 from scheduler import PowerSchedule
@@ -33,7 +33,7 @@ def main(verbose: bool, stats: bool) -> None:
     corpus_str, corpus = parser.load_corpus()
 
     # Initialize the mutator
-    mut: DocumentMutator = DocumentMutator(verbose)
+    mut: GeneralMutator = GeneralMutator(verbose)
 
     population_path: str = os.path.join(cwd_path, "documents", "population")
     # Initialize and run the fuzzer
