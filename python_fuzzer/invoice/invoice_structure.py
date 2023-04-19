@@ -214,6 +214,30 @@ class BillingReference():
     ReminderDocumentReference: ReminderDocumentReference #Optional[ReminderDocumentReference]
 
 @dataclass 
+class InvoiceLine():
+    ID: int 
+    UUID: int #Optional[int]
+    Note: str #Optional[str] 
+    InvoicedQuantity: float #datatype: quantity
+    LineExtensionAmount: float #datatype: amount
+    TaxPointDate: date #Optional[date]
+    AccountingCostCode: str #Optional[str] #datatype: code
+    AccountingCost: str #Optional[str]
+    FreeOfChargeIndicator: bool #Optional[bool]
+    #OrderLineReference #Optional[
+    #DespatchLineReference #Optional[ #multiple instances possible
+    #ReceiptLineReference #Optional[ #multiple instances possible
+    BillingReference: BillingReference #Optional[List[BillingReference]] #multiple instances possible
+    #PricingReference #Optional[ 
+    DocumentReference: DocumentReference #Optional[List[DocumentReference]] #multiple instances possible
+    #OriginatorParty #Optional[ 
+    Delivery: Delivery #Optional[List[Delivery]] #multiple instances possible
+    #AllowanceCharge #Optional[ #multiple instances possible
+    #TaxTotal #multiple instances possible
+    #Item 
+    #Price
+
+@dataclass 
 class OrderReference():
     ID: int
     CopyIndicator: bool #Optional[bool]
@@ -272,4 +296,4 @@ class Invoice():
     PaymentAlternativeExchangeRate: PaymentAlternativeExchangeRate #Optional[PaymentAlternativeExchangeRate]
     # TaxTotal - multiple instances possible
     # LegalMonetaryTotal
-    # InvoiceLine - multiple instances possible
+    InvoiceLine: InvoiceLine # - multiple instances possible
