@@ -10,6 +10,7 @@ from .mutator import Mutator
 import sys
 sys.path.append("..")
 from invoice import Invoice
+from utils import TypeGenerator
 
 
 class StructureMutator(Mutator):
@@ -100,17 +101,17 @@ class StructureMutator(Mutator):
 
         #makes text for element according to its field type
         if field.type == str: #or field.type == Optional[str]:
-            elem.text = self.make_string()
+            elem.text = TypeGenerator.make_string()
         elif field.type == int: #or field.type == Optional[int]:
-            elem.text = self.make_int()
+            elem.text = TypeGenerator.make_int()
         elif field.type == bool: #or field.type == Optional[bool]:
-            elem.text = self.make_bool()
+            elem.text = TypeGenerator.make_bool()
         elif field.type == time: #or field.type == Optional[time]:
-            elem.text = self.make_time()
+            elem.text = TypeGenerator.make_time()
         elif field.type == date: #or field.type == Optional[date]:
-            elem.text = self.make_date()
+            elem.text = TypeGenerator.make_date()
         elif field.type == bytes: #or field.type == Optional[bytes]:
-            elem.text = self.make_string() #TODO change this (look at oioubl documentation for attachement binary object)
+            elem.text = TypeGenerator.make_string() #TODO change this (look at oioubl documentation for attachement binary object)
         else:
             elem = self.make_subclass(elem, field.type)
             
@@ -127,38 +128,3 @@ class StructureMutator(Mutator):
             elem.append(subelem)
                 
         return elem
-            
-        
-    def make_string(self) -> str:
-
-        length = random.randint(0, 100)     
-
-        #random string of legnth composed of printable string chararcters (letters, digits, punctuation, whitespace) - alternatively string.ascii_letters + string.digits (+string.punctuation)
-        text = ''.join(random.choice(string.printable) for _ in range(length))
-        
-        return text
-    
-    def make_int(self) -> str:
-        text = random.randint(0, sys.maxsize)
-        
-        return str(text)
-        
-    def make_bool(self) -> str:
-        if(random.random() < 0.5 ):
-            text = "false"
-        else:
-            text = "true"
-        
-        return text
-            
-    def make_time(self) -> str:
-        #create time with random values, first argument is hours, second argument is minutes, and last argument is seconds 
-        text = time(random.randint(0, 23), random.randint(0, 60), random.randint(0, 60)) 
-        
-        return str(text)
-            
-    def make_date(self) -> str:
-        #create date with random values, first argument is year with the range for datetime modules minyear and maxyear, second argument is month, and last argument is day 
-        text = date(random.randint(1, 9999), random.randint(1, 12), random.randint(1, 31)) 
-        
-        return str(text)
