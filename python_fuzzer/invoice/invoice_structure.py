@@ -2,6 +2,23 @@ from datetime import date, time
 from typing import Optional, List, Union, Any
 from dataclasses import dataclass, fields
 
+
+@dataclass 
+class Delivery():
+    ID: int #Optional[int]
+    Quantity: float #Optional[float] #datatype: quantity
+    MinimumQuantity: float #Optional[float] #datatype: quantity
+    MaximumQuantity: float #Optional[float] #datatype: quantity
+    ActualDeliveryDate: date #Optional[date]
+    ActualDeliveryTime: time #Optional[time]
+    LatestDeliveryDate: date #Optional[date]
+    LatestDeliveryTime: time #Optional[time]
+    TrackingID: int #Optional[str]
+    #DeliveryLocation
+    #RequestedDeliveryPeriod
+    #DeliveryParty
+    #Despatch
+
 @dataclass 
 class OtherCommunication():
     ChannelCode: str #Optional[str] #datatype code? (dokumentationen beskriver ikke datatypen for denne klasse)
