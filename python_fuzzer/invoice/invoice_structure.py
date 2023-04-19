@@ -172,6 +172,29 @@ class InvoiceDocumentReference(DocumentReference):
     pass
     
 @dataclass 
+class ForeignExchangeContract():
+    ID: int
+    IssueDate: date #Optional[date] 
+    IssueTime: time #Optional[time]
+    ContractTypeCode: str #Optional[str] # code
+    ContractType: str #Optional[str]
+    #ValidityPeriod #Optional[ValidityPeriod]
+    ContractDocumentReference: ContractDocumentReference #Optional[ContractDocumentReference]
+
+@dataclass 
+class TaxExchangeRate():
+    SourceCurrencyCode: str # code 
+    SourceCurrencyBaseRate: int #Optional[int] #rate
+    TargetCurrencyCode: str # code
+    TargetCurrencyBaseRate: int #Optional[int] #rate
+    ExchangeMarketID: int #Optional[int]
+    CalculationRate: int #Optional[int] #rate
+    MathematicOperatorCode: str #Optional[str] # code
+    Date: date #Optional[date]
+    ForeignExchangeContract: ForeignExchangeContract #Optional[ForeignExchangeContract]
+
+
+@dataclass 
 class BillingReference():
     InvoiceDocumentReference: InvoiceDocumentReference #Optional[InvoiceDocumentReference]
     SelfBilledInvoiceDocumentReference: SelfBilledInvoiceDocumentReference #Optional[SelfBilledInvoiceDocumentReference]
@@ -232,7 +255,7 @@ class Invoice():
     # PaymentTerms Optional[ - multiple instances possible
     # PrepaidPayment Optional[ - multiple instances possible
     # AllowanceCharge Optional[ - multiple instances possible
-    # TaxExchangeRate Optional[
+    TaxExchangeRate: TaxExchangeRate #Optional[TaxExchangeRate]
     # PricingExchangeRate Optional[
     # PaymentExchangeRate Optional[
     # PaymentAlternativeExchangeRate Optional[
