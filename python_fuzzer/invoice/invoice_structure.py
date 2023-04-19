@@ -193,6 +193,9 @@ class TaxExchangeRate():
     Date: date #Optional[date]
     ForeignExchangeContract: ForeignExchangeContract #Optional[ForeignExchangeContract]
 
+@dataclass 
+class PricingExchangeRate(TaxExchangeRate):
+    pass
 
 @dataclass 
 class BillingReference():
