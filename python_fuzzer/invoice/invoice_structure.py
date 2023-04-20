@@ -2,6 +2,20 @@ from datetime import date, time
 from typing import Optional, List, Union, Any
 from dataclasses import dataclass, fields
 
+
+@dataclass 
+class Price(): #!
+    PriceAmount: float #datatype: amount
+    BaseQuantity: float #Optional[float] #datatype: quantity 
+    PriceChangeReason: str #Optional[str] #multiple instances possible
+    PriceTypeCode: str #Optional[str] # code
+    PriceType: str #Optional[str] 
+    OrderableUnitFactorRate: int #Optional[int] #rate
+    # ValidityPeriod: #Optional[] #multiple instances possible
+    # PriceList #Optional[ 
+    # AllowanceCharge #Optional[ #multiple instances possible
+    # PricingExchangeRate
+
 @dataclass 
 class DeliveryLocation():
     ID: int 
@@ -21,10 +35,10 @@ class DeliveryTerms():
     DeliveryLocation: DeliveryLocation #Optional[DeliveryLocation]
 
 @dataclass 
-class OtherCommunication():
-    ChannelCode: str #Optional[str] #datatype code? (dokumentationen beskriver ikke datatypen for denne klasse)
-    Channel: str #Optional[str] #datatype text?
-    Value: str #datatype text?
+class OtherCommunication(): #!
+    ChannelCode: str #Optional[str] #datatype code 
+    Channel: str #Optional[str] #datatype text
+    Value: str #datatype text
 
 @dataclass 
 class Contact():
@@ -320,7 +334,7 @@ class InvoiceLine():
     #AllowanceCharge #Optional[ #multiple instances possible
     #TaxTotal #multiple instances possible
     Item: Item 
-    #Price
+    Price: Price
 
 @dataclass #provide automatic generation of __init__(), among other things
 class Invoice():
