@@ -6,7 +6,7 @@ from .mutator import Mutator
 
 import sys
 sys.path.append("..")
-from mutators import DocumentMutator
+from mutators import FieldMutator
 from mutators import StructureMutator
 
 
@@ -14,7 +14,7 @@ class GeneralMutator(Mutator):
     def __init__(self, verbose: bool) -> None:
         self.verbose: bool = verbose
         # List mutator classes here
-        self.mutator_classes: List[Mutator] = [DocumentMutator(verbose), StructureMutator(verbose)]
+        self.mutator_classes: List[Mutator] = [FieldMutator(verbose), StructureMutator(verbose)]
 
     def mutate(self, document: ElementTree) -> ElementTree:
         """

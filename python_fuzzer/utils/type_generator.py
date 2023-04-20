@@ -17,6 +17,13 @@ class TypeGenerator:
         return text
 
     @staticmethod
+    def make_char() -> str:
+
+        text = '' + random.choice(string.printable)
+
+        return text
+
+    @staticmethod
     def make_int() -> str:
         text = random.randint(0, sys.maxsize)
 
@@ -25,7 +32,6 @@ class TypeGenerator:
     @staticmethod
     def make_float() -> str:
         text = random.uniform(0, sys.maxsize)
-
         return str(text)
 
     @staticmethod
