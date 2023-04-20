@@ -12,19 +12,6 @@ class TaxTotal(): #!
     # TaxSubtotal: #Optional[] #multiple instances possible
 
 @dataclass 
-class Price(): #!
-    PriceAmount: float #datatype: amount
-    BaseQuantity: float #Optional[float] #datatype: quantity 
-    PriceChangeReason: str #Optional[str] #multiple instances possible
-    PriceTypeCode: str #Optional[str] # code
-    PriceType: str #Optional[str] 
-    OrderableUnitFactorRate: int #Optional[int] #rate
-    # ValidityPeriod: #Optional[] #multiple instances possible
-    # PriceList #Optional[ 
-    # AllowanceCharge #Optional[ #multiple instances possible
-    # PricingExchangeRate
-
-@dataclass 
 class DeliveryLocation():
     ID: int 
     Description: str #Optional[str] 
@@ -74,6 +61,20 @@ class PayeeParty():
     #Person Optional[
 
 @dataclass 
+class PartyLegalEntity():
+    RegistrationName: str #Optional[str] # name
+    CompanyID: int #Optional[int]
+    CompanyTypeCode: str #Optional[str] # code
+    CompanyLiquidationStatusCode: str #Optional[str] # code
+    RegistrationDate: date #Optional[date]
+    RegistrationExpirationDate: date #Optional[date]
+    CorporateStockAmount: float #Optional[float] #datatype: amount
+    #RegistrationAddress Optional[
+    #CorporateRegistrationScheme Optional[
+    #StakeholderParty Optional[ #multiple instances possible
+    #CompanyDossierDocumentReference Optional[
+
+@dataclass 
 class Party():
     WebsiteURI: int #Optional[int]
     LogoReferenceID: int #Optional[int]
@@ -84,7 +85,7 @@ class Party():
     #PostalAddress Optional[
     #PhysicalLocation Optional[
     #PartyTaxScheme Optional[ #multiple instances possible
-    #PartyLegalEntity
+    PartyLegalEntity: PartyLegalEntity
     Contact: Contact #(Optional for AccountingSupplierParty, BuyerCustomerParty, and SellerSupplierParty, but mandatory for AccountingCustomerParty)
     #Person Optional[
 
@@ -268,6 +269,19 @@ class AdditionalItemIdentification(BuyersItemIdentification):
 @dataclass 
 class CatalogueDocumentReference(DocumentReference):
     pass
+
+@dataclass 
+class Price(): #!
+    PriceAmount: float #datatype: amount
+    BaseQuantity: float #Optional[float] #datatype: quantity 
+    PriceChangeReason: str #Optional[str] #multiple instances possible
+    PriceTypeCode: str #Optional[str] # code
+    PriceType: str #Optional[str] 
+    OrderableUnitFactorRate: int #Optional[int] #rate
+    # ValidityPeriod: #Optional[] #multiple instances possible
+    # PriceList #Optional[ 
+    # AllowanceCharge #Optional[ #multiple instances possible
+    PricingExchangeRate: PricingExchangeRate
 
 @dataclass 
 class Item():
