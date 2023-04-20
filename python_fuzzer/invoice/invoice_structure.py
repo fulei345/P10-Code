@@ -4,6 +4,14 @@ from dataclasses import dataclass, fields
 
 
 @dataclass 
+class TaxTotal(): #!
+    TaxAmount: float #datatype: amount
+    RoundingAmount: float #Optional[float] #datatype: amount
+    TaxEvidenceIndicator: bool #Optional[bool] 
+    TaxIncludedIndicator: bool #Optional[bool] 
+    # TaxSubtotal: #Optional[] #multiple instances possible
+
+@dataclass 
 class Price(): #!
     PriceAmount: float #datatype: amount
     BaseQuantity: float #Optional[float] #datatype: quantity 
@@ -332,7 +340,7 @@ class InvoiceLine():
     #OriginatorParty #Optional[ 
     Delivery: Delivery #Optional[List[Delivery]] #multiple instances possible
     #AllowanceCharge #Optional[ #multiple instances possible
-    #TaxTotal #multiple instances possible
+    TaxTotal: TaxTotal #multiple instances possible
     Item: Item 
     Price: Price
 
