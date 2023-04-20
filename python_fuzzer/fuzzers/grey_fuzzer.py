@@ -4,6 +4,8 @@ from xml.etree.ElementTree import ElementTree
 from os.path import join
 from copy import deepcopy
 
+from python_fuzzer import Mutator
+
 if __name__ == "__main__":
     from fuzzer import Fuzzer
 else:
@@ -11,7 +13,6 @@ else:
 
 import sys
 sys.path.append("..")
-from mutators import DocumentMutator
 from runners import RaspRunner
 from loggers import FeedbackLogger
 from utils import Seed
@@ -21,7 +22,7 @@ class GreyboxFuzzer(Fuzzer):
     def __init__(self,
                  seeds: List[ElementTree],
                  runner: RaspRunner,
-                 mutator: DocumentMutator,
+                 mutator: Mutator,
                  logger: FeedbackLogger,
                  schedule: PowerSchedule,
                  verbose: bool,
@@ -40,7 +41,7 @@ class GreyboxFuzzer(Fuzzer):
         self.schedule: PowerSchedule = schedule
         self.runner: RaspRunner = runner
         self.logger: FeedbackLogger = logger
-        self.mutator: DocumentMutator = mutator
+        self.mutator: Mutator = mutator
         self.mutation_count: int = mutation_count
 
         self.reset()

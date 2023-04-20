@@ -10,7 +10,7 @@ else:
 
 import sys
 sys.path.append("..")
-from mutators import DocumentMutator
+from python_fuzzer import Mutator
 from runners import RaspRunner
 from loggers import FeedbackLogger
 from parsers import DocumentParser
@@ -20,7 +20,7 @@ class RaspFuzzer(Fuzzer):
     def __init__(self,
                  corpus: List[str],
                  runner: RaspRunner,
-                 mutator: DocumentMutator,
+                 mutator: Mutator,
                  logger: FeedbackLogger,
                  verbose: bool,
                  parser: DocumentParser,
@@ -36,7 +36,7 @@ class RaspFuzzer(Fuzzer):
 
         self.runner: RaspRunner = runner
         self.logger: FeedbackLogger = logger
-        self.mutator: DocumentMutator = mutator
+        self.mutator: Mutator = mutator
         self.parser: DocumentParser = parser
         self.mutation_count: int = mutation_count
 
