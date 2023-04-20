@@ -3,58 +3,94 @@ from typing import Any, List, Callable
 from xml.etree.ElementTree import ElementTree, tostring, fromstring, Element
 
 from .mutator import Mutator
+import sys
+
+sys.path.append("..")
+from utils import TypeGenerator
 
 
-class DocumentMutator(Mutator):
+class FieldMutator(Mutator):
     def __init__(self, verbose: bool) -> None:
         self.verbose: bool = verbose
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [self.flip_bit_mutator,
-                                                     self.add_to_byte_mutator]
-#        self.dont_mutate: List[str] = ["CustomizationID", 
-#                                       "CopyIndicator", "FreeOfChargeIndicator", "CatalogueIndicator", "HazardousRiskIndicator"
-#                                       "IssueDate", "TaxPointDate", "ActualDeliveryDate", "LatestDeliveryDate", "Date", "TaxPointDate"]
+        self.mutators: List[Callable[[Any], Any]] = [self.replace_string_mutator,
+                                                     self.replace_sub_mutator,
+                                                     self.replace_char_mutator,
+                                                     self.delete_sub_mutator,
+                                                     self.delete_char_mutator,
+                                                     self.add_sub_mutator,
+                                                     self.add_char_mutator
+                                                     ]
+
+        self.generators: List[Callable[[Any], Any]] = [TypeGenerator.make_string,
+                                                       TypeGenerator.make_int,
+                                                       TypeGenerator.make_float,
+                                                       TypeGenerator.make_bool,
+                                                       TypeGenerator.make_time,
+                                                       TypeGenerator.make_date]
+        # self.dont_mutate: List[str] = ["CustomizationID",
+        #                                "CopyIndicator", "FreeOfChargeIndicator", "CatalogueIndicator", "HazardousRiskIndicator"
+        #                                "IssueDate", "TaxPointDate", "ActualDeliveryDate", "LatestDeliveryDate", "Date", "TaxPointDate"]
 
     def mutate(self, document: ElementTree) -> ElementTree:
         """
-        Mutate fields i OIOUBL document ??.
+        Mutate fields i OIOUBL document.
         :return: Mutated documents.
         """
-        root:Element = document.getroot()
-        for elem in root.iter():
-            mutator: Callable[[Any], Any] = random.choice(self.mutators)
-            text = elem.text
-            # random variable to determine whether the element should be mutated - 15% probability currently
-            i: int = random.randint(0, 99)
-            if "\n" not in text and i > 84: # and elem.tag.split("}")[1] not in self.dont_mutate: 
-                field: bytes = bytes(elem.text, 'utf-8')
-                field = mutator(field)
-                temp = str(field)
-                elem.text = temp[2:-1]
+        root: Element = document.getroot()
+        total_size = sum(1 for _ in root.iter())
+        mutator: Callable[[Any], Any] = random.choice(self.mutators)
+        index: int = random.randint(1, total_size)
+        for i, elem in enumerate(root.iter()):
+            if i == index:
+                field: str = mutator(elem.text)
+                elem.text = field
+                return document
         return document
 
-    #string methods of this
-    def flip_bit_mutator(self, data: bytes) -> bytes:
-        pos: int = random.randint(0, len(data) - 1)
-        bit: int = 1 << random.randint(0, 6)
-        c: int = data[pos] ^ bit
+    # For now only string/char methods is implemented, can be changed to look for the current type
+    def replace_string_mutator(self, data: str) -> str:
+        c: str = TypeGenerator.make_string()
+        return c
 
-        data = data[:pos] + bytes([c]) + data[pos + 1:]
+    def replace_sub_mutator(self, data: str) -> str:
+        start_pos: int = random.randint(0, len(data) - 1)
+        end_pos: int = random.randint(start_pos, len(data) - 1)
+        c: str = TypeGenerator.make_string()
 
+        data = data[:start_pos] + c + data[end_pos:]
         return data
 
-    def add_to_byte_mutator(self, data: bytes) -> bytes:
-        pos: int = random.randint(0, len(data) - 1)
-        c = data[pos] + random.randint(1, 36)
+    def replace_char_mutator(self, data: str) -> str:
+        start_pos: int = random.randint(0, len(data) - 1)
+        c: str = TypeGenerator.make_char()
 
-        data = data[:pos] + bytes([c]) + data[pos + 1:]
-
+        data = data[:start_pos] + c + data[start_pos + 1:]
         return data
 
-    def remove_from_byte_mutator(self, data: bytes) -> bytes:
-        pos: int = random.randint(0, len(data) - 1)
-        c = data[pos] - random.randint(1, 36)
+    def delete_sub_mutator(self, data: str) -> str:
+        start_pos: int = random.randint(0, len(data) - 1)
+        end_pos: int = random.randint(start_pos, len(data) - 1)
 
-        data = data[:pos] + bytes([c]) + data[pos + 1:]
+        data = data[:start_pos] + data[end_pos:]
+        return data
 
+    def delete_char_mutator(self, data: str) -> str:
+        start_pos: int = random.randint(0, len(data) - 1)
+
+        data = data[:start_pos] + data[start_pos + 1:]
+        return data
+
+    def add_sub_mutator(self, data: str) -> str:
+        start_pos: int = random.randint(0, len(data) - 1)
+        c: str = TypeGenerator.make_string()
+
+        data = data[:start_pos] + c + data[start_pos + 1:]
+        return data
+
+    def add_char_mutator(self, data: str) -> str:
+        start_pos: int = random.randint(0, len(data) - 1)
+        c: str = TypeGenerator.make_char()
+
+        data = data[:start_pos] + c + data[start_pos + 1:]
         return data

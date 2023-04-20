@@ -28,7 +28,7 @@ class RaspRunner(Runner):
 
         self.executable_path: str = path
         self.verbose: bool = verbose
-        self.code_covereage = []
+        self.code_coverage = []
 
     def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, List[str]]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
@@ -60,7 +60,7 @@ class RaspRunner(Runner):
         except Exception as e:
             # TODO handle this better
             print(e)
-            return "", self.FAIL, []
+            return str(e), self.FAIL, []
 
     def handle_feedback(self, standard_out: str, doc_path: str) -> Tuple[str, str, List[str]]:
         # Find code blocks for code coverage
