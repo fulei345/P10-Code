@@ -3,7 +3,7 @@ from typing import Optional, List, Union, Any
 from dataclasses import dataclass, fields
 
 @dataclass 
-class LegalMonetaryTotal():
+class LegalMonetaryTotal(): #!
     LineExtensionAmount: float #Optional[float] #datatype: amount
     TaxExclusiveAmount: float #Optional[float] #datatype: amount
     TaxInclusiveAmount: float #Optional[float] #datatype: amount
@@ -58,7 +58,7 @@ class Contact():
 
 
 @dataclass 
-class PartyLegalEntity():
+class PartyLegalEntity(): #!
     RegistrationName: str #Optional[str] # name
     CompanyID: int #Optional[int]
     CompanyTypeCode: str #Optional[str] # code
@@ -417,6 +417,6 @@ class Invoice():
     PricingExchangeRate: PricingExchangeRate #Optional[PricingExchangeRate]
     PaymentExchangeRate: PaymentExchangeRate #Optional[PaymentExchangeRate]
     PaymentAlternativeExchangeRate: PaymentAlternativeExchangeRate #Optional[PaymentAlternativeExchangeRate]
-    # TaxTotal - multiple instances possible
+    TaxTotal: TaxTotal # - multiple instances possible
     LegalMonetaryTotal: LegalMonetaryTotal
     InvoiceLine: InvoiceLine # - multiple instances possible
