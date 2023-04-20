@@ -214,6 +214,37 @@ class BillingReference():
     ReminderDocumentReference: ReminderDocumentReference #Optional[ReminderDocumentReference]
 
 @dataclass 
+class Item():
+    Description: str #Optional[List[str]] #multiple instances possible
+    PackQuantity: float #Optional[float] #datatype: quantity
+    PackSizeNumeric: int #Optional[int] #numeric
+    CatalogueIndicator: bool #Optional[bool]
+    Name: str # name
+    HazardousRiskIndicator: bool #Optional[bool]
+    AdditionalInformation: str #Optional[str]
+    Keyword: str #Optional[str]
+    BrandName: str #Optional[str] # name
+    ModelName: str #Optional[str] # name
+    #BuyersItemIdentification #Optional[
+    #SellersItemIdentification #Optional[
+    #ManufacturersItemIdentification #Optional[
+    #StandardItemIdentification #Optional[
+    #CatalogueItemIdentification #Optional[
+    #AdditionalItemIdentification #Optional[
+    #CatalogueDocumentReference #Optional[
+    #ItemSpecificationDocumentReference #Optional[
+    #OriginCountry #Optional[
+    #CommodityClassification #Optional[List[]] #multiple instances possible
+    #TransactionConditions #Optional[List[]] #multiple instances possible
+    #HazardousItem #Optional[List[]] #multiple instances possible
+    #ClassifiedTaxCategory #Optional[List[]] #multiple instances possible
+    #AdditionalItemProperty #Optional[List[]] #multiple instances possible
+    #ManufacturerParty #Optional[List[]] #multiple instances possible
+    #InformationContentProviderParty #Optional[
+    #OriginAddress #Optional[
+    #ItemInstance #Optional[List[]] #multiple instances possible
+
+@dataclass 
 class OrderReference():
     ID: int
     SalesOrderID: int #Optional[int]
@@ -254,7 +285,7 @@ class InvoiceLine():
     Delivery: Delivery #Optional[List[Delivery]] #multiple instances possible
     #AllowanceCharge #Optional[ #multiple instances possible
     #TaxTotal #multiple instances possible
-    #Item 
+    Item: Item 
     #Price
 
 @dataclass #provide automatic generation of __init__(), among other things
