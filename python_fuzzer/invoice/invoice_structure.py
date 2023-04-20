@@ -2,6 +2,17 @@ from datetime import date, time
 from typing import Optional, List, Union, Any
 from dataclasses import dataclass, fields
 
+@dataclass 
+class LegalMonetaryTotal():
+    LineExtensionAmount: float #Optional[float] #datatype: amount
+    TaxExclusiveAmount: float #Optional[float] #datatype: amount
+    TaxInclusiveAmount: float #Optional[float] #datatype: amount
+    AllowanceTotalAmount: float #Optional[float] #datatype: amount
+    ChargeTotalAmount: float #Optional[float] #datatype: amount
+    PrepaidAmount: float #Optional[float] #datatype: amount
+    PayableRoundingAmount: float #Optional[float] #datatype: amount
+    PayableAmount: float #datatype: amount
+    PayableAlternativeAmount: float #Optional[float] #datatype: amount
 
 @dataclass 
 class TaxTotal(): #!
@@ -45,20 +56,6 @@ class Contact():
     Note: str #Optional[str]
     OtherCommunication: OtherCommunication #Optional[OtherCommunication]
 
-@dataclass 
-class PayeeParty():
-    WebsiteURI: int #Optional[int]
-    LogoReferenceID: int #Optional[int]
-    EndpointID: int #Optional[int]
-    #PartyIdentification Optional[ #multiple instances possible
-    #PartyName Optional[ #multiple instances possible
-    #Language Optional[
-    #PostalAddress Optional[
-    #PhysicalLocation Optional[
-    #PartyTaxScheme Optional[ #multiple instances possible
-    #PartyLegalEntity
-    Contact: Contact #Optional[Contact]
-    #Person Optional[
 
 @dataclass 
 class PartyLegalEntity():
@@ -73,6 +70,22 @@ class PartyLegalEntity():
     #CorporateRegistrationScheme Optional[
     #StakeholderParty Optional[ #multiple instances possible
     #CompanyDossierDocumentReference Optional[
+
+
+@dataclass 
+class PayeeParty():
+    WebsiteURI: int #Optional[int]
+    LogoReferenceID: int #Optional[int]
+    EndpointID: int #Optional[int]
+    #PartyIdentification Optional[ #multiple instances possible
+    #PartyName Optional[ #multiple instances possible
+    #Language Optional[
+    #PostalAddress Optional[
+    #PhysicalLocation Optional[
+    #PartyTaxScheme Optional[ #multiple instances possible
+    PartyLegalEntity: PartyLegalEntity
+    Contact: Contact #Optional[Contact]
+    #Person Optional[
 
 @dataclass 
 class Party():
@@ -405,5 +418,5 @@ class Invoice():
     PaymentExchangeRate: PaymentExchangeRate #Optional[PaymentExchangeRate]
     PaymentAlternativeExchangeRate: PaymentAlternativeExchangeRate #Optional[PaymentAlternativeExchangeRate]
     # TaxTotal - multiple instances possible
-    # LegalMonetaryTotal
+    LegalMonetaryTotal: LegalMonetaryTotal
     InvoiceLine: InvoiceLine # - multiple instances possible
