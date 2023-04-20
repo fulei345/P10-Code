@@ -214,6 +214,40 @@ class BillingReference():
     ReminderDocumentReference: ReminderDocumentReference #Optional[ReminderDocumentReference]
 
 @dataclass 
+class BuyersItemIdentification():
+    ID: int
+    ExtendedID: int #Optional[int]
+    #IssuerParty #Optional[
+
+@dataclass 
+class SellersItemIdentification():
+    ID: int
+    ExtendedID: int #Optional[int]
+    #PhysicalAttribute #Optional[List[]] #multiple instances possible
+    #MeasurementDimension #Optional[List[]] #multiple instances possible
+    #IssuerParty #Optional[
+
+@dataclass 
+class ManufacturersItemIdentification(BuyersItemIdentification):
+    pass
+
+@dataclass 
+class StandardItemIdentification(BuyersItemIdentification):
+    pass
+
+@dataclass 
+class CatalogueItemIdentification(BuyersItemIdentification):
+    pass
+
+@dataclass 
+class AdditionalItemIdentification(BuyersItemIdentification):
+    pass
+
+@dataclass 
+class CatalogueDocumentReference(DocumentReference):
+    pass
+
+@dataclass 
 class Item():
     Description: str #Optional[List[str]] #multiple instances possible
     PackQuantity: float #Optional[float] #datatype: quantity
@@ -225,13 +259,13 @@ class Item():
     Keyword: str #Optional[str]
     BrandName: str #Optional[str] # name
     ModelName: str #Optional[str] # name
-    #BuyersItemIdentification #Optional[
-    #SellersItemIdentification #Optional[
-    #ManufacturersItemIdentification #Optional[
-    #StandardItemIdentification #Optional[
-    #CatalogueItemIdentification #Optional[
-    #AdditionalItemIdentification #Optional[
-    #CatalogueDocumentReference #Optional[
+    BuyersItemIdentification: BuyersItemIdentification #Optional[BuyersItemIdentification]
+    SellersItemIdentification: SellersItemIdentification #Optional[SellersItemIdentification]
+    ManufacturersItemIdentification: ManufacturersItemIdentification #Optional[ManufacturersItemIdentification]
+    StandardItemIdentification: StandardItemIdentification #Optional[StandardItemIdentification]
+    CatalogueItemIdentification: CatalogueItemIdentification #Optional[CatalogueItemIdentification]
+    AdditionalItemIdentification: AdditionalItemIdentification #Optional[AdditionalItemIdentification]
+    CatalogueDocumentReference: CatalogueDocumentReference #Optional[CatalogueDocumentReference]
     #ItemSpecificationDocumentReference #Optional[
     #OriginCountry #Optional[
     #CommodityClassification #Optional[List[]] #multiple instances possible
