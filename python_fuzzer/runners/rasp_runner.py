@@ -60,7 +60,7 @@ class RaspRunner(Runner):
         except Exception as e:
             # TODO handle this better
             print(e)
-            return "", self.FAIL, []
+            return str(e), self.FAIL, []
 
     def handle_feedback(self, standard_out: str, doc_path: str) -> Tuple[str, str, List[str]]:
         # Find code blocks for code coverage
