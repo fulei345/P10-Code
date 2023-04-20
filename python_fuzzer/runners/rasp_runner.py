@@ -28,7 +28,7 @@ class RaspRunner(Runner):
 
         self.executable_path: str = path
         self.verbose: bool = verbose
-        self.code_covereage = []
+        self.code_coverage = []
 
     def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, List[str]]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
