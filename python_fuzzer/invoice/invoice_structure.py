@@ -2,6 +2,7 @@ from datetime import date, time
 from typing import Optional, List, Union, Any
 from dataclasses import dataclass, fields
 
+
 @dataclass 
 class LegalMonetaryTotal(): #!
     LineExtensionAmount: float #Optional[float] #datatype: amount
@@ -21,6 +22,23 @@ class TaxTotal(): #!
     TaxEvidenceIndicator: bool #Optional[bool] 
     TaxIncludedIndicator: bool #Optional[bool] 
     # TaxSubtotal: #Optional[] #multiple instances possible
+
+@dataclass 
+class AllowanceCharge(): #!
+    ID: int #Optional[int]
+    ChargeIndicator: bool 
+    AllowanceChargeReasonCode: str #Optional[str] #datatype: code
+    AllowanceChargeReason: str #Optional[str]
+    MultiplierFactorNumeric: int #Optional[int] #numeric
+    PrepaidIndicator: bool #Optional[bool]
+    SequenceNumeric: int #Optional[int] #numeric
+    Amount: float #datatype: amount
+    BaseAmount: float #Optional[float] #datatype: amount
+    AccountingCostCode: str #Optional[str] #datatype: code
+    AccountingCost: str #Optional[str] 
+    #TaxCategory #Optional[] #multiple instances possible
+    TaxTotal: TaxTotal #Optional[] 
+    #PaymentMeans #Optional[] #multiple instances possible
 
 @dataclass 
 class DeliveryLocation():
@@ -293,7 +311,7 @@ class Price(): #!
     OrderableUnitFactorRate: int #Optional[int] #rate
     # ValidityPeriod: #Optional[] #multiple instances possible
     # PriceList #Optional[ 
-    # AllowanceCharge #Optional[ #multiple instances possible
+    AllowanceCharge: AllowanceCharge #Optional[ #multiple instances possible
     PricingExchangeRate: PricingExchangeRate
 
 @dataclass 
@@ -366,7 +384,7 @@ class InvoiceLine():
     DocumentReference: DocumentReference #Optional[List[DocumentReference]] #multiple instances possible
     #OriginatorParty #Optional[ 
     Delivery: Delivery #Optional[List[Delivery]] #multiple instances possible
-    #AllowanceCharge #Optional[ #multiple instances possible
+    AllowanceCharge: AllowanceCharge #Optional[ #multiple instances possible
     TaxTotal: TaxTotal #multiple instances possible
     Item: Item 
     Price: Price
@@ -412,7 +430,7 @@ class Invoice():
     # PaymentMeans Optional[ - multiple instances possible
     # PaymentTerms Optional[ - multiple instances possible
     # PrepaidPayment Optional[ - multiple instances possible
-    # AllowanceCharge Optional[ - multiple instances possible
+    AllowanceCharge: AllowanceCharge #Optional[ - multiple instances possible
     TaxExchangeRate: TaxExchangeRate #Optional[TaxExchangeRate]
     PricingExchangeRate: PricingExchangeRate #Optional[PricingExchangeRate]
     PaymentExchangeRate: PaymentExchangeRate #Optional[PaymentExchangeRate]
