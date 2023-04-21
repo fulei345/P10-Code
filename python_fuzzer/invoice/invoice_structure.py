@@ -123,14 +123,21 @@ class PartyLegalEntity(): #!
     #StakeholderParty Optional[ #multiple instances possible
     #CompanyDossierDocumentReference Optional[
 
+@dataclass 
+class PartyName():
+    Name: str 
+
+@dataclass 
+class PartyIdentification():
+    ID: int 
 
 @dataclass 
 class PayeeParty():
     WebsiteURI: int #Optional[int]
     LogoReferenceID: int #Optional[int]
     EndpointID: int #Optional[int]
-    #PartyIdentification Optional[ #multiple instances possible
-    #PartyName Optional[ #multiple instances possible
+    PartyIdentification: PartyIdentification #Optional[ #multiple instances possible
+    PartyName: PartyName #Optional[ #multiple instances possible
     #Language Optional[
     #PostalAddress Optional[
     #PhysicalLocation Optional[
@@ -140,16 +147,12 @@ class PayeeParty():
     #Person Optional[
 
 @dataclass 
-class PartyIdentification():
-    ID: int 
-
-@dataclass 
 class Party():
     WebsiteURI: int #Optional[int]
     LogoReferenceID: int #Optional[int]
     EndpointID: int #optional for BuyerCustomerParty, and SellerSupplierParty
     PartyIdentification: PartyIdentification #Optional[ #multiple instances possible
-    #PartyName Optional[ #multiple instances possible
+    PartyName: PartyName #Optional[ #multiple instances possible
     #Language Optional[
     #PostalAddress Optional[
     #PhysicalLocation Optional[
