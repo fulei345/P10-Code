@@ -24,6 +24,25 @@ class TaxTotal(): #!
     # TaxSubtotal: #Optional[] #multiple instances possible
 
 @dataclass 
+class PaymentTerms():
+    ID: int #Optional[int]
+    PaymentMeansID: int #Optional[int] #multiple instances possible
+    PrepaidPaymentReferenceID: int #Optional[int]
+    Note: str #Optional[str] #multiple instances possible
+    ReferenceEventCode: str #Optional[str] #datatype: code
+    SettlementDiscountPercent: str #Optional[str] #Percent Type
+    PenaltySurchargePercent: str #Optional[str] #Percent Type
+    PaymentPercent: str #Optional[str] #Percent Type
+    Amount: float #Optional[float] #datatype: amount
+    SettlementDiscountAmount: float #Optional[float] #datatype: amount
+    PenaltyAmount: float #Optional[float] #datatype: amount
+    PaymentDueDate: date #Optional[date]
+    InstallmentDueDate: date #Optional[date]
+    #SettlementPeriod
+    #PenaltyPeriod
+    #TradeFinancing
+
+@dataclass 
 class PaymentMeans():
     ID: int #Optional[int]
     PaymentMeansCode: str #datatype: code
@@ -443,7 +462,7 @@ class Invoice():
     Delivery: Delivery #Optional[ - multiple instances possible
     DeliveryTerms: DeliveryTerms #Optional[
     PaymentMeans: PaymentMeans #Optional[ - multiple instances possible
-    # PaymentTerms Optional[ - multiple instances possible
+    PaymentTerms: PaymentTerms #Optional[ - multiple instances possible
     # PrepaidPayment Optional[ - multiple instances possible
     AllowanceCharge: AllowanceCharge #Optional[ - multiple instances possible
     TaxExchangeRate: TaxExchangeRate #Optional[TaxExchangeRate]
