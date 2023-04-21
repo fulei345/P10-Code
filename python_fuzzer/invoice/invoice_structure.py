@@ -24,6 +24,21 @@ class TaxTotal(): #!
     # TaxSubtotal: #Optional[] #multiple instances possible
 
 @dataclass 
+class PaymentMeans():
+    ID: int #Optional[int]
+    PaymentMeansCode: str #datatype: code
+    PaymentDueDate: date #Optional[date]
+    PaymentChannelCode: str #Optional[str] #datatype: code
+    InstructionID: int #Optional[int]
+    InstructionNote: str #Optional[str] 
+    PaymentID: int #Optional[int] #multiple instances possible
+    #CardAccount #Optional[ 
+    #PayerFinancialAccount #Optional[ 
+    #PayeeFinancialAccount #Optional[ 
+    #CreditAccount #Optional[ 
+    
+
+@dataclass 
 class AllowanceCharge(): #!
     ID: int #Optional[int]
     ChargeIndicator: bool 
@@ -38,7 +53,7 @@ class AllowanceCharge(): #!
     AccountingCost: str #Optional[str] 
     #TaxCategory #Optional[] #multiple instances possible
     TaxTotal: TaxTotal #Optional[] 
-    #PaymentMeans #Optional[] #multiple instances possible
+    PaymentMeans: PaymentMeans #Optional[] #multiple instances possible
 
 @dataclass 
 class DeliveryLocation():
@@ -427,7 +442,7 @@ class Invoice():
     SellerSupplierParty: SellerSupplierParty #Optional[SellerSupplierParty]
     Delivery: Delivery #Optional[ - multiple instances possible
     DeliveryTerms: DeliveryTerms #Optional[
-    # PaymentMeans Optional[ - multiple instances possible
+    PaymentMeans: PaymentMeans #Optional[ - multiple instances possible
     # PaymentTerms Optional[ - multiple instances possible
     # PrepaidPayment Optional[ - multiple instances possible
     AllowanceCharge: AllowanceCharge #Optional[ - multiple instances possible
