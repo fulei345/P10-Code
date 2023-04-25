@@ -45,6 +45,8 @@ class GreyboxFuzzer(Fuzzer):
         self.mutator: Mutator = mutator
         self.mutation_count: int = mutation_count
 
+        self.outcome_list: List[str] = []
+
         self.reset()
 
     def reset(self) -> None:
@@ -60,8 +62,8 @@ class GreyboxFuzzer(Fuzzer):
         # Stacking: Apply multiple mutations to generate the candidate
         candidate = deepcopy(seed.data)
         num_mutations = random.randint(1, self.mutation_count)
-        for _ in range(num_mutations):
-            candidate = self.mutator.mutate(candidate)
+        # for _ in range(num_mutations):
+        #     candidate = self.mutator.mutate(candidate)
         return candidate
 
     def fuzz(self, inp: Any) -> ElementTree:
@@ -76,16 +78,12 @@ class GreyboxFuzzer(Fuzzer):
 
         self.inputs.append(self.inp)
         return self.inp
-
-    # TODO: Update when mutator is done
-    def run(self) -> Tuple[Any, str]:
-        document: ElementTree = self.fuzz("")
-        # Make new name
-        filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
-        result, outcome, _ = self.runner.run(document, filename)
-        new_coverage = frozenset(self.runner.code_coverage)
-        if new_coverage not in self.coverages_seen:
-            # We have new coverage
+    
+    def handle_feedback(self, new_coverage, result, outcome):
+        # Can check for new coverage or based on result
+        if outcome not in self.outcome_list: 
+            # We are gonna log it, and do all the other things
+            self.outcome_list.append(outcome)
             seed = Seed(self.inp)
             seed.coverage = self.runner.code_coverage
             self.coverages_seen.add(new_coverage)
@@ -95,8 +93,16 @@ class GreyboxFuzzer(Fuzzer):
             seed.data.write(document_path, encoding="utf-8", xml_declaration=True)
             self.logger.log_crash(filename, result)
             self.seed_index += 1
-            # Add maybe new coverage to the total code blocks seen
+            # Union new coverage with total coverage
             self.total_coverage = self.total_coverage.union(self.runner.code_coverage)
+    
+    def run(self) -> Tuple[Any, str]:
+        document: ElementTree = self.fuzz("")
+        # Make new name
+        filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
+        result, outcome, _ = self.runner.run(document, filename)
+        new_coverage = frozenset(self.runner.code_coverage)
+        self.handle_feedback(new_coverage, result, outcome)
         return result, outcome
 
     def multiple_runs(self, run_count: int, stats: bool) -> List[Tuple[Any, str]]:

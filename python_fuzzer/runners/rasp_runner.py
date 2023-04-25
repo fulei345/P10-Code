@@ -30,6 +30,9 @@ class RaspRunner(Runner):
         self.verbose: bool = verbose
         self.code_coverage = []
 
+        # Just for E-RSP15324 and returncode not zero
+        self.count = 0 
+
     def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, List[str]]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
         document.write(document_path, encoding="utf-8", xml_declaration=True)
@@ -47,22 +50,22 @@ class RaspRunner(Runner):
 
             if process.returncode != 0:
                 standard_error = process.stderr.decode("utf-8", errors="replace")
+                self.code_coverage = {}
                 if self.verbose:
                     print(standard_error)
-
-                self.logger.log_crash(doc_path, standard_error)
-                return standard_error, self.FAIL, []
+                outcome = self.FAIL + str(self.count)
+                return standard_error, outcome, []
 
             elif process.returncode == 0:
                 # TODO find better way to handle decode error for ø (+ æ and å, i suppose)
                 standard_out = process.stdout.decode("utf-8", errors="replace")
-                return self.handle_feedback(standard_out, doc_path)
+                return self.handle_feedback(standard_out)
         except Exception as e:
             # TODO handle this better
             print(e)
             return str(e), self.FAIL, []
 
-    def handle_feedback(self, standard_out: str, doc_path: str) -> Tuple[str, str, List[str]]:
+    def handle_feedback(self, standard_out: str) -> Tuple[str, str, List[str]]:
         # Find code blocks for code coverage
         self.code_coverage = findall(r"BLOCK:\d+", standard_out)
 
@@ -76,24 +79,29 @@ class RaspRunner(Runner):
             fault_message = standard_out[erro_index:]
 
             # Regex to find E-RSP num
-            ersp_num = search(r" E-RSP\d+", fault_message)
+            ersp_num = findall(r"E-RSP\d+", fault_message)
+            if len(ersp_num) > 0:
+                print(ersp_num[1])
+                # Log forskellige, hvis der er flere
+                if ersp_num[1] == "E-RSP15324":
+                    outcome = "E-RSP15324-" + str(self.count)
+                    self.count += 1
+                    return fault_message, outcome, self.code_coverage
 
             # If it is E-RSP and not already seen number
-            if ersp_num != None and ersp_num.group(0) not in self.ersp_nums:
-                self.ersp_nums.append(ersp_num.group(0))
+            if ersp_num != None and ersp_num[0] not in self.ersp_nums:
+                self.ersp_nums.append(ersp_num[0])
 
                 ## F fault code
                 # f_num = search(r"\[F-\w+\]", fault_message)
                 # if f_num != None and f_num.group(0) not in self.ersp_nums:
                 # self.ersp_nums.append(f_num.group(0))
 
-                # Should be removed, only for compatibility med OG fuzzer
-                self.logger.log_crash(doc_path, fault_message)
                 if self.verbose:
                     print(fault_message)
 
                 # If it was an E-RSP fault
-                return fault_message, self.EXCEPTION, self.code_coverage
+                return fault_message, ersp_num[0], self.code_coverage
 
             if self.verbose:
                 print(fault_message)
