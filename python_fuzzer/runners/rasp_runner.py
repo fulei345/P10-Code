@@ -4,6 +4,7 @@ from os import getcwd
 from os.path import join
 from xml.etree.ElementTree import ElementTree
 from re import search, findall
+import traceback
 
 if __name__ == "__main__":
     from runner import Runner
@@ -61,9 +62,8 @@ class RaspRunner(Runner):
                 standard_out = process.stdout.decode("utf-8", errors="replace")
                 return self.handle_feedback(standard_out)
         except Exception as e:
-            # TODO handle this better
-            print(e)
-            return str(e), self.FAIL, []
+            traceback.print_exc()
+            return str(traceback.format_exception()), self.FAIL, []
 
     def handle_feedback(self, standard_out: str) -> Tuple[str, str, List[str]]:
         # Find code blocks for code coverage
@@ -80,7 +80,7 @@ class RaspRunner(Runner):
 
             # Regex to find E-RSP num
             ersp_num = findall(r"E-RSP\d+", fault_message)
-            if len(ersp_num) > 0:
+            if len(ersp_num) > 1:
                 print(ersp_num[1])
                 # Log forskellige, hvis der er flere
                 if ersp_num[1] == "E-RSP15324":
@@ -89,7 +89,7 @@ class RaspRunner(Runner):
                     return fault_message, outcome, self.code_coverage
 
             # If it is E-RSP and not already seen number
-            if ersp_num != None and ersp_num[0] not in self.ersp_nums:
+            if len(ersp_num) > 0 and ersp_num[0] not in self.ersp_nums:
                 self.ersp_nums.append(ersp_num[0])
 
                 ## F fault code

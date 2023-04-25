@@ -62,8 +62,8 @@ class GreyboxFuzzer(Fuzzer):
         # Stacking: Apply multiple mutations to generate the candidate
         candidate = deepcopy(seed.data)
         num_mutations = random.randint(1, self.mutation_count)
-        # for _ in range(num_mutations):
-        #     candidate = self.mutator.mutate(candidate)
+        for _ in range(num_mutations):
+            candidate = self.mutator.mutate(candidate)
         return candidate
 
     def fuzz(self, inp: Any) -> ElementTree:
