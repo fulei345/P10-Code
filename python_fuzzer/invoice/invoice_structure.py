@@ -150,7 +150,7 @@ class AllowanceCharge(): #!
     BaseAmount: float #Optional[float] #datatype: amount
     AccountingCostCode: str #Optional[str] #datatype: code
     AccountingCost: str #Optional[str] 
-    #TaxCategory #Optional[] #multiple instances possible
+    TaxCategory: TaxCategory #Optional[] #multiple instances possible
     TaxTotal: TaxTotal #Optional[] 
     PaymentMeans: PaymentMeans #Optional[] #multiple instances possible
 
@@ -438,7 +438,7 @@ class Item():
     #CommodityClassification #Optional[List[]] #multiple instances possible
     #TransactionConditions #Optional[List[]] #multiple instances possible
     #HazardousItem #Optional[List[]] #multiple instances possible
-    #ClassifiedTaxCategory #Optional[List[]] #multiple instances possible
+    ClassifiedTaxCategory: TaxCategory #Optional[List[]] #multiple instances possible
     #AdditionalItemProperty #Optional[List[]] #multiple instances possible
     #ManufacturerParty #Optional[List[]] #multiple instances possible
     #InformationContentProviderParty #Optional[
