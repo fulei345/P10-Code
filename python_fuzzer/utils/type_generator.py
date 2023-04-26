@@ -46,13 +46,13 @@ class TypeGenerator:
     @staticmethod
     def make_time() -> str:
         # create time with random values, first argument is hours, second argument is minutes, and last argument is seconds
-        text = time(random.randint(0, 23), random.randint(0, 60), random.randint(0, 60))
+        text = time(random.randint(0, 23), random.randint(0, 59), random.randint(0, 59))
 
         return str(text)
 
     @staticmethod
     def make_date() -> str:
         # create date with random values, first argument is year with the range for datetime modules minyear and maxyear, second argument is month, and last argument is day
-        text = date(random.randint(1, 9999), random.randint(1, 12), random.randint(1, 31))
+        text = str(random.randint(1, 9999)) + "-" + str(random.randint(1, 12)) + "-" + str(random.randint(1, 31))
 
-        return str(text)
+        return text

@@ -82,7 +82,6 @@ class RaspRunner(Runner):
             # Regex to find E-RSP num
             ersp_num = findall(r"E-RSP\d+", fault_message)
             if len(ersp_num) > 1:
-                print(ersp_num[1])
                 # Log forskellige, hvis der er flere
                 if ersp_num[1] == "E-RSP15324":
                     outcome = "E-RSP15324-" + str(self.count)
