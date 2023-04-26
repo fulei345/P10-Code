@@ -132,14 +132,44 @@ class PartyIdentification():
     ID: str 
 
 @dataclass 
+class PostalAddress():
+    ID: str #Optional[str]
+    AddressTypeCode: str #Optional[str] # code
+    AddressFormatCode: str #Optional[str] # code
+    Postbox: str #Optional[str] 
+    Floor: str #Optional[str]
+    Room: str #Optional[str]
+    StreetName: str #Optional[str] # name
+    AdditionalStreetName: str #Optional[str] # name
+    BlockName: str #Optional[str] # name
+    BuildingName: str #Optional[str] # name
+    BuildingNumber: str #Optional[str]
+    InhouseMail: str #Optional[str]
+    Department: str #Optional[str]
+    MarkAttention: str #Optional[str]
+    MarkCare: str #Optional[str]
+    PlotIdentification: str #Optional[str]
+    CitySubdivisionName: str #Optional[str] # name
+    CityName: str #Optional[str] # name
+    PostalZone: str #Optional[str]
+    CountrySubentity: str #Optional[str]
+    CountrySubentityCode: str #Optional[str] # code
+    Region: str #Optional[str] 
+    District: str #Optional[str]
+    TimezoneOffset: str #Optional[str]
+    #AddressLine
+    #Country
+    #LocationCoordinate
+    
+@dataclass 
 class PayeeParty():
-    WebsiteURI: str #Optional[int]
-    LogoReferenceID: str #Optional[int]
-    EndpointID: str #Optional[int]
+    WebsiteURI: str #Optional[str]
+    LogoReferenceID: str #Optional[str]
+    EndpointID: str #Optional[str]
     PartyIdentification: PartyIdentification #Optional[ #multiple instances possible
     PartyName: PartyName #Optional[ #multiple instances possible
     #Language Optional[
-    #PostalAddress Optional[
+    PostalAddress: PostalAddress #Optional[PostalAddress
     #PhysicalLocation Optional[
     #PartyTaxScheme Optional[ #multiple instances possible
     PartyLegalEntity: PartyLegalEntity
@@ -154,7 +184,7 @@ class Party():
     PartyIdentification: PartyIdentification #Optional[ #multiple instances possible
     PartyName: PartyName #Optional[ #multiple instances possible
     #Language Optional[
-    #PostalAddress Optional[
+    PostalAddress: PostalAddress #Optional[PostalAddress
     #PhysicalLocation Optional[
     #PartyTaxScheme Optional[ #multiple instances possible
     PartyLegalEntity: PartyLegalEntity
