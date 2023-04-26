@@ -42,6 +42,42 @@ class PaymentTerms():
     #PenaltyPeriod
     #TradeFinancing
 
+@dataclass 
+class Address():
+    ID: str #Optional[str]
+    AddressTypeCode: str #Optional[str] # code
+    AddressFormatCode: str #Optional[str] # code
+    Postbox: str #Optional[str] 
+    Floor: str #Optional[str]
+    Room: str #Optional[str]
+    StreetName: str #Optional[str] # name
+    AdditionalStreetName: str #Optional[str] # name
+    BlockName: str #Optional[str] # name
+    BuildingName: str #Optional[str] # name
+    BuildingNumber: str #Optional[str]
+    InhouseMail: str #Optional[str]
+    Department: str #Optional[str]
+    MarkAttention: str #Optional[str]
+    MarkCare: str #Optional[str]
+    PlotIdentification: str #Optional[str]
+    CitySubdivisionName: str #Optional[str] # name
+    CityName: str #Optional[str] # name
+    PostalZone: str #Optional[str]
+    CountrySubentity: str #Optional[str]
+    CountrySubentityCode: str #Optional[str] # code
+    Region: str #Optional[str] 
+    District: str #Optional[str]
+    TimezoneOffset: str #Optional[str]
+    #AddressLine #Optional[ #multiple instances possible
+    Country: Country #Optional[Country
+    #LocationCoordinate #Optional[
+
+@dataclass 
+class FinancialInstitutionBranch():
+    ID: str #Optional[str]
+    Name: str #Optional[str] #datatype: name
+    #FinancialInstitution #Optional[
+    Address: Address #Optional[
 
 @dataclass 
 class Country():
@@ -91,36 +127,6 @@ class AllowanceCharge(): #!
     #TaxCategory #Optional[] #multiple instances possible
     TaxTotal: TaxTotal #Optional[] 
     PaymentMeans: PaymentMeans #Optional[] #multiple instances possible
-
-@dataclass 
-class Address():
-    ID: str #Optional[str]
-    AddressTypeCode: str #Optional[str] # code
-    AddressFormatCode: str #Optional[str] # code
-    Postbox: str #Optional[str] 
-    Floor: str #Optional[str]
-    Room: str #Optional[str]
-    StreetName: str #Optional[str] # name
-    AdditionalStreetName: str #Optional[str] # name
-    BlockName: str #Optional[str] # name
-    BuildingName: str #Optional[str] # name
-    BuildingNumber: str #Optional[str]
-    InhouseMail: str #Optional[str]
-    Department: str #Optional[str]
-    MarkAttention: str #Optional[str]
-    MarkCare: str #Optional[str]
-    PlotIdentification: str #Optional[str]
-    CitySubdivisionName: str #Optional[str] # name
-    CityName: str #Optional[str] # name
-    PostalZone: str #Optional[str]
-    CountrySubentity: str #Optional[str]
-    CountrySubentityCode: str #Optional[str] # code
-    Region: str #Optional[str] 
-    District: str #Optional[str]
-    TimezoneOffset: str #Optional[str]
-    #AddressLine #Optional[ #multiple instances possible
-    Country: Country #Optional[Country
-    #LocationCoordinate #Optional[
 
 @dataclass 
 class DeliveryLocation():
