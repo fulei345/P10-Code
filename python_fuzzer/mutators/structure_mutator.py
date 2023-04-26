@@ -40,12 +40,10 @@ class StructureMutator(Mutator):
             mutator(root)
         else:
             index: int = random.randint(1, self.total_size)
-            counter: int = 0
-            for elem in root.iter():
-                if counter == index:
+            for i, elem in enumerate(root.iter()):
+                if i == index:
                     mutator(self.parent_map[elem], elem)
                     return document
-                counter += 1
         return document
 
     # when used directly it insert duplicate of the field - is also used to insert fields when moving fields or add new fields
@@ -55,15 +53,12 @@ class StructureMutator(Mutator):
             index = random.randint(0, len(parent))
             parent.insert(index, subelement) #insert field in parent class
         else:
-            index = random.randint(0, self.total_size)
-            counter = 0
-            for elem in self.root.iter():
-                if counter == index:
+            index = random.randint(1, self.total_size)
+            for i, elem in enumerate(self.root.iter()):
+                if i == index:
                     parent = self.parent_map[elem]
                     insert_index = random.randint(0, len(parent))
                     parent.insert(insert_index, subelement)
-                counter += 1
-
         return parent
 
 
@@ -112,6 +107,8 @@ class StructureMutator(Mutator):
             elem.text = TypeGenerator.make_date()
         elif field.type == bytes: #or field.type == Optional[bytes]:
             elem.text = TypeGenerator.make_string() #TODO change this (look at oioubl documentation for attachement binary object)
+        elif field.type == float: #or field.type == Optional[float]:
+            elem.text = TypeGenerator.make_float()
         else:
             elem = self.make_subclass(elem, field.type)
             
