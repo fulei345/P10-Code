@@ -53,6 +53,6 @@ class TypeGenerator:
     @staticmethod
     def make_date() -> str:
         # create date with random values, first argument is year with the range for datetime modules minyear and maxyear, second argument is month, and last argument is day
-        text = date(random.randint(1, 9999), random.randint(1, 12), random.randint(1, 31))
+        text = str(random.randint(1, 9999)) + "-" + str(random.randint(1, 12)) + "-" + str(random.randint(1, 31))
 
         return str(text)
