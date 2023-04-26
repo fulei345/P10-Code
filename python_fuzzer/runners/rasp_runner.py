@@ -41,6 +41,8 @@ class RaspRunner(Runner):
         return message, code, code_coverage
 
     def start_process(self, doc_path: str) -> Tuple[str, str, List[str]]:
+        # Initialize coverage if something goes wrong
+        self.code_coverage = {}
         try:
             # Input is the options chosen in the Client
             process = run(["dk.gov.oiosi.samples.ClientExample.exe", doc_path],
@@ -51,7 +53,6 @@ class RaspRunner(Runner):
 
             if process.returncode != 0:
                 standard_error = process.stderr.decode("utf-8", errors="replace")
-                self.code_coverage = {}
                 if self.verbose:
                     print(standard_error)
                 outcome = self.FAIL + str(self.count)
@@ -61,7 +62,7 @@ class RaspRunner(Runner):
                 # TODO find better way to handle decode error for ø (+ æ and å, i suppose)
                 standard_out = process.stdout.decode("utf-8", errors="replace")
                 return self.handle_feedback(standard_out)
-        except Exception as e:
+        except Exception:
             traceback.print_exc()
             return str(traceback.format_exception()), self.FAIL, []
 
