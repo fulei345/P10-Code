@@ -25,9 +25,9 @@ class TaxTotal(): #!
 
 @dataclass 
 class PaymentTerms():
-    ID: int #Optional[int]
-    PaymentMeansID: int #Optional[int] #multiple instances possible
-    PrepaidPaymentReferenceID: int #Optional[int]
+    ID: str #Optional[int]
+    PaymentMeansID: str #Optional[int] #multiple instances possible
+    PrepaidPaymentReferenceID: str #Optional[int]
     Note: str #Optional[str] #multiple instances possible
     ReferenceEventCode: str #Optional[str] #datatype: code
     SettlementDiscountPercent: str #Optional[str] #Percent Type
@@ -44,13 +44,13 @@ class PaymentTerms():
 
 @dataclass 
 class PaymentMeans():
-    ID: int #Optional[int]
+    ID: str #Optional[int]
     PaymentMeansCode: str #datatype: code
     PaymentDueDate: date #Optional[date]
     PaymentChannelCode: str #Optional[str] #datatype: code
-    InstructionID: int #Optional[int]
+    InstructionID: str #Optional[int]
     InstructionNote: str #Optional[str] 
-    PaymentID: int #Optional[int] #multiple instances possible
+    PaymentID: str #Optional[int] #multiple instances possible
     #CardAccount #Optional[ 
     #PayerFinancialAccount #Optional[ 
     #PayeeFinancialAccount #Optional[ 
@@ -59,7 +59,7 @@ class PaymentMeans():
 
 @dataclass 
 class AllowanceCharge(): #!
-    ID: int #Optional[int]
+    ID: str #Optional[int]
     ChargeIndicator: bool 
     AllowanceChargeReasonCode: str #Optional[str] #datatype: code
     AllowanceChargeReason: str #Optional[str]
@@ -76,7 +76,7 @@ class AllowanceCharge(): #!
 
 @dataclass 
 class DeliveryLocation():
-    ID: int 
+    ID: str 
     Description: str #Optional[str] 
     Conditions: str #Optional[str] 
     CountrySubentity: str #Optional[str] 
@@ -86,7 +86,7 @@ class DeliveryLocation():
 
 @dataclass 
 class DeliveryTerms():
-    ID: int #Optional[int]  
+    ID: str #Optional[int]  
     SpecialTerms: str #Optional[str] 
     LossRiskResponsibilityCode: str #Optional[str] # code
     LossRisk: str #Optional[str]  
@@ -112,7 +112,7 @@ class Contact():
 @dataclass 
 class PartyLegalEntity(): #!
     RegistrationName: str #Optional[str] # name
-    CompanyID: int #Optional[int]
+    CompanyID: str #Optional[int]
     CompanyTypeCode: str #Optional[str] # code
     CompanyLiquidationStatusCode: str #Optional[str] # code
     RegistrationDate: date #Optional[date]
@@ -129,13 +129,13 @@ class PartyName():
 
 @dataclass 
 class PartyIdentification():
-    ID: int 
+    ID: str 
 
 @dataclass 
 class PayeeParty():
-    WebsiteURI: int #Optional[int]
-    LogoReferenceID: int #Optional[int]
-    EndpointID: int #Optional[int]
+    WebsiteURI: str #Optional[int]
+    LogoReferenceID: str #Optional[int]
+    EndpointID: str #Optional[int]
     PartyIdentification: PartyIdentification #Optional[ #multiple instances possible
     PartyName: PartyName #Optional[ #multiple instances possible
     #Language Optional[
@@ -148,9 +148,9 @@ class PayeeParty():
 
 @dataclass 
 class Party():
-    WebsiteURI: int #Optional[int]
-    LogoReferenceID: int #Optional[int]
-    EndpointID: int #optional for BuyerCustomerParty, and SellerSupplierParty
+    WebsiteURI: str #Optional[int]
+    LogoReferenceID: str #Optional[int]
+    EndpointID: str #optional for BuyerCustomerParty, and SellerSupplierParty
     PartyIdentification: PartyIdentification #Optional[ #multiple instances possible
     PartyName: PartyName #Optional[ #multiple instances possible
     #Language Optional[
@@ -164,7 +164,7 @@ class Party():
 
 @dataclass 
 class Delivery():
-    ID: int #Optional[int]
+    ID: str #Optional[int]
     Quantity: float #Optional[float] #datatype: quantity
     MinimumQuantity: float #Optional[float] #datatype: quantity
     MaximumQuantity: float #Optional[float] #datatype: quantity
@@ -172,7 +172,7 @@ class Delivery():
     ActualDeliveryTime: time #Optional[time]
     LatestDeliveryDate: date #Optional[date]
     LatestDeliveryTime: time #Optional[time]
-    TrackingID: int #Optional[str]
+    TrackingID: str #Optional[str]
     #DeliveryLocation #Optional[
     #RequestedDeliveryPeriod #Optional[
     #DeliveryParty #Optional[
@@ -180,8 +180,8 @@ class Delivery():
 
 @dataclass 
 class SellerSupplierParty():
-    CustomerAssignedAccountID: int #Optional[int]
-    AdditionalAccountID: int #Optional[List[int]] #multiple instances possible
+    CustomerAssignedAccountID: str #Optional[int]
+    AdditionalAccountID: str #Optional[List[int]] #multiple instances possible
     Party: Party
     #DespatchContact: Optional[
     #AccountingContact: Optional[
@@ -189,9 +189,9 @@ class SellerSupplierParty():
 
 @dataclass 
 class BuyerCustomerParty():
-    CustomerAssignedAccountID: int #Optional[int]
-    SupplierAssignedAccountID: int #Optional[List[int]] #multiple instances possible
-    AdditionalAccountID: int #Optional[List[int]] #multiple instances possible
+    CustomerAssignedAccountID: str #Optional[int]
+    SupplierAssignedAccountID: str #Optional[List[int]] #multiple instances possible
+    AdditionalAccountID: str #Optional[List[int]] #multiple instances possible
     Party: Party
     #DeliveryContact: Optional[
     #AccountingContact: Optional[
@@ -199,9 +199,9 @@ class BuyerCustomerParty():
 
 @dataclass 
 class AccountingCustomerParty():
-    CustomerAssignedAccountID: int #Optional[int]
-    SupplierAssignedAccountID: int #Optional[int]
-    AdditionalAccountID: int #Optional[List[int]] #multiple instances possible
+    CustomerAssignedAccountID: str #Optional[int]
+    SupplierAssignedAccountID: str #Optional[int]
+    AdditionalAccountID: str #Optional[List[int]] #multiple instances possible
     Party: Party
     #DespatchContact: Optional[
     #AccountingContact: Optional[
@@ -209,8 +209,8 @@ class AccountingCustomerParty():
 
 @dataclass 
 class AccountingSupplierParty():
-    CustomerAssignedAccountID: int #Optional[int]
-    AdditionalAccountID: int #Optional[List[int]] #multiple instances possible
+    CustomerAssignedAccountID: str #Optional[int]
+    AdditionalAccountID: str #Optional[List[int]] #multiple instances possible
     Party: Party
     #DeliveryContact: Optional[
     #AccountingContact: Optional[
@@ -225,7 +225,7 @@ class Attachment():
 class DocumentReference():
     ID: int
     CopyIndicator: bool #Optional[bool]
-    UUID: int #Optional[int]
+    UUID: str #Optional[int]
     IssueDate: date #Optional[date] #date type (yyyy-mm-dd)
     XPath: str #Optional[List[str]] #multiple instances possible
     Attachment: Attachment #Optional[Attachment]
@@ -282,7 +282,7 @@ class TaxExchangeRate():
     SourceCurrencyBaseRate: int #Optional[int] #rate
     TargetCurrencyCode: str # code
     TargetCurrencyBaseRate: int #Optional[int] #rate
-    ExchangeMarketID: int #Optional[int]
+    ExchangeMarketID: str #Optional[int]
     CalculationRate: int #Optional[int] #rate
     MathematicOperatorCode: str #Optional[str] # code
     Date: date #Optional[date]
@@ -311,13 +311,13 @@ class BillingReference():
 @dataclass 
 class BuyersItemIdentification():
     ID: int
-    ExtendedID: int #Optional[int]
+    ExtendedID: str #Optional[int]
     #IssuerParty #Optional[
 
 @dataclass 
 class SellersItemIdentification():
     ID: int
-    ExtendedID: int #Optional[int]
+    ExtendedID: str #Optional[int]
     #PhysicalAttribute #Optional[List[]] #multiple instances possible
     #MeasurementDimension #Optional[List[]] #multiple instances possible
     #IssuerParty #Optional[
@@ -389,27 +389,27 @@ class Item():
 @dataclass 
 class OrderReference():
     ID: int
-    SalesOrderID: int #Optional[int]
+    SalesOrderID: str #Optional[int]
     CopyIndicator: bool #Optional[bool]
-    UUID: int #Optional[int]
+    UUID: str #Optional[int]
     IssueDate: date #Optional[date] #date type (yyyy-mm-dd)
     IssueTime: time #Optional[time] #time type (00:00:00)
-    SalesOrderID: int #Optional[int]
+    SalesOrderID: str #Optional[int]
     CustomerReference: str #Optional[str]
     DocumentReference: DocumentReference #Optional[DocumentReference]
 
 @dataclass 
 class OrderLineReference():
     LineID: int
-    SalesOrderLineID: int #Optional[int]
-    UUID: int #Optional[int]
+    SalesOrderLineID: str #Optional[int]
+    UUID: str #Optional[int]
     LineStatusCode: str #Optional[str] #datatype: code
     OrderReference: OrderReference #Optional[OrderReference]
 
 @dataclass 
 class InvoiceLine():
-    ID: int 
-    UUID: int #Optional[int]
+    ID: str 
+    UUID: str #Optional[int]
     Note: str #Optional[str] 
     InvoicedQuantity: float #datatype: quantity
     LineExtensionAmount: float #datatype: amount
@@ -433,12 +433,12 @@ class InvoiceLine():
 @dataclass #provide automatic generation of __init__(), among other things
 class Invoice():
     # UBLExtensions Optional[
-    UBLVersionID: int # identifiers (alle int er indentifiers, undtagen den med numeric) strings giver ikke schema fejl, kun schematron, så kan måske ændres til det 
+    UBLVersionID: str # identifier
     CustomizationID: int
     ProfileID: int
     ID: int
     CopyIndicator: bool #Optional[bool]
-    UUID: int #Optional[int]
+    UUID: str #Optional[int]
     IssueDate: date #date type (yyyy-mm-dd)
     IssueTime: time #Optional[time] #time type (00:00:00)
     InvoiceTypeCode: str #Optional[str] #code type (example doc has e.g. 380 and DKK, so string to generalize)
