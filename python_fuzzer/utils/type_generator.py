@@ -46,7 +46,7 @@ class TypeGenerator:
     @staticmethod
     def make_time() -> str:
         # create time with random values, first argument is hours, second argument is minutes, and last argument is seconds
-        text = time(random.randint(0, 23), random.randint(0, 60), random.randint(0, 60))
+        text = time(random.randint(0, 23), random.randint(0, 59), random.randint(0, 59))
 
         return str(text)
 
