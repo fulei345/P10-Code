@@ -13,6 +13,7 @@ else:
 
 import sys
 sys.path.append("..")
+from mutators import Mutator
 from runners import RaspRunner
 from loggers import FeedbackLogger
 from utils import Seed

@@ -10,7 +10,7 @@ else:
 
 import sys
 sys.path.append("..")
-from python_fuzzer import Mutator
+from mutators import Mutator
 from runners import RaspRunner
 from loggers import FeedbackLogger
 from parsers import DocumentParser
