@@ -16,12 +16,38 @@ class LegalMonetaryTotal(): #!
     PayableAlternativeAmount: float #Optional[float] #datatype: amount
 
 @dataclass 
+class TaxCategory():
+    ID: str #Optional[str]
+    Name: str #Optional[str] #datatype: name
+    Percent: str #Optional[str] #Percent Type
+    BaseUnitMeasure: int #Optional[int] #measure Type
+    PerUnitAmount: float #Optional[float] #datatype: amoun
+    TaxExemptionReasonCode: str #Optional[str] #datatype: code
+    TaxExemptionReason: str #Optional[str] 
+    TierRange: str #Optional[str] 
+    TierRatePercent: str #Optional[str] #Percent Type
+    TaxScheme: TaxScheme
+    
+@dataclass 
+class TaxSubtotal(): #!
+    TaxableAmount: float #Optional[float] #datatype: amount
+    TaxAmount: float #datatype: amount
+    CalculationSequenceNumeric: int #Optional[int] #numeric
+    TransactionCurrencyTaxAmount: float #Optional[float] #datatype: amount
+    Percent: str #Optional[str] #Percent Type
+    BaseUnitMeasure: int #Optional[int] #measure Type
+    PerUnitAmount: float #Optional[float] #datatype: amount
+    TierRange: str #Optional[str] 
+    TierRatePercent: str #Optional[str] #Percent Type  
+    TaxCategory: TaxCategory
+      
+@dataclass 
 class TaxTotal(): #!
     TaxAmount: float #datatype: amount
     RoundingAmount: float #Optional[float] #datatype: amount
     TaxEvidenceIndicator: bool #Optional[bool] 
     TaxIncludedIndicator: bool #Optional[bool] 
-    # TaxSubtotal: #Optional[] #multiple instances possible
+    TaxSubtotal: TaxSubtotal #Optional[] #multiple instances possible
 
 @dataclass 
 class PaymentTerms():
