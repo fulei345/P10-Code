@@ -108,7 +108,7 @@ class StructureMutator(Mutator):
         elif field.type == bytes: #or field.type == Optional[bytes]:
             elem.text = TypeGenerator.make_string() #TODO change this (look at oioubl documentation for attachement binary object)
         elif field.type == float: #or field.type == Optional[float]:
-            elem.text = TypeGenerator.make_string() #TODO change this
+            elem.text = TypeGenerator.make_float()
         else:
             elem = self.make_subclass(elem, field.type)
             
