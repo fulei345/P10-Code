@@ -42,6 +42,24 @@ class PaymentTerms():
     #PenaltyPeriod
     #TradeFinancing
 
+
+@dataclass 
+class Country():
+    IdentificationCode: str #Optional[str] # code
+    Name: str #Optional[str]
+
+@dataclass 
+class FinancialAccount():
+    ID: str #Optional[str]
+    Name: str #Optional[str] #datatype: name
+    AliasName: str #Optional[str] #datatype: name
+    AccountTypeCode: str #Optional[str] #datatype: code
+    AccountFormatCode: str #Optional[str] #datatype: code
+    CurrencyCode: str #Optional[str] #datatype: code
+    PaymentNote: str #Optional[str] #multiple instances possible
+    #FinancialInstitutionBranch #Optional[
+    Country: Country #Optional[Country
+    
 @dataclass 
 class PaymentMeans():
     ID: str #Optional[int]
@@ -52,8 +70,8 @@ class PaymentMeans():
     InstructionNote: str #Optional[str] 
     PaymentID: str #Optional[int] #multiple instances possible
     #CardAccount #Optional[ 
-    #PayerFinancialAccount #Optional[ 
-    #PayeeFinancialAccount #Optional[ 
+    PayerFinancialAccount: FinancialAccount #Optional[ 
+    PayeeFinancialAccount: FinancialAccount #Optional[ 
     #CreditAccount #Optional[ 
     
 
@@ -105,26 +123,6 @@ class Address():
     #LocationCoordinate #Optional[
 
 @dataclass 
-class PostalAddress(Address):
-    pass
-
-@dataclass 
-class RegistrationAddress(Address):
-    pass
-
-@dataclass 
-class JurisdictionRegionAddress(Address):
-    pass
-
-@dataclass 
-class OriginAddress(Address):
-    pass
-
-@dataclass 
-class RegistrationAddress(Address):
-    pass
-
-@dataclass 
 class DeliveryLocation():
     ID: str 
     Description: str #Optional[str] 
@@ -150,7 +148,7 @@ class OtherCommunication(): #!
 
 @dataclass 
 class Contact():
-    ID: int
+    ID: str
     Name: str #Optional[str] #datatype: name
     Telephone: str #Optional[str]
     Telefax: str #Optional[str]
@@ -168,15 +166,10 @@ class PartyLegalEntity(): #!
     RegistrationDate: date #Optional[date]
     RegistrationExpirationDate: date #Optional[date]
     CorporateStockAmount: float #Optional[float] #datatype: amount
-    RegistrationAddress: RegistrationAddress #Optional[
+    RegistrationAddress: Address #Optional[
     #CorporateRegistrationScheme Optional[
     #StakeholderParty Optional[ #multiple instances possible
     #CompanyDossierDocumentReference Optional[
-
-@dataclass 
-class Country():
-    IdentificationCode: str #Optional[str] # code
-    Name: str #Optional[str]
 
 @dataclass 
 class TaxScheme():
@@ -184,7 +177,7 @@ class TaxScheme():
     Name: str #Optional[str] # name
     TaxTypeCode: str #Optional[str] # code
     CurrencyCode: str #Optional[str] # code
-    JurisdictionRegionAddress: JurisdictionRegionAddress #Optional[ #multiple instances possible
+    JurisdictionRegionAddress: Address #Optional[ #multiple instances possible
 
 @dataclass 
 class PartyTaxScheme():
@@ -193,7 +186,7 @@ class PartyTaxScheme():
     TaxLevelCode: str #Optional[str] # code
     ExemptionReasonCode: str #Optional[str] # code
     ExemptionReason: str #Optional[str]
-    RegistrationAddress: RegistrationAddress #Optional[
+    RegistrationAddress: Address #Optional[
     TaxScheme: TaxScheme
    
 @dataclass 
@@ -212,7 +205,7 @@ class PayeeParty():
     PartyIdentification: PartyIdentification #Optional[ #multiple instances possible
     PartyName: PartyName #Optional[ #multiple instances possible
     #Language Optional[
-    PostalAddress: PostalAddress #Optional[PostalAddress
+    PostalAddress: Address #Optional[Address
     #PhysicalLocation Optional[
     PartyTaxScheme: PartyTaxScheme #Optional[ #multiple instances possible
     PartyLegalEntity: PartyLegalEntity
@@ -227,7 +220,7 @@ class Party():
     PartyIdentification: PartyIdentification #Optional[ #multiple instances possible
     PartyName: PartyName #Optional[ #multiple instances possible
     #Language Optional[
-    PostalAddress: PostalAddress #Optional[PostalAddress
+    PostalAddress: Address #Optional[Address
     #PhysicalLocation Optional[
     PartyTaxScheme: PartyTaxScheme #Optional[ #multiple instances possible
     PartyLegalEntity: PartyLegalEntity
@@ -296,58 +289,23 @@ class Attachment():
 
 @dataclass 
 class DocumentReference():
-    ID: int
+    ID: str
     CopyIndicator: bool #Optional[bool]
     UUID: str #Optional[int]
     IssueDate: date #Optional[date] #date type (yyyy-mm-dd)
     XPath: str #Optional[List[str]] #multiple instances possible
     Attachment: Attachment #Optional[Attachment]
 
-@dataclass 
-class ContractDocumentReference(DocumentReference):
-    pass
-
-@dataclass 
-class OriginatorDocumentReference(DocumentReference):
-    pass
-
-@dataclass 
-class ReceiptDocumentReference(DocumentReference):
-    pass
-
-@dataclass 
-class DespatchDocumentReference(DocumentReference):
-    pass
-
-@dataclass 
-class ReminderDocumentReference(DocumentReference):
-    pass
-
-@dataclass 
-class SelfBilledCreditNoteDocumentReference(DocumentReference):
-    pass
-
-@dataclass 
-class CreditNoteDocumentReference(DocumentReference):
-    pass
-
-@dataclass 
-class SelfBilledInvoiceDocumentReference(DocumentReference):
-    pass
-
-@dataclass 
-class InvoiceDocumentReference(DocumentReference):
-    pass
     
 @dataclass 
 class ForeignExchangeContract():
-    ID: int
+    ID: str
     IssueDate: date #Optional[date] 
     IssueTime: time #Optional[time]
     ContractTypeCode: str #Optional[str] # code
     ContractType: str #Optional[str]
     #ValidityPeriod #Optional[ValidityPeriod]
-    ContractDocumentReference: ContractDocumentReference #Optional[ContractDocumentReference]
+    ContractDocumentReference: DocumentReference #Optional[ContractDocumentReference]
 
 @dataclass 
 class TaxExchangeRate():
@@ -375,21 +333,21 @@ class PricingExchangeRate(TaxExchangeRate):
 
 @dataclass 
 class BillingReference():
-    InvoiceDocumentReference: InvoiceDocumentReference #Optional[InvoiceDocumentReference]
-    SelfBilledInvoiceDocumentReference: SelfBilledInvoiceDocumentReference #Optional[SelfBilledInvoiceDocumentReference]
-    CreditNoteDocumentReference: CreditNoteDocumentReference #Optional[CreditNoteDocumentReference]
-    SelfBilledCreditNoteDocumentReference: SelfBilledCreditNoteDocumentReference #Optional[SelfBilledCreditNoteDocumentReference]
-    ReminderDocumentReference: ReminderDocumentReference #Optional[ReminderDocumentReference]
+    InvoiceDocumentReference: DocumentReference #Optional[InvoiceDocumentReference]
+    SelfBilledInvoiceDocumentReference: DocumentReference #Optional[SelfBilledInvoiceDocumentReference]
+    CreditNoteDocumentReference: DocumentReference #Optional[CreditNoteDocumentReference]
+    SelfBilledCreditNoteDocumentReference: DocumentReference #Optional[SelfBilledCreditNoteDocumentReference]
+    ReminderDocumentReference: DocumentReference #Optional[ReminderDocumentReference]
 
 @dataclass 
 class BuyersItemIdentification():
-    ID: int
+    ID: str
     ExtendedID: str #Optional[int]
     #IssuerParty #Optional[
 
 @dataclass 
 class SellersItemIdentification():
-    ID: int
+    ID: str
     ExtendedID: str #Optional[int]
     #PhysicalAttribute #Optional[List[]] #multiple instances possible
     #MeasurementDimension #Optional[List[]] #multiple instances possible
@@ -409,10 +367,6 @@ class CatalogueItemIdentification(BuyersItemIdentification):
 
 @dataclass 
 class AdditionalItemIdentification(BuyersItemIdentification):
-    pass
-
-@dataclass 
-class CatalogueDocumentReference(DocumentReference):
     pass
 
 @dataclass 
@@ -446,7 +400,7 @@ class Item():
     StandardItemIdentification: StandardItemIdentification #Optional[StandardItemIdentification]
     CatalogueItemIdentification: CatalogueItemIdentification #Optional[CatalogueItemIdentification]
     AdditionalItemIdentification: AdditionalItemIdentification #Optional[AdditionalItemIdentification]
-    CatalogueDocumentReference: CatalogueDocumentReference #Optional[CatalogueDocumentReference]
+    CatalogueDocumentReference: DocumentReference #Optional[DocumentReference]
     #ItemSpecificationDocumentReference #Optional[
     #OriginCountry #Optional[
     #CommodityClassification #Optional[List[]] #multiple instances possible
@@ -456,12 +410,12 @@ class Item():
     #AdditionalItemProperty #Optional[List[]] #multiple instances possible
     #ManufacturerParty #Optional[List[]] #multiple instances possible
     #InformationContentProviderParty #Optional[
-    OriginAddress: OriginAddress #Optional[
+    OriginAddress: Address #Optional[
     #ItemInstance #Optional[List[]] #multiple instances possible
 
 @dataclass 
 class OrderReference():
-    ID: int
+    ID: str
     SalesOrderID: str #Optional[int]
     CopyIndicator: bool #Optional[bool]
     UUID: str #Optional[int]
@@ -473,7 +427,7 @@ class OrderReference():
 
 @dataclass 
 class OrderLineReference():
-    LineID: int
+    LineID: str
     SalesOrderLineID: str #Optional[int]
     UUID: str #Optional[int]
     LineStatusCode: str #Optional[str] #datatype: code
@@ -507,9 +461,9 @@ class InvoiceLine():
 class Invoice():
     # UBLExtensions Optional[
     UBLVersionID: str # identifier
-    CustomizationID: int
-    ProfileID: int
-    ID: int
+    CustomizationID: str
+    ProfileID: str
+    ID: str
     CopyIndicator: bool #Optional[bool]
     UUID: str #Optional[int]
     IssueDate: date #date type (yyyy-mm-dd)
@@ -528,10 +482,10 @@ class Invoice():
     # InvoicePeriod Optional[
     OrderReference: OrderReference #Optional[OrderReference]
     BillingReference: BillingReference #Optional[List[BillingReference]] # multiple instances possible
-    DespatchDocumentReference: DespatchDocumentReference #Optional[List[DespatchDocumentReference]] # multiple instances possible
-    ReceiptDocumentReference: ReceiptDocumentReference #Optional[List[ReceiptDocumentReference]] # multiple instances possible
-    OriginatorDocumentReference: OriginatorDocumentReference #Optional[List[OriginatorDocumentReference]] # multiple instances possible
-    ContractDocumentReference: ContractDocumentReference #Optional[ContractDocumentReference]
+    DespatchDocumentReference: DocumentReference #Optional[List[DespatchDocumentReference]] # multiple instances possible
+    ReceiptDocumentReference: DocumentReference #Optional[List[ReceiptDocumentReference]] # multiple instances possible
+    OriginatorDocumentReference: DocumentReference #Optional[List[OriginatorDocumentReference]] # multiple instances possible
+    ContractDocumentReference: DocumentReference #Optional[ContractDocumentReference]
     # AdditionalDocumentReference Optional[ - multiple instances possible
     # Signature Optional[ - multiple instances possible
     AccountingSupplierParty: AccountingSupplierParty
