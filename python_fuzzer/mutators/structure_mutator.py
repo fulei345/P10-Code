@@ -55,7 +55,7 @@ class StructureMutator(Mutator):
             index = random.randint(0, len(parent))
             parent.insert(index, subelement) #insert field in parent class
         else:
-            index = random.randint(0, self.total_size)
+            index = random.randint(1, self.total_size)
             counter = 0
             for elem in self.root.iter():
                 if counter == index:
@@ -112,6 +112,8 @@ class StructureMutator(Mutator):
             elem.text = TypeGenerator.make_date()
         elif field.type == bytes: #or field.type == Optional[bytes]:
             elem.text = TypeGenerator.make_string() #TODO change this (look at oioubl documentation for attachement binary object)
+        elif field.type == float: #or field.type == Optional[float]:
+            elem.text = TypeGenerator.make_string() #TODO change this
         else:
             elem = self.make_subclass(elem, field.type)
             
