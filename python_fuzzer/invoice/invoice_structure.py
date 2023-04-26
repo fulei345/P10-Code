@@ -132,6 +132,11 @@ class PartyIdentification():
     ID: str 
 
 @dataclass 
+class Country():
+    IdentificationCode: str #Optional[str] # code
+    Name: str #Optional[str]
+
+@dataclass 
 class PostalAddress():
     ID: str #Optional[str]
     AddressTypeCode: str #Optional[str] # code
@@ -157,9 +162,9 @@ class PostalAddress():
     Region: str #Optional[str] 
     District: str #Optional[str]
     TimezoneOffset: str #Optional[str]
-    #AddressLine
-    #Country
-    #LocationCoordinate
+    #AddressLine #Optional[ #multiple instances possible
+    Country: Country #Optional[Country
+    #LocationCoordinate Optional[
     
 @dataclass 
 class PayeeParty():
