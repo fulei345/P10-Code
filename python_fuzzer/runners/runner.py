@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Any, Tuple
-from xml.etree.ElementTree import ElementTree
+from xml.etree.cElementTree import ElementTree
 
 
 class Runner(ABC):

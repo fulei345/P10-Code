@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Callable
-from xml.etree.ElementTree import ElementTree, tostring, fromstring, Element
+from xml.etree.cElementTree import ElementTree, tostring, fromstring, Element
 
 from .mutator import Mutator
 import sys

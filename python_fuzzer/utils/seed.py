@@ -1,5 +1,5 @@
 from typing import List, Set, Union, Any
-from xml.etree.ElementTree import Element, ElementTree, parse, ParseError
+from xml.etree.cElementTree import Element, ElementTree, parse, ParseError
 
 
 class Seed:
