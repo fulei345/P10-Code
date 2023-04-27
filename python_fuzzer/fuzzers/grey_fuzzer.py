@@ -91,6 +91,7 @@ class GreyboxFuzzer(Fuzzer):
             seed.coverage = self.runner.code_coverage
             # Find Schema ting og lav det om til det
             seed.outcome = outcome
+            seed.result = result
 
             # Administration
             self.population.append(seed)

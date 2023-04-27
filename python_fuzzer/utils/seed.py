@@ -13,6 +13,7 @@ class Seed:
         # These will be needed for advanced power schedules
         self.coverage: Set[str] = set()
         self.outcome: str = ""
+        self.result: str = ""
         # self.distance: Union[int, float] = -1
         self.energy = 0.0
 
