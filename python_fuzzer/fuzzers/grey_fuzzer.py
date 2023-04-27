@@ -79,30 +79,38 @@ class GreyboxFuzzer(Fuzzer):
         self.inputs.append(self.inp)
         return self.inp
     
-    def handle_feedback(self, new_coverage, result, outcome):
+    def handle_feedback(self, new_coverage: frozenset, result: str, outcome: str, document: ElementTree):
         # Can check for new coverage or based on result
-        if outcome not in self.outcome_list: 
-            # We are gonna log it, and do all the other things
-            self.outcome_list.append(outcome)
-            seed = Seed(self.inp)
-            seed.coverage = self.runner.code_coverage
+        # could count outcome messages even if false
+        if new_coverage not in self.coverages_seen:
+            # Add to seen coverage
             self.coverages_seen.add(new_coverage)
+
+            # Make new seed
+            seed = Seed(document)
+            seed.coverage = self.runner.code_coverage
+            # Find Schema ting og lav det om til det
+            seed.outcome = outcome
+
+            # Administration
             self.population.append(seed)
+            self.total_coverage = self.total_coverage.union(self.runner.code_coverage)
+
+            # Write and log new file
             filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
             document_path = join(self.population_path, filename)
-            seed.data.write(document_path, encoding="utf-8", xml_declaration=True)
+            document.write(document_path, encoding="utf-8", xml_declaration=True)
             self.logger.log_crash(filename, result)
             self.seed_index += 1
-            # Union new coverage with total coverage
-            self.total_coverage = self.total_coverage.union(self.runner.code_coverage)
-    
+
     def run(self) -> Tuple[Any, str]:
+        # "" since it needs an input
         document: ElementTree = self.fuzz("")
         # Make new name
         filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
         result, outcome, _ = self.runner.run(document, filename)
         new_coverage = frozenset(self.runner.code_coverage)
-        self.handle_feedback(new_coverage, result, outcome)
+        self.handle_feedback(new_coverage, result, outcome, document)
         return result, outcome
 
     def multiple_runs(self, run_count: int, stats: bool) -> List[Tuple[Any, str]]:
