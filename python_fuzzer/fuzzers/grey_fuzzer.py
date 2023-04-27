@@ -87,11 +87,7 @@ class GreyboxFuzzer(Fuzzer):
             self.coverages_seen.add(new_coverage)
 
             # Make new seed
-            seed = Seed(document)
-            seed.coverage = self.runner.code_coverage
-            # Find Schema ting og lav det om til det
-            seed.outcome = outcome
-            seed.result = result
+            seed = Seed(document, self.runner.code_coverage, outcome, result)
 
             # Administration
             self.population.append(seed)
