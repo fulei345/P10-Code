@@ -16,6 +16,50 @@ class LegalMonetaryTotal(): #!
     PayableAlternativeAmount: float #Optional[float] #datatype: amount
 
 @dataclass 
+class Country():
+    IdentificationCode: str #Optional[str] # code
+    Name: str #Optional[str]
+
+@dataclass 
+class Address():
+    ID: str #Optional[str]
+    AddressTypeCode: str #Optional[str] # code
+    AddressFormatCode: str #Optional[str] # code
+    Postbox: str #Optional[str] 
+    Floor: str #Optional[str]
+    Room: str #Optional[str]
+    StreetName: str #Optional[str] # name
+    AdditionalStreetName: str #Optional[str] # name
+    BlockName: str #Optional[str] # name
+    BuildingName: str #Optional[str] # name
+    BuildingNumber: str #Optional[str]
+    InhouseMail: str #Optional[str]
+    Department: str #Optional[str]
+    MarkAttention: str #Optional[str]
+    MarkCare: str #Optional[str]
+    PlotIdentification: str #Optional[str]
+    CitySubdivisionName: str #Optional[str] # name
+    CityName: str #Optional[str] # name
+    PostalZone: str #Optional[str]
+    CountrySubentity: str #Optional[str]
+    CountrySubentityCode: str #Optional[str] # code
+    Region: str #Optional[str] 
+    District: str #Optional[str]
+    TimezoneOffset: str #Optional[str]
+    #AddressLine #Optional[ #multiple instances possible
+    Country: Country #Optional[Country
+    #LocationCoordinate #Optional[
+
+@dataclass 
+class TaxScheme():
+    ID: str #Optional[str]
+    Name: str #Optional[str] # name
+    TaxTypeCode: str #Optional[str] # code
+    CurrencyCode: str #Optional[str] # code
+    JurisdictionRegionAddress: Address #Optional[ #multiple instances possible
+
+
+@dataclass 
 class TaxCategory():
     ID: str #Optional[str]
     Name: str #Optional[str] #datatype: name
@@ -69,46 +113,11 @@ class PaymentTerms():
     #TradeFinancing
 
 @dataclass 
-class Address():
-    ID: str #Optional[str]
-    AddressTypeCode: str #Optional[str] # code
-    AddressFormatCode: str #Optional[str] # code
-    Postbox: str #Optional[str] 
-    Floor: str #Optional[str]
-    Room: str #Optional[str]
-    StreetName: str #Optional[str] # name
-    AdditionalStreetName: str #Optional[str] # name
-    BlockName: str #Optional[str] # name
-    BuildingName: str #Optional[str] # name
-    BuildingNumber: str #Optional[str]
-    InhouseMail: str #Optional[str]
-    Department: str #Optional[str]
-    MarkAttention: str #Optional[str]
-    MarkCare: str #Optional[str]
-    PlotIdentification: str #Optional[str]
-    CitySubdivisionName: str #Optional[str] # name
-    CityName: str #Optional[str] # name
-    PostalZone: str #Optional[str]
-    CountrySubentity: str #Optional[str]
-    CountrySubentityCode: str #Optional[str] # code
-    Region: str #Optional[str] 
-    District: str #Optional[str]
-    TimezoneOffset: str #Optional[str]
-    #AddressLine #Optional[ #multiple instances possible
-    Country: Country #Optional[Country
-    #LocationCoordinate #Optional[
-
-@dataclass 
 class FinancialInstitutionBranch():
     ID: str #Optional[str]
     Name: str #Optional[str] #datatype: name
     #FinancialInstitution #Optional[
     Address: Address #Optional[
-
-@dataclass 
-class Country():
-    IdentificationCode: str #Optional[str] # code
-    Name: str #Optional[str]
 
 @dataclass 
 class FinancialAccount():
@@ -203,13 +212,6 @@ class PartyLegalEntity(): #!
     #StakeholderParty Optional[ #multiple instances possible
     #CompanyDossierDocumentReference Optional[
 
-@dataclass 
-class TaxScheme():
-    ID: str #Optional[str]
-    Name: str #Optional[str] # name
-    TaxTypeCode: str #Optional[str] # code
-    CurrencyCode: str #Optional[str] # code
-    JurisdictionRegionAddress: Address #Optional[ #multiple instances possible
 
 @dataclass 
 class PartyTaxScheme():
