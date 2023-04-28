@@ -18,6 +18,7 @@ from runners import RaspRunner
 from loggers import FeedbackLogger
 from utils import Seed
 from scheduler import PowerSchedule
+from config import MUTATION_COUNT
 
 class GreyboxFuzzer(Fuzzer):
     def __init__(self,
@@ -62,7 +63,7 @@ class GreyboxFuzzer(Fuzzer):
 
         # Stacking: Apply multiple mutations to generate the candidate
         candidate = deepcopy(seed.data)
-        num_mutations = random.randint(1, self.mutation_count)
+        num_mutations = random.randint(1, MUTATION_COUNT)
         for _ in range(num_mutations):
             candidate = self.mutator.mutate(candidate)
         return candidate
