@@ -3,7 +3,7 @@ import random
 import sys
 sys.path.append("..")
 from utils import Seed
-
+from config import WEIGHTED_PS
 
 class PowerSchedule:
     """Define how fuzzing time should be distributed across the population."""
@@ -14,15 +14,19 @@ class PowerSchedule:
 
     def assignEnergy(self, population: Sequence[Seed]) -> None:
         """Assigns Schema 1, Valid 3 and else 2"""
-        for seed in population:
-            if seed.result.find("Schema"):
-                seed.energy = 1
-            else:
-                if seed.outcome == "PASS":
-                    seed.energy = 3
+        if WEIGHTED_PS:
+            for seed in population:
+                if seed.result.find("Schema"):
+                    seed.energy = 1
                 else:
-                    seed.energy = 2
-
+                    if seed.outcome == "PASS":
+                        seed.energy = 3
+                    else:
+                        seed.energy = 2
+        else:
+            # 1 to each
+            for seed in population:
+                seed.energy = 1
     def normalizedEnergy(self, population: Sequence[Seed]) -> List[float]:
         """Normalize energy"""
         energy = list(map(lambda seed: seed.energy, population))

@@ -5,6 +5,7 @@ from .runners import *
 from .fuzzers import *
 from .scheduler import *
 from .utils import *
+from .config import *
 
 __all__ = ["Logger", "FeedbackLogger",
            "Mutator", "FieldMutator", "StructureMutator", "GeneralMutator"
