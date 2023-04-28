@@ -12,8 +12,10 @@ class Seed:
 
         # These will be needed for advanced power schedules
         self.coverage: Set[str] = set()
-        # self.distance: Union[int, float] = -1
+        self.outcome: str = ""
+        self.result: str = ""
         self.energy = 0.0
+        self.chosen_count = 0
 
     def __str__(self) -> str:
         """Returns data as string representation of the seed"""
