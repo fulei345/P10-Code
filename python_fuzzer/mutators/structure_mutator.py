@@ -59,6 +59,7 @@ class StructureMutator(Mutator):
                     parent = self.parent_map[elem]
                     insert_index = random.randint(0, len(parent))
                     parent.insert(insert_index, subelement)
+                    return parent
         return parent
 
 
