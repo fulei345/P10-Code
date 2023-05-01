@@ -1,11 +1,13 @@
 import random
 from typing import Any, List, Callable
 from xml.etree.ElementTree import ElementTree, tostring, fromstring, Element
+from dataclasses import dataclass, fields, field
 
 from .mutator import Mutator
 import sys
 
 sys.path.append("..")
+from invoice.invoice_structure import *
 from utils import TypeGenerator
 
 INTERESTING8 = [-128, -1, 0, 1, 16, 32, 64, 100, 127]
@@ -16,18 +18,22 @@ INTERESTING32 = [0, 1, 32768, 65535, 65536, 100663045, 2147483647, 4294967295]
 class FieldMutator(Mutator):
     def __init__(self, verbose: bool) -> None:
         self.verbose: bool = verbose
+        self.parent_map = dict()
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [self.replace_string_mutator,
+        self.string_mutators: List[Callable[[Any], Any]] = [self.replace_string_mutator,
                                                      self.replace_sub_mutator,
                                                      self.replace_char_mutator,
                                                      self.delete_sub_mutator,
                                                      self.delete_char_mutator,
                                                      self.add_sub_mutator,
-                                                     self.add_char_mutator,
-                                                     self.interesting8_mutator,
+                                                     self.add_char_mutator
+                                                     ]
+        
+        self.int_mutators: List[Callable[[Any], Any]] = [self.interesting8_mutator,
                                                      self.interesting16_mutator,
                                                      self.interesting32_mutator
                                                      ]
+
         # self.dont_mutate: List[str] = ["CustomizationID",
         #                                "CopyIndicator", "FreeOfChargeIndicator", "CatalogueIndicator", "HazardousRiskIndicator"
         #                                "IssueDate", "TaxPointDate", "ActualDeliveryDate", "LatestDeliveryDate", "Date", "TaxPointDate"]
@@ -39,12 +45,27 @@ class FieldMutator(Mutator):
         """
         root: Element = document.getroot()
         total_size = sum(1 for _ in root.iter())
-        mutator: Callable[[Any], Any] = random.choice(self.mutators)
         index: int = random.randint(1, total_size)
-        for i, elem in enumerate(root.iter()):
+        self.parent_map = {c:p for p in root.iter() for c in p}
+        for i, elem in enumerate(root.iter()):            
             if i == index:
-                field: str = mutator(elem.text)
-                elem.text = field
+                class_name = self.parent_map[elem].tag.split("}")[1]
+                print("class_name: ", class_name)
+                field_type = str
+                lol = globals()[class_name]
+                print("lol: ", lol)
+                for f in fields(lol): 
+                    if f.name == elem.tag.split("}")[1]:
+                        field_type = f.type
+                print("field_type: ", field_type)
+                mutator: Callable[[Any], Any]
+                if field_type == int:
+                    mutator = random.choice(self.int_mutators)
+                    print("hi")
+                else:
+                    mutator = random.choice(self.string_mutators)
+                fiel: str = mutator(elem.text)
+                elem.text = fiel
                 return document
         return document
 
