@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Tuple
-from xml.etree.ElementTree import ElementTree
+from xml.etree.cElementTree import ElementTree
 from os.path import join
 from copy import deepcopy
 

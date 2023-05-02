@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Callable, Optional
-from xml.etree.ElementTree import ElementTree, Element, SubElement
+from xml.etree.cElementTree import ElementTree, Element
 from dataclasses import dataclass, fields
 from datetime import date, time
 import string
