@@ -50,9 +50,12 @@ class StructureMutator(Mutator):
         parent = check_element
         child = subelement
         while parent != child:
-            parent = self.parent_map[child]
-            if parent not in self.parent_map:
+            if child not in self.parent_map:
                 return True
+            else:
+                temp_p = parent
+                parent = self.parent_map[child]
+                child = temp_p
         return False
 
     # when used directly it insert duplicate of the field - is also used to insert fields when moving fields or add new fields
