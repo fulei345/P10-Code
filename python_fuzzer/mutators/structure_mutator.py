@@ -47,6 +47,18 @@ class StructureMutator(Mutator):
                     print(index)
                     return document
         return document
+    
+    def check_if_parent(self, check_element: Element, subelement: Element) -> bool:
+        parent = check_element
+        child = subelement
+        while parent != child:
+            if child not in self.parent_map:
+                return True
+            else:
+                temp_p = parent
+                parent = self.parent_map[child]
+                child = temp_p
+        return False
 
     # when used directly it insert duplicate of the field - is also used to insert fields when moving fields or add new fields
     def insert_field(self, parent: Element, subelement: Element) -> Element:
@@ -58,7 +70,7 @@ class StructureMutator(Mutator):
         else:
             index = random.randint(1, self.total_size)
             for i, elem in enumerate(self.root.iter()):
-                if i == index:
+                if i >= index and self.check_if_parent(self.parent_map[elem], subelement): 
                     parent = self.parent_map[elem]
                     insert_index = random.randint(0, len(parent))
                     parent.insert(insert_index, subelement)
