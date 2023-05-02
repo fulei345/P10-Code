@@ -49,6 +49,7 @@ class StructureMutator(Mutator):
 
     # when used directly it insert duplicate of the field - is also used to insert fields when moving fields or add new fields
     def insert_field(self, parent: Element, subelement: Element) -> Element:
+        print("insert field")
         # 50% sætte i parent eller uniformt i hele file
         if(random.random() < IF_PROB ):
             index = random.randint(0, len(parent))
@@ -65,14 +66,14 @@ class StructureMutator(Mutator):
 
 
     def delete_field(self, parent: Element, subelement: Element) -> Element:
-        
+        print("delete field")
         parent.remove(subelement)
         
         return parent
     
 
     def move_field(self, parent: Element, subelement: Element) -> Element:
-        
+        print("move field")
         parent.remove(subelement)
         
         self.insert_field(parent, subelement)
@@ -81,6 +82,7 @@ class StructureMutator(Mutator):
         
     #create new field and insert in the document
     def add_field(self, parent: Element) -> Element:
+        print("add field")
         #TODO probably make this general so it could be other types of documents as well (if their structure was made lol)
         #randomly choose one of the Invoice direct subelements to create        
         field = random.choice(fields(Invoice))
