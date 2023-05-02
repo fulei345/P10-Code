@@ -105,7 +105,6 @@ class RaspRunner(Runner):
 
             if self.verbose:
                 print(fault_message)
-            # If it was not E-RSP
             return fault_message, self.UNKNOWN, self.code_coverage
 
         else:
