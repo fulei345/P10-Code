@@ -34,7 +34,6 @@ class GreyboxFuzzer(Fuzzer):
 
         self.seed_index: int = 0
         self.population: List[ElementTree] = []
-        self.inputs: List[ElementTree] = []
         self.population_path: str = population_path
         self.verbose: bool = verbose
         self.total_coverage = set()
@@ -75,16 +74,14 @@ class GreyboxFuzzer(Fuzzer):
         else:
             # Mutating
             self.inp = self.create_candidate()
-
-        self.inputs.append(self.inp)
         return self.inp
-    
-    def handle_feedback(self, new_coverage, result, outcome):
+
+    def handle_feedback(self, new_coverage, result, outcome, document):
         # Can check for new coverage or based on result
         if outcome not in self.outcome_list: 
             # We are gonna log it, and do all the other things
             self.outcome_list.append(outcome)
-            seed = Seed(self.inp)
+            seed = Seed(document)
             seed.coverage = self.runner.code_coverage
             self.coverages_seen.add(new_coverage)
             self.population.append(seed)
@@ -102,7 +99,7 @@ class GreyboxFuzzer(Fuzzer):
         filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
         result, outcome, _ = self.runner.run(document, filename)
         new_coverage = frozenset(self.runner.code_coverage)
-        self.handle_feedback(new_coverage, result, outcome)
+        self.handle_feedback(new_coverage, result, outcome, document)
         return result, outcome
 
     def multiple_runs(self, run_count: int, stats: bool) -> List[Tuple[Any, str]]:
