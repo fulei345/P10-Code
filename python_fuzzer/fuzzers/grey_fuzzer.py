@@ -113,7 +113,6 @@ class GreyboxFuzzer(Fuzzer):
         document: ElementTree = self.fuzz("")
         # Make new name
         filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
-        print(self.chosen_seed.population_name)
         result, outcome, _ = self.runner.run(document, filename)
         new_coverage = frozenset(self.runner.code_coverage)
         self.handle_feedback(new_coverage, result, outcome, document)

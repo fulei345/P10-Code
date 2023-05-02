@@ -46,7 +46,6 @@ class FieldMutator(Mutator):
                 if elem.text is None:
                     return document
                 field: str = mutator(elem.text)
-                
                 elem.text = field
                 return document
         return document

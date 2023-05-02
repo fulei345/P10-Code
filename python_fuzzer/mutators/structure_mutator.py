@@ -44,7 +44,6 @@ class StructureMutator(Mutator):
             for i, elem in enumerate(root.iter()):
                 if i == index:
                     mutator(self.parent_map[elem], elem)
-                    print(index)
                     return document
         return document
     
