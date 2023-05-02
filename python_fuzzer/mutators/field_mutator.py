@@ -43,7 +43,10 @@ class FieldMutator(Mutator):
         index: int = random.randint(1, total_size)
         for i, elem in enumerate(root.iter()):
             if i == index:
+                if elem.text is None:
+                    return document
                 field: str = mutator(elem.text)
+                
                 elem.text = field
                 return document
         return document
