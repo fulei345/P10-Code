@@ -106,3 +106,19 @@ class FieldMutator(Mutator):
     def interesting32_mutator(self, data: str) -> str:
         data = random.choice(INTERESTING32)
         return str(data)
+
+    # Should only be used when we know the type to be integer
+    def addition_mutator(self, data: str) -> str:
+        num_add: int = random.randint(1, 36)
+        num = int(data)
+
+        num = num + num_add
+        return str(num)
+    
+    # Should only be used when we know the type to be integer
+    def subtraction_mutator(self, data: str) -> str:
+        num_sub: int = random.randint(1, 36)
+        num = int(data)
+
+        num = num + num_sub
+        return str(num)
