@@ -1,5 +1,5 @@
 from typing import List, Set, Union, Any
-from xml.etree.ElementTree import Element, ElementTree, parse, ParseError
+from xml.etree.cElementTree import Element, ElementTree, parse, ParseError
 
 
 class Seed:
@@ -16,6 +16,7 @@ class Seed:
         self.result: str = ""
         self.energy = 0.0
         self.chosen_count = 0
+        self.population_name = "first"
 
     def __str__(self) -> str:
         """Returns data as string representation of the seed"""

@@ -1,6 +1,6 @@
 from typing import List, Any
 from abc import ABC, abstractmethod
-from xml.etree.ElementTree import ElementTree
+from xml.etree.cElementTree import ElementTree
 
 class InputParser(ABC):
     @abstractmethod

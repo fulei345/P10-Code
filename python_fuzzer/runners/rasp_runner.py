@@ -2,7 +2,7 @@ from typing import Any, Tuple, List
 from subprocess import run
 from os import getcwd
 from os.path import join
-from xml.etree.ElementTree import ElementTree
+from xml.etree.cElementTree import ElementTree
 from re import search, findall
 import traceback
 

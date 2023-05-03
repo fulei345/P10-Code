@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Callable
-from xml.etree.ElementTree import ElementTree, tostring, fromstring, Element
+from xml.etree.cElementTree import ElementTree, tostring, fromstring, Element
 
 if __name__ == "__main__":
     from mutator import Mutator

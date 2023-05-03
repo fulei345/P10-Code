@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Callable
-from xml.etree.ElementTree import ElementTree, tostring, fromstring, Element
+from xml.etree.cElementTree import ElementTree, tostring, fromstring, Element
 
 from .mutator import Mutator
 import sys
@@ -43,6 +43,8 @@ class FieldMutator(Mutator):
         index: int = random.randint(1, total_size)
         for i, elem in enumerate(root.iter()):
             if i == index:
+                if elem.text is None:
+                    return document
                 field: str = mutator(elem.text)
                 elem.text = field
                 return document
