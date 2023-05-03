@@ -11,6 +11,7 @@ import sys
 sys.path.append("..")
 from invoice import Invoice
 from utils import TypeGenerator
+from config import IF_PROB
 
 
 class StructureMutator(Mutator):
@@ -49,7 +50,7 @@ class StructureMutator(Mutator):
     # when used directly it insert duplicate of the field - is also used to insert fields when moving fields or add new fields
     def insert_field(self, parent: Element, subelement: Element) -> Element:
         # 50% sætte i parent eller uniformt i hele file
-        if(random.random() < 0.5 ):
+        if(random.random() < IF_PROB ):
             index = random.randint(0, len(parent))
             parent.insert(index, subelement) #insert field in parent class
         else:
