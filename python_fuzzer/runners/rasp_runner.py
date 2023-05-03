@@ -84,9 +84,7 @@ class RaspRunner(Runner):
             if len(ersp_num) > 1:
                 # Log forskellige, hvis der er flere
                 if ersp_num[1] == "E-RSP15324":
-                    outcome = "E-RSP15324-" + str(self.count)
-                    self.count += 1
-                    return fault_message, outcome, self.code_coverage
+                    return fault_message, ersp_num[1], self.code_coverage
 
             # If it is E-RSP and not already seen number
             if len(ersp_num) > 0 and ersp_num[0] not in self.ersp_nums:

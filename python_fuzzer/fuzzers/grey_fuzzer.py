@@ -1,5 +1,5 @@
 import random
-from typing import Any, List, Tuple
+from typing import Any, List, Tuple, Set
 from xml.etree.cElementTree import ElementTree
 from os.path import join
 from copy import deepcopy
@@ -18,7 +18,8 @@ from runners import RaspRunner
 from loggers import FeedbackLogger
 from utils import Seed
 from scheduler import PowerSchedule
-from config import MUTATION_COUNT
+from config import MUTATION_COUNT, COVERAGE_BASED
+
 
 class GreyboxFuzzer(Fuzzer):
     def __init__(self,
@@ -46,13 +47,16 @@ class GreyboxFuzzer(Fuzzer):
         self.mutation_count: int = mutation_count
 
         self.outcome_list: List[str] = []
+        self.coverage_list: List[set] = []
+        self.log_count = 0
 
         self.chosen_seed = None
         self.reset()
 
     def reset(self) -> None:
         """"Reset the initial population, seed index, coverage information"""
-        self.coverages_seen = set()
+        self.coverages_list: List[set] = []
+        self.outcome_list: List[str] = []
         self.population = list(map(lambda x: Seed(x), self.seeds))
         self.seed_index: int = 0
 
@@ -81,31 +85,50 @@ class GreyboxFuzzer(Fuzzer):
             self.inp = self.create_candidate()
         return self.inp
     
+    def add_to_population(self, result: str, outcome: str, document: ElementTree):
+        # Make new seed
+        seed = Seed(document)
+        seed.coverage = self.runner.code_coverage
+        seed.outcome = outcome
+        seed.result = result
+
+        # Administration
+        self.population.append(seed)
+        self.total_coverage = self.total_coverage.union(self.runner.code_coverage)
+
+        # Write and log new file
+        filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
+        document_path = join(self.population_path, filename)
+        document.write(document_path, encoding="utf-8", xml_declaration=True)
+        self.logger.log_crash(filename, result)
+        seed.population_name = filename
+        self.seed_index += 1
+
+    def only_log(self, result: str, outcome: str, document: ElementTree):
+        # Write and log new file
+        filename: str = outcome + "-" + str(self.log_count) + ".xml"
+        self.log_count += 1
+        document_path = join(self.population_path, filename)
+        document.write(document_path, encoding="utf-8", xml_declaration=True)
+        self.logger.log_crash(filename, result)
+    
     def handle_feedback(self, new_coverage: frozenset, result: str, outcome: str, document: ElementTree):
-        # Can check for new coverage or based on result
-        # could count outcome messages even if false
-        if new_coverage not in self.coverages_seen:
-            # Add to seen coverage
 
-            self.coverages_seen.add(new_coverage)
+        # Log special stuff        
+        if "E-RSP15324" in outcome:
+            self.only_log(result, outcome, document)
 
-            # Make new seed
-            seed = Seed(document)
-            seed.coverage = self.runner.code_coverage
-            seed.outcome = outcome
-            seed.result = result
-
-            # Administration
-            self.population.append(seed)
-            self.total_coverage = self.total_coverage.union(self.runner.code_coverage)
-
-            # Write and log new file
-            filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
-            document_path = join(self.population_path, filename)
-            document.write(document_path, encoding="utf-8", xml_declaration=True)
-            self.logger.log_crash(filename, result)
-            seed.population_name = filename
-            self.seed_index += 1
+        # Coverage based eller Outcome based
+        if COVERAGE_BASED:
+            if new_coverage not in self.coverages_list:
+                # Add to seen coverage
+                self.coverages_list.append(new_coverage)
+                self.add_to_population(result, outcome, document)
+        else:
+            if outcome not in self.outcome_list:
+                # Add to outcome list
+                self.outcome_list.append(outcome)
+                self.add_to_population(result, outcome, document)
 
 
     def run(self) -> Tuple[Any, str]:
@@ -125,7 +148,7 @@ class GreyboxFuzzer(Fuzzer):
         for i in range(run_count):
             result = self.run()
             run_num = i + 1
-            path_num = len(self.coverages_seen)
+            path_num = len(self.coverages_list)
             if result[0] not in results:
                 results.append(result[0])
                 result_num += 1
@@ -137,7 +160,7 @@ class GreyboxFuzzer(Fuzzer):
 
         # Filter results marked as "PASS"
         if self.verbose:
-            for cov in self.coverages_seen:
+            for cov in self.coverages_list:
                 print(cov)
             print(len(self.population))
 
