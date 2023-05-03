@@ -18,7 +18,8 @@ from runners import RaspRunner
 from loggers import FeedbackLogger
 from utils import Seed
 from scheduler import PowerSchedule
-from config import MUTATION_COUNT
+from config import MUTATION_COUNT, COVERAGE_BASED
+
 
 class GreyboxFuzzer(Fuzzer):
     def __init__(self,
