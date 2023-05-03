@@ -1,5 +1,5 @@
 import random
-from typing import Any, List, Tuple
+from typing import Any, List, Tuple, Set
 from xml.etree.cElementTree import ElementTree
 from os.path import join
 from copy import deepcopy
@@ -55,7 +55,7 @@ class GreyboxFuzzer(Fuzzer):
 
     def reset(self) -> None:
         """"Reset the initial population, seed index, coverage information"""
-        self.coverages_list = List[set] = []
+        self.coverages_list: List[set] = []
         self.outcome_list: List[str] = []
         self.population = list(map(lambda x: Seed(x), self.seeds))
         self.seed_index: int = 0
@@ -122,12 +122,12 @@ class GreyboxFuzzer(Fuzzer):
         if COVERAGE_BASED:
             if new_coverage not in self.coverages_list:
                 # Add to seen coverage
-                self.coverages_list.add(new_coverage)
+                self.coverages_list.append(new_coverage)
                 self.add_to_population(result, outcome, document)
         else:
             if outcome not in self.outcome_list:
                 # Add to outcome list
-                self.outcome_list.add(outcome)
+                self.outcome_list.append(outcome)
                 self.add_to_population(result, outcome, document)
 
 
