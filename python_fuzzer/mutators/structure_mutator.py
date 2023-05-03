@@ -49,7 +49,7 @@ class StructureMutator(Mutator):
     
     def check_if_ancestor(self, ancestor: Element, subelement: Element) -> bool:
         parent = self.parent_map[ancestor]
-        child = ancestor
+        child = parent
         while subelement != parent:
             if parent not in self.parent_map or child not in self.parent_map:
                 return True
