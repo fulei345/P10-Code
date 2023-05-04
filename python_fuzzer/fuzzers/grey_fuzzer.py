@@ -127,6 +127,7 @@ class GreyboxFuzzer(Fuzzer):
         else:
             if outcome not in self.outcome_list:
                 # Add to outcome list
+                self.coverages_list.append(new_coverage)
                 self.outcome_list.append(outcome)
                 self.add_to_population(result, outcome, document)
 
