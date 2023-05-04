@@ -30,8 +30,11 @@ class FeedbackLogger(Logger):
         log_name = join(self.path,filename + ".txt")
         with open(log_name, "w", encoding="utf-8") as file:
             # set a list of lines to add:
-            lines = [filename + "\n", "-------------------------------------------------\n", out]
-            file.writelines(lines)
+            message = out.splitlines()
+            message = [line + "\n" for line in message]
+            file.write(filename + "\n")
+            file.write("-------------------------------------------------\n")
+            file.writelines(message)
 
     def log_crash(self, filename: str, out: Any) -> None:
         """
@@ -42,5 +45,8 @@ class FeedbackLogger(Logger):
         log_name = join(self.log_path, filename + ".txt")
         with open(log_name, "w", encoding="utf-8") as file:
             # set a list of lines to add:
-            lines = [filename + "\n", "-------------------------------------------------\n", out]
-            file.writelines(lines)
+            message = out.splitlines()
+            message = [line + "\n" for line in message]
+            file.write(filename + "\n")
+            file.write("-------------------------------------------------\n")
+            file.writelines(message)

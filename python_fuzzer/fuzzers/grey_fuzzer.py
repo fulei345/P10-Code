@@ -115,7 +115,7 @@ class GreyboxFuzzer(Fuzzer):
     def handle_feedback(self, new_coverage: frozenset, result: str, outcome: str, document: ElementTree):
 
         # Log special stuff        
-        if "E-RSP15324" in outcome:
+        if "E-RSP15324" in outcome or "UNKNOWN" in outcome:
             self.only_log(result, outcome, document)
 
         # Coverage based eller Outcome based
