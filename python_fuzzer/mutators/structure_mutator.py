@@ -104,7 +104,7 @@ class StructureMutator(Mutator):
     def make_element(self, field) -> Element:
         
         #make element with the name
-        elem = Element(field.name)
+        elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" + "}" + field.name)
 
         #makes text for element according to its field type
         if field.type == str: #or field.type == Optional[str]:
@@ -122,6 +122,7 @@ class StructureMutator(Mutator):
         elif field.type == float: #or field.type == Optional[float]:
             elem.text = TypeGenerator.make_float()
         else:
+            elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" + "}" + field.name)
             elem = self.make_subclass(elem, field.type)
             
         return elem   
