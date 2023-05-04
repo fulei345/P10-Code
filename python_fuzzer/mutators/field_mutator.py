@@ -31,7 +31,9 @@ class FieldMutator(Mutator):
         
         self.int_mutators: List[Callable[[Any], Any]] = [self.interesting8_mutator,
                                                      self.interesting16_mutator,
-                                                     self.interesting32_mutator
+                                                     self.interesting32_mutator,
+                                                     self.addition_mutator,
+                                                     self.subtraction_mutator
                                                      ]
 
         # self.dont_mutate: List[str] = ["CustomizationID",
