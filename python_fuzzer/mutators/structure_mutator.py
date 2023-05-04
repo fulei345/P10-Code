@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Callable, Optional
-from xml.etree.ElementTree import ElementTree, Element, SubElement
+from xml.etree.cElementTree import ElementTree, Element
 from dataclasses import dataclass, fields
 from datetime import date, time
 import string
@@ -46,6 +46,18 @@ class StructureMutator(Mutator):
                     mutator(self.parent_map[elem], elem)
                     return document
         return document
+    
+    def check_if_ancestor(self, ancestor: Element, subelement: Element) -> bool:
+        parent = self.parent_map[ancestor]
+        child = parent
+        while subelement != parent:
+            if parent not in self.parent_map or child not in self.parent_map:
+                return True
+            else:
+                temp_p = parent
+                parent = self.parent_map[child]
+                child = temp_p
+        return False
 
     # when used directly it insert duplicate of the field - is also used to insert fields when moving fields or add new fields
     def insert_field(self, parent: Element, subelement: Element) -> Element:
@@ -56,22 +68,21 @@ class StructureMutator(Mutator):
         else:
             index = random.randint(1, self.total_size)
             for i, elem in enumerate(self.root.iter()):
-                if i == index:
+                if i >= index and self.check_if_ancestor(elem, subelement): 
                     parent = self.parent_map[elem]
                     insert_index = random.randint(0, len(parent))
                     parent.insert(insert_index, subelement)
+                    return parent
         return parent
 
 
     def delete_field(self, parent: Element, subelement: Element) -> Element:
-        
         parent.remove(subelement)
         
         return parent
     
 
     def move_field(self, parent: Element, subelement: Element) -> Element:
-        
         parent.remove(subelement)
         
         self.insert_field(parent, subelement)

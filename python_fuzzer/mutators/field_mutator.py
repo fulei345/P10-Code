@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Callable
-from xml.etree.ElementTree import ElementTree, tostring, fromstring, Element
+from xml.etree.cElementTree import ElementTree, tostring, fromstring, Element
 from dataclasses import dataclass, fields, field
 
 from .mutator import Mutator
@@ -60,8 +60,10 @@ class FieldMutator(Mutator):
                     mutator = random.choice(self.int_mutators)
                 else:
                     mutator = random.choice(self.string_mutators)
-                fiel: str = mutator(elem.text)
-                elem.text = fiel
+                if elem.text is None:
+                    return document
+                field: str = mutator(elem.text)
+                elem.text = field
                 return document
         return document
 
