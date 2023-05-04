@@ -54,8 +54,9 @@ class FieldMutator(Mutator):
                 parent_class_name = self.parent_map[elem].tag.split("}")[1]
                 parent = invoice_type_dict[parent_class_name]
                 field_type = str
+                class_name = elem.tag.split("}")[1]
                 for f in fields(parent): 
-                    if f.name == elem.tag.split("}")[1]:
+                    if f.name == class_name:
                         field_type = f.type
                 mutator: Callable[[Any], Any]
                 if field_type == int:
