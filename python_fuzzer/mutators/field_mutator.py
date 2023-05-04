@@ -7,7 +7,7 @@ from .mutator import Mutator
 import sys
 
 sys.path.append("..")
-from invoice.invoice_structure import *
+from invoice.invoice_structure import invoice_type_dict
 from utils import TypeGenerator
 
 INTERESTING8 = [-128, -1, 0, 1, 16, 32, 64, 100, 127]
@@ -49,19 +49,15 @@ class FieldMutator(Mutator):
         self.parent_map = {c:p for p in root.iter() for c in p}
         for i, elem in enumerate(root.iter()):            
             if i == index:
-                class_name = self.parent_map[elem].tag.split("}")[1]
-                print("class_name: ", class_name)
+                parent_class_name = self.parent_map[elem].tag.split("}")[1]
+                parent = invoice_type_dict[parent_class_name]
                 field_type = str
-                lol = globals()[class_name]
-                print("lol: ", lol)
-                for f in fields(lol): 
+                for f in fields(parent): 
                     if f.name == elem.tag.split("}")[1]:
                         field_type = f.type
-                print("field_type: ", field_type)
                 mutator: Callable[[Any], Any]
                 if field_type == int:
                     mutator = random.choice(self.int_mutators)
-                    print("hi")
                 else:
                     mutator = random.choice(self.string_mutators)
                 fiel: str = mutator(elem.text)
