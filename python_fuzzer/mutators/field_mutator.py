@@ -53,7 +53,7 @@ class FieldMutator(Mutator):
             if i == index:
                 parent_class_name = self.parent_map[elem].tag.split("}")[1]
                 parent = invoice_type_dict[parent_class_name]
-                field_type = str
+                field_type = None
                 class_name = elem.tag.split("}")[1]
                 for f in fields(parent): 
                     if f.name == class_name:
