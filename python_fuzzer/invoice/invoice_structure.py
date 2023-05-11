@@ -555,7 +555,7 @@ class Invoice():
     DeliveryTerms: DeliveryTerms #Optional[
     PaymentMeans: PaymentMeans #Optional[ - multiple instances possible
     PaymentTerms: PaymentTerms #Optional[ - multiple instances possible
-    # PrepaidPayment Optional[ - multiple instances possible
+    PrepaidPayment: Payment #Optional[ - multiple instances possible
     AllowanceCharge: AllowanceCharge #Optional[ - multiple instances possible
     TaxExchangeRate: TaxExchangeRate #Optional[TaxExchangeRate]
     PricingExchangeRate: PricingExchangeRate #Optional[PricingExchangeRate]
@@ -647,5 +647,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'IssuerParty': Party,
 'ManufacturerParty': Party,
 'InformationContentProviderParty': Party,
-'OriginatorParty': Party
+'OriginatorParty': Party,
+'PrepaidPayment': Payment
 }
