@@ -330,6 +330,18 @@ class DocumentReference():
     XPath: str #Optional[List[str]] #multiple instances possible
     Attachment: Attachment #Optional[Attachment]
 
+@dataclass 
+class Signature():
+    ID: str 
+    Note: str #Optional[str]
+    ValidationDate: date #Optional[date]
+    ValidationTime: time #Optional[time]
+    ValidatorID: str #Optional[str]
+    CanonicalizationMethod: str #Optional[str]
+    SignatureMethod: str #Optional[str]
+    SignatoryParty: Party
+    DigitalSignatureAttachment: Attachment #Optional[Attachment]
+    OriginalDocumentReference: DocumentReference #Optional[DocumentReference]
     
 @dataclass 
 class ForeignExchangeContract():
@@ -339,7 +351,7 @@ class ForeignExchangeContract():
     ContractTypeCode: str #Optional[str] # code
     ContractType: str #Optional[str]
     #ValidityPeriod #Optional[ValidityPeriod]
-    ContractDocumentReference: DocumentReference #Optional[ContractDocumentReference]
+    ContractDocumentReference: DocumentReference #Optional[DocumentReference]
 
 @dataclass 
 class TaxExchangeRate():
@@ -520,8 +532,8 @@ class Invoice():
     ReceiptDocumentReference: DocumentReference #Optional[List[ReceiptDocumentReference]] # multiple instances possible
     OriginatorDocumentReference: DocumentReference #Optional[List[OriginatorDocumentReference]] # multiple instances possible
     ContractDocumentReference: DocumentReference #Optional[ContractDocumentReference]
-    # AdditionalDocumentReference Optional[ - multiple instances possible
-    # Signature Optional[ - multiple instances possible
+    AdditionalDocumentReference: DocumentReference #Optional[ - multiple instances possible
+    Signature: Signature #Optional[ - multiple instances possible
     AccountingSupplierParty: AccountingSupplierParty
     AccountingCustomerParty: AccountingCustomerParty
     PayeeParty: PayeeParty #Optional[PayeeParty]
