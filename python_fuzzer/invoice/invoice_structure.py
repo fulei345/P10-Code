@@ -500,6 +500,13 @@ class OrderReference():
     DocumentReference: DocumentReference #Optional[DocumentReference]
 
 @dataclass 
+class LineReference():
+    LineID: str
+    UUID: str #Optional[int]
+    LineStatusCode: str #Optional[str] #datatype: code
+    DocumentReference: DocumentReference #Optional[DocumentReference]
+
+@dataclass 
 class OrderLineReference():
     LineID: str
     SalesOrderLineID: str #Optional[int]
@@ -519,8 +526,8 @@ class InvoiceLine():
     AccountingCost: str #Optional[str]
     FreeOfChargeIndicator: bool #Optional[bool]
     OrderLineReference: OrderLineReference #Optional[OrderLineReference]
-    #DespatchLineReference #Optional[ #multiple instances possible
-    #ReceiptLineReference #Optional[ #multiple instances possible
+    DespatchLineReference: LineReference #Optional[ #multiple instances possible
+    ReceiptLineReference: LineReference #Optional[ #multiple instances possible
     BillingReference: BillingReference #Optional[List[BillingReference]] #multiple instances possible
     PricingReference: PricingReference #Optional[PricingReference 
     DocumentReference: DocumentReference #Optional[List[DocumentReference]] #multiple instances possible
@@ -684,5 +691,7 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'PrepaidPayment': Payment,
 'UBLExtensions': UBLExtensions,
 'UBLExtension': UBLExtension,
-'PricingReference': PricingReference
+'PricingReference': PricingReference,
+'DespatchLineReference': LineReference,
+'ReceiptLineReference': LineReference
 }
