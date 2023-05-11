@@ -4,6 +4,16 @@ from dataclasses import dataclass, fields
 
 
 @dataclass 
+class Payment():
+    ID: str #Optional[str]
+    PaidAmount: float #Optional[float] #datatype: amount
+    ReceivedDate: date #Optional[date] 
+    PaidDate: date #Optional[date] 
+    PaidTime: time #Optional[time]   
+    InstructionID: str #Optional[str] 
+
+
+@dataclass 
 class Period():
     StartDate: date #Optional[date]
     StartTime: time #Optional[time]
