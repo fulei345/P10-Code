@@ -525,9 +525,26 @@ class InvoiceLine():
     Item: Item 
     Price: Price
 
+@dataclass 
+class UBLExtension(): #?????????????????????????????`?????????????```?`?????`
+    ID: str #Optional[str]
+    Name: str #Optional[str] #datatype: name
+    ExtensionAgencyID: str #Optional[str]
+    ExtensionAgencyName: str #Optional[str] #datatype: name
+    ExtensionVersionID: str #Optional[str]
+    ExtensionAgencyURI: str #Optional[str]
+    ExtensionURI: str #Optional[str]
+    ExtensionReasonCode: str #Optional[str] #code
+    ExtensionReason: str #Optional[str]
+    ExtensionContent: str 
+
+@dataclass 
+class UBLExtensions():
+    UBLExtension: UBLExtension #multiple instances possible
+
 @dataclass #provide automatic generation of __init__(), among other things
 class Invoice():
-    # UBLExtensions Optional[
+    UBLExtensions: UBLExtensions #Optional[
     UBLVersionID: str # identifier
     CustomizationID: str
     ProfileID: str
