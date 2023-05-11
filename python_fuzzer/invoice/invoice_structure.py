@@ -476,7 +476,7 @@ class Item():
     AdditionalItemIdentification: AdditionalItemIdentification #Optional[AdditionalItemIdentification]
     CatalogueDocumentReference: DocumentReference #Optional[DocumentReference]
     ItemSpecificationDocumentReference: DocumentReference #Optional[DocumentReference]
-    #OriginCountry #Optional[
+    OriginCountry: Country #Optional[
     #CommodityClassification #Optional[List[]] #multiple instances possible
     #TransactionConditions #Optional[List[]] #multiple instances possible
     #HazardousItem #Optional[List[]] #multiple instances possible
@@ -693,5 +693,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'UBLExtension': UBLExtension,
 'PricingReference': PricingReference,
 'DespatchLineReference': LineReference,
-'ReceiptLineReference': LineReference
+'ReceiptLineReference': LineReference,
+'OriginCountry': Country
 }
