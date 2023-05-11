@@ -629,4 +629,10 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'OrderLineReference': OrderLineReference,
 'InvoiceLine': InvoiceLine,
 'Invoice': Invoice,
+'Signature': Signature,
+'InvoicePeriod': Period,
+'SettlementPeriod': Period,
+'PenaltyPeriod': Period,
+'ValidityPeriod': Period,
+'RequestedDeliveryPeriod': Period
 }
