@@ -451,6 +451,12 @@ class Price(): #!
     PricingExchangeRate: PricingExchangeRate
 
 @dataclass 
+class PricingReference():
+    #OriginalItemLocationQuantity: ItemLocationQuantity #Optional[
+    AlternativeConditionPrice: Price #Optional[Price] #multiple instances possible
+
+
+@dataclass 
 class Item():
     Description: str #Optional[List[str]] #multiple instances possible
     PackQuantity: float #Optional[float] #datatype: quantity
@@ -516,7 +522,7 @@ class InvoiceLine():
     #DespatchLineReference #Optional[ #multiple instances possible
     #ReceiptLineReference #Optional[ #multiple instances possible
     BillingReference: BillingReference #Optional[List[BillingReference]] #multiple instances possible
-    #PricingReference #Optional[ 
+    PricingReference: PricingReference #Optional[PricingReference 
     DocumentReference: DocumentReference #Optional[List[DocumentReference]] #multiple instances possible
     OriginatorParty: Party #Optional[ 
     Delivery: Delivery #Optional[List[Delivery]] #multiple instances possible
@@ -675,5 +681,8 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'ManufacturerParty': Party,
 'InformationContentProviderParty': Party,
 'OriginatorParty': Party,
-'PrepaidPayment': Payment
+'PrepaidPayment': Payment,
+'UBLExtensions': UBLExtensions,
+'UBLExtension': UBLExtension,
+'PricingReference': PricingReference
 }
