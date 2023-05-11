@@ -210,6 +210,20 @@ class Contact():
 
 
 @dataclass 
+class Attachment():
+    EmbeddedDocumentBinaryObject: bytes #Optional[bytes] # binary type
+    #ExternalReference Optional[
+
+@dataclass 
+class DocumentReference():
+    ID: str
+    CopyIndicator: bool #Optional[bool]
+    UUID: str #Optional[int]
+    IssueDate: date #Optional[date] #date type (yyyy-mm-dd)
+    XPath: str #Optional[List[str]] #multiple instances possible
+    Attachment: Attachment #Optional[Attachment]
+
+@dataclass 
 class PartyLegalEntity(): #!
     RegistrationName: str #Optional[str] # name
     CompanyID: str #Optional[int]
@@ -220,8 +234,8 @@ class PartyLegalEntity(): #!
     CorporateStockAmount: float #Optional[float] #datatype: amount
     RegistrationAddress: Address #Optional[
     #CorporateRegistrationScheme Optional[
-    #StakeholderParty Optional[ #multiple instances possible
-    #CompanyDossierDocumentReference Optional[
+    #StakeholderParty: 'Party' #Optional[Party #multiple instances possible #TODO test this one plz and op
+    CompanyDossierDocumentReference: DocumentReference #Optional[DocumentReference
 
 
 @dataclass 
@@ -286,7 +300,7 @@ class Delivery():
     TrackingID: str #Optional[str]
     #DeliveryLocation #Optional[
     RequestedDeliveryPeriod: Period #Optional[Period
-    #DeliveryParty #Optional[
+    DeliveryParty: Party #Optional[Party
     #Despatch #Optional[
 
 @dataclass 
@@ -327,19 +341,6 @@ class AccountingSupplierParty():
     #AccountingContact: Optional[
     #BuyerContact: Optional[
 
-@dataclass 
-class Attachment():
-    EmbeddedDocumentBinaryObject: bytes #Optional[bytes] # binary type
-    #ExternalReference Optional[
-
-@dataclass 
-class DocumentReference():
-    ID: str
-    CopyIndicator: bool #Optional[bool]
-    UUID: str #Optional[int]
-    IssueDate: date #Optional[date] #date type (yyyy-mm-dd)
-    XPath: str #Optional[List[str]] #multiple instances possible
-    Attachment: Attachment #Optional[Attachment]
 
 @dataclass 
 class Signature():
@@ -400,7 +401,7 @@ class BillingReference():
 class BuyersItemIdentification():
     ID: str
     ExtendedID: str #Optional[int]
-    #IssuerParty #Optional[
+    IssuerParty: Party #Optional[
 
 @dataclass 
 class SellersItemIdentification():
@@ -408,7 +409,7 @@ class SellersItemIdentification():
     ExtendedID: str #Optional[int]
     #PhysicalAttribute #Optional[List[]] #multiple instances possible
     #MeasurementDimension #Optional[List[]] #multiple instances possible
-    #IssuerParty #Optional[
+    IssuerParty: Party #Optional[
 
 @dataclass 
 class ManufacturersItemIdentification(BuyersItemIdentification):
@@ -458,15 +459,15 @@ class Item():
     CatalogueItemIdentification: CatalogueItemIdentification #Optional[CatalogueItemIdentification]
     AdditionalItemIdentification: AdditionalItemIdentification #Optional[AdditionalItemIdentification]
     CatalogueDocumentReference: DocumentReference #Optional[DocumentReference]
-    #ItemSpecificationDocumentReference #Optional[
+    ItemSpecificationDocumentReference: DocumentReference #Optional[DocumentReference]
     #OriginCountry #Optional[
     #CommodityClassification #Optional[List[]] #multiple instances possible
     #TransactionConditions #Optional[List[]] #multiple instances possible
     #HazardousItem #Optional[List[]] #multiple instances possible
     ClassifiedTaxCategory: TaxCategory #Optional[List[]] #multiple instances possible
     #AdditionalItemProperty #Optional[List[]] #multiple instances possible
-    #ManufacturerParty #Optional[List[]] #multiple instances possible
-    #InformationContentProviderParty #Optional[
+    ManufacturerParty: Party #Optional[List[]] #multiple instances possible
+    InformationContentProviderParty: Party #Optional[
     OriginAddress: Address #Optional[
     #ItemInstance #Optional[List[]] #multiple instances possible
 
@@ -507,7 +508,7 @@ class InvoiceLine():
     BillingReference: BillingReference #Optional[List[BillingReference]] #multiple instances possible
     #PricingReference #Optional[ 
     DocumentReference: DocumentReference #Optional[List[DocumentReference]] #multiple instances possible
-    #OriginatorParty #Optional[ 
+    OriginatorParty: Party #Optional[ 
     Delivery: Delivery #Optional[List[Delivery]] #multiple instances possible
     AllowanceCharge: AllowanceCharge #Optional[ #multiple instances possible
     TaxTotal: TaxTotal #multiple instances possible
@@ -638,5 +639,13 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'SettlementPeriod': Period,
 'PenaltyPeriod': Period,
 'ValidityPeriod': Period,
-'RequestedDeliveryPeriod': Period
+'RequestedDeliveryPeriod': Period,
+'CompanyDossierDocumentReference': DocumentReference,
+'ItemSpecificationDocumentReference': DocumentReference,
+'StakeholderParty': Party,
+'DeliveryParty': Party,
+'IssuerParty': Party,
+'ManufacturerParty': Party,
+'InformationContentProviderParty': Party,
+'OriginatorParty': Party
 }
