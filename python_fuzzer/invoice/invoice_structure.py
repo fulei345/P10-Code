@@ -4,6 +4,17 @@ from dataclasses import dataclass, fields
 
 
 @dataclass 
+class Period():
+    StartDate: date #Optional[date]
+    StartTime: time #Optional[time]
+    EndDate: date #Optional[date]
+    EndTime: time #Optional[time]
+    DurationMeasure: int #Optional[int] #measure Type
+    DescriptionCode: str #Optional[str] # code #multiple instances possible
+    Description: str #Optional[str] #multiple instances possible
+
+
+@dataclass 
 class LegalMonetaryTotal(): #!
     LineExtensionAmount: float #Optional[float] #datatype: amount
     TaxExclusiveAmount: float #Optional[float] #datatype: amount
@@ -108,9 +119,9 @@ class PaymentTerms():
     PenaltyAmount: float #Optional[float] #datatype: amount
     PaymentDueDate: date #Optional[date]
     InstallmentDueDate: date #Optional[date]
-    #SettlementPeriod
-    #PenaltyPeriod
-    #TradeFinancing
+    SettlementPeriod: Period #Optional[Period
+    PenaltyPeriod: Period #Optional[Period
+    #TradeFinancing #Optional[TradeFinancing
 
 @dataclass 
 class FinancialInstitutionBranch():
@@ -170,7 +181,7 @@ class DeliveryLocation():
     Conditions: str #Optional[str] 
     CountrySubentity: str #Optional[str] 
     CountrySubentityCode: str #Optional[str] # code
-    #ValidityPeriod #Optional[
+    ValidityPeriod: Period #Optional[Period
     Address: Address #Optional[
 
 @dataclass 
@@ -274,7 +285,7 @@ class Delivery():
     LatestDeliveryTime: time #Optional[time]
     TrackingID: str #Optional[str]
     #DeliveryLocation #Optional[
-    #RequestedDeliveryPeriod #Optional[
+    RequestedDeliveryPeriod: Period #Optional[Period
     #DeliveryParty #Optional[
     #Despatch #Optional[
 
@@ -350,7 +361,7 @@ class ForeignExchangeContract():
     IssueTime: time #Optional[time]
     ContractTypeCode: str #Optional[str] # code
     ContractType: str #Optional[str]
-    #ValidityPeriod #Optional[ValidityPeriod]
+    ValidityPeriod: Period #Optional[Period
     ContractDocumentReference: DocumentReference #Optional[DocumentReference]
 
 @dataclass 
@@ -423,7 +434,7 @@ class Price(): #!
     PriceTypeCode: str #Optional[str] # code
     PriceType: str #Optional[str] 
     OrderableUnitFactorRate: int #Optional[int] #rate
-    # ValidityPeriod: #Optional[] #multiple instances possible
+    ValidityPeriod: Period #Optional[Period #multiple instances possible
     # PriceList #Optional[ 
     AllowanceCharge: AllowanceCharge #Optional[ #multiple instances possible
     PricingExchangeRate: PricingExchangeRate
@@ -525,7 +536,7 @@ class Invoice():
     AccountingCostCode: str #Optional[str] #code
     AccountingCost: str #Optional[str]
     LineCountNumeric: int #Optional[int] #numeric: int?
-    # InvoicePeriod Optional[
+    InvoicePeriod: Period #Optional[Period
     OrderReference: OrderReference #Optional[OrderReference]
     BillingReference: BillingReference #Optional[List[BillingReference]] # multiple instances possible
     DespatchDocumentReference: DocumentReference #Optional[List[DespatchDocumentReference]] # multiple instances possible
