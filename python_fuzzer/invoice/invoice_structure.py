@@ -456,6 +456,14 @@ class PricingReference():
     AlternativeConditionPrice: Price #Optional[Price] #multiple instances possible
 
 @dataclass 
+class TransactionConditions():
+    ID: str #Optional[str]
+    ActionCode: str #Optional[str] # code
+    Description: str #Optional[str] #multiple instances possible
+    DocumentReference: DocumentReference #Optional[DocumentReference] #multiple instances possible
+
+
+@dataclass 
 class ItemProperty():
     Name: str #Optional[str] # name
     NameCode: str #Optional[str] # code
@@ -526,7 +534,7 @@ class Item():
     ItemSpecificationDocumentReference: DocumentReference #Optional[DocumentReference]
     OriginCountry: Country #Optional[
     #CommodityClassification #Optional[List[]] #multiple instances possible
-    #TransactionConditions #Optional[List[]] #multiple instances possible
+    TransactionConditions: TransactionConditions #Optional[List[]] #multiple instances possible
     HazardousItem: HazardousItem #Optional[List[]] #multiple instances possible
     ClassifiedTaxCategory: TaxCategory #Optional[List[]] #multiple instances possible
     AdditionalItemProperty: ItemProperty #Optional[List[]] #multiple instances possible
@@ -744,5 +752,7 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'ReceiptLineReference': LineReference,
 'OriginCountry': Country,
 'ItemInstance': ItemInstance,
-'AdditionalItemProperty': ItemProperty
+'AdditionalItemProperty': ItemProperty,
+'HazardousItem': HazardousItem,
+'TransactionConditions': TransactionConditions
 }
