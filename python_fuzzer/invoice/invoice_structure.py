@@ -408,6 +408,14 @@ class BillingReference():
     ReminderDocumentReference: DocumentReference #Optional[ReminderDocumentReference]
 
 @dataclass 
+class Dimension():
+    AttributeID: str
+    Measure: int #Optional[int] #measure Type
+    Description: str #Optional[str] #multiple instances possible
+    MinimumMeasure: int #Optional[int] #measure Type
+    MaximumMeasure: int #Optional[int] #measure Type
+    
+@dataclass 
 class BuyersItemIdentification():
     ID: str
     ExtendedID: str #Optional[int]
@@ -418,7 +426,7 @@ class SellersItemIdentification():
     ID: str
     ExtendedID: str #Optional[int]
     #PhysicalAttribute #Optional[List[]] #multiple instances possible
-    #MeasurementDimension #Optional[List[]] #multiple instances possible
+    MeasurementDimension: Dimension #Optional[List[]] #multiple instances possible
     IssuerParty: Party #Optional[
 
 @dataclass 
@@ -509,7 +517,7 @@ class ItemProperty():
     ImportanceCode: str #Optional[str] # code
     UsabilityPeriod: Period #Optional[Period
     ItemPropertyGroup: ItemPropertyGroup #Optional[List[]] #multiple instances possible
-    #RangeDimension #Optional[
+    RangeDimension: Dimension #Optional[
 
 @dataclass 
 class HazardousItem():
@@ -806,5 +814,7 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'AdditionalTemperature': Temperature,
 'MaximumTemperature': Temperature,
 'MinimumTemperature': Temperature,
-'ItemPropertyGroup': ItemPropertyGroup
+'ItemPropertyGroup': ItemPropertyGroup,
+'MeasurementDimension': Dimension,
+'RangeDimension': Dimension
 }
