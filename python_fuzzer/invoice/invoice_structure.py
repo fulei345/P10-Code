@@ -509,6 +509,12 @@ class HazardousItem():
     #AdditionalTemperature #Optional[List[]] #multiple instances possible
 
 @dataclass 
+class LotIdentification():
+    LotNumberID: str #Optional[str]
+    ExpiryDate: date #Optional[date] 
+    AdditionalItemProperty: ItemProperty #Optional[List[]] #multiple instances possible
+
+@dataclass 
 class ItemInstance():
     ProductTraceID: str #Optional[str]
     ManufactureDate: date #Optional[date] 
@@ -517,7 +523,7 @@ class ItemInstance():
     RegistrationID: str #Optional[str] 
     SerialID: str #Optional[str] 
     AdditionalItemProperty: ItemProperty #Optional[List[]] #multiple instances possible
-    #LotIdentification #Optional[
+    LotIdentification: LotIdentification #Optional[
 
 @dataclass 
 class Item():
@@ -762,5 +768,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'AdditionalItemProperty': ItemProperty,
 'HazardousItem': HazardousItem,
 'TransactionConditions': TransactionConditions,
-'CommodityClassification': CommodityClassification
+'CommodityClassification': CommodityClassification,
+'LotIdentification': LotIdentification
 }
