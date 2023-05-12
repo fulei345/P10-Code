@@ -456,6 +456,14 @@ class PricingReference():
     AlternativeConditionPrice: Price #Optional[Price] #multiple instances possible
 
 @dataclass 
+class SecondaryHazard():
+    ID: str #Optional[str]
+    PlacardNotation: str #Optional[str]     
+    PlacardEndorsement: str #Optional[str] 
+    EmergencyProceduresCode: str #Optional[str] # code
+    Extension: str #Optional[str]
+
+@dataclass 
 class CommodityClassification():
     NatureCode: str #Optional[str] # code
     CargoTypeCode: str #Optional[str] # code
@@ -479,8 +487,8 @@ class ItemProperty():
     Value: str #Optional[str] #multiple instances possible
     ImportanceCode: str #Optional[str] # code
     UsabilityPeriod: Period #Optional[Period
-    #ItemPropertyGroup
-    #RangeDimension
+    #ItemPropertyGroup #Optional[List[]] #multiple instances possible
+    #RangeDimension #Optional[
 
 @dataclass 
 class HazardousItem():
@@ -502,7 +510,7 @@ class HazardousItem():
     NetVolumeMeasure: int #Optional[int] #measure Type
     Quantity: float #Optional[float] #datatype: quantity
     ContactParty: Party #Optional[Party
-    #SecondaryHazard #Optional[List[]] #multiple instances possible
+    SecondaryHazard: SecondaryHazard #Optional[List[]] #multiple instances possible
     #HazardousGoodsTransit #Optional[List[]] #multiple instances possible
     #EmergencyTemperature #Optional[
     #FlashpointTemperature #Optional[
@@ -769,5 +777,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'HazardousItem': HazardousItem,
 'TransactionConditions': TransactionConditions,
 'CommodityClassification': CommodityClassification,
-'LotIdentification': LotIdentification
+'LotIdentification': LotIdentification,
+'SecondaryHazard': SecondaryHazard
 }
