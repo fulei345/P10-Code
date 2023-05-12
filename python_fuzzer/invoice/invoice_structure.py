@@ -456,6 +456,12 @@ class PricingReference():
     AlternativeConditionPrice: Price #Optional[Price] #multiple instances possible
 
 @dataclass 
+class ItemPropertyGroup():
+    ID: str 
+    Name: str #Optional[str] # name
+    ImportanceCode: str #Optional[str] # code
+
+@dataclass 
 class Temperature():
     AttributeID: str 
     Measure: int #measure Type   
@@ -493,7 +499,6 @@ class TransactionConditions():
     Description: str #Optional[str] #multiple instances possible
     DocumentReference: DocumentReference #Optional[DocumentReference] #multiple instances possible
 
-
 @dataclass 
 class ItemProperty():
     Name: str #Optional[str] # name
@@ -503,7 +508,7 @@ class ItemProperty():
     Value: str #Optional[str] #multiple instances possible
     ImportanceCode: str #Optional[str] # code
     UsabilityPeriod: Period #Optional[Period
-    #ItemPropertyGroup #Optional[List[]] #multiple instances possible
+    ItemPropertyGroup: ItemPropertyGroup #Optional[List[]] #multiple instances possible
     #RangeDimension #Optional[
 
 @dataclass 
@@ -800,5 +805,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'FlashpointTemperature': Temperature,
 'AdditionalTemperature': Temperature,
 'MaximumTemperature': Temperature,
-'MinimumTemperature': Temperature
+'MinimumTemperature': Temperature,
+'ItemPropertyGroup': ItemPropertyGroup
 }
