@@ -455,6 +455,17 @@ class PricingReference():
     #OriginalItemLocationQuantity: ItemLocationQuantity #Optional[
     AlternativeConditionPrice: Price #Optional[Price] #multiple instances possible
 
+@dataclass 
+class ItemProperty():
+    Name: str #Optional[str] # name
+    NameCode: str #Optional[str] # code
+    Value: str #Optional[str] #multiple instances possible
+    ValueQuantity: float #Optional[float] #datatype: quantity
+    Value: str #Optional[str] #multiple instances possible
+    ImportanceCode: str #Optional[str] # code
+    UsabilityPeriod: Period #Optional[Period
+    #ItemPropertyGroup
+    #RangeDimension
 
 @dataclass 
 class ItemInstance():
@@ -464,7 +475,7 @@ class ItemInstance():
     BestBeforeDate: date #Optional[date] 
     RegistrationID: str #Optional[str] 
     SerialID: str #Optional[str] 
-    #AdditionalItemProperty #Optional[List[]] #multiple instances possible
+    AdditionalItemProperty: ItemProperty #Optional[List[]] #multiple instances possible
     #LotIdentification #Optional[
 
 @dataclass 
@@ -492,7 +503,7 @@ class Item():
     #TransactionConditions #Optional[List[]] #multiple instances possible
     #HazardousItem #Optional[List[]] #multiple instances possible
     ClassifiedTaxCategory: TaxCategory #Optional[List[]] #multiple instances possible
-    #AdditionalItemProperty #Optional[List[]] #multiple instances possible
+    AdditionalItemProperty: ItemProperty #Optional[List[]] #multiple instances possible
     ManufacturerParty: Party #Optional[List[]] #multiple instances possible
     InformationContentProviderParty: Party #Optional[
     OriginAddress: Address #Optional[
