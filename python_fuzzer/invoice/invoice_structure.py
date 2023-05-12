@@ -457,6 +457,17 @@ class PricingReference():
 
 
 @dataclass 
+class ItemInstance():
+    ProductTraceID: str #Optional[str]
+    ManufactureDate: date #Optional[date] 
+    ManufactureTime: time #Optional[time]   
+    BestBeforeDate: date #Optional[date] 
+    RegistrationID: str #Optional[str] 
+    SerialID: str #Optional[str] 
+    #AdditionalItemProperty #Optional[List[]] #multiple instances possible
+    #LotIdentification #Optional[
+
+@dataclass 
 class Item():
     Description: str #Optional[List[str]] #multiple instances possible
     PackQuantity: float #Optional[float] #datatype: quantity
@@ -485,7 +496,7 @@ class Item():
     ManufacturerParty: Party #Optional[List[]] #multiple instances possible
     InformationContentProviderParty: Party #Optional[
     OriginAddress: Address #Optional[
-    #ItemInstance #Optional[List[]] #multiple instances possible
+    ItemInstance: ItemInstance #Optional[List[]] #multiple instances possible
 
 @dataclass 
 class OrderReference():
@@ -694,5 +705,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'PricingReference': PricingReference,
 'DespatchLineReference': LineReference,
 'ReceiptLineReference': LineReference,
-'OriginCountry': Country
+'OriginCountry': Country,
+'ItemInstance': ItemInstance
 }
