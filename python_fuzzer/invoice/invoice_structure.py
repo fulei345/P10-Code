@@ -468,6 +468,32 @@ class ItemProperty():
     #RangeDimension
 
 @dataclass 
+class HazardousItem():
+    ID: str #Optional[str]
+    PlacardNotation: str #Optional[str] 
+    PlacardEndorsement: str #Optional[str] 
+    AdditionalInformation: str #Optional[str] 
+    UNDGCode: str #Optional[str] # code
+    EmergencyProceduresCode: str #Optional[str] # code
+    MedicalFirstAidGuideCode: str #Optional[str] # code
+    TechnicalName: str #Optional[str] # name
+    CategoryName: str #Optional[str] # name
+    HazardousCategoryCode: str #Optional[str] # code
+    UpperOrangeHazardPlacardID: str #Optional[str]
+    LowerOrangeHazardPlacardID: str #Optional[str]
+    MarkingID: str #Optional[str]
+    HazardClassID: str #Optional[str]
+    NetWeightMeasure: int #Optional[int] #measure Type
+    NetVolumeMeasure: int #Optional[int] #measure Type
+    Quantity: float #Optional[float] #datatype: quantity
+    ContactParty: Party #Optional[Party
+    #SecondaryHazard #Optional[List[]] #multiple instances possible
+    #HazardousGoodsTransit #Optional[List[]] #multiple instances possible
+    #EmergencyTemperature #Optional[
+    #FlashpointTemperature #Optional[
+    #AdditionalTemperature #Optional[List[]] #multiple instances possible
+
+@dataclass 
 class ItemInstance():
     ProductTraceID: str #Optional[str]
     ManufactureDate: date #Optional[date] 
@@ -501,7 +527,7 @@ class Item():
     OriginCountry: Country #Optional[
     #CommodityClassification #Optional[List[]] #multiple instances possible
     #TransactionConditions #Optional[List[]] #multiple instances possible
-    #HazardousItem #Optional[List[]] #multiple instances possible
+    HazardousItem: HazardousItem #Optional[List[]] #multiple instances possible
     ClassifiedTaxCategory: TaxCategory #Optional[List[]] #multiple instances possible
     AdditionalItemProperty: ItemProperty #Optional[List[]] #multiple instances possible
     ManufacturerParty: Party #Optional[List[]] #multiple instances possible
@@ -717,5 +743,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'DespatchLineReference': LineReference,
 'ReceiptLineReference': LineReference,
 'OriginCountry': Country,
-'ItemInstance': ItemInstance
+'ItemInstance': ItemInstance,
+'AdditionalItemProperty': ItemProperty
 }
