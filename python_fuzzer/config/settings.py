@@ -13,7 +13,7 @@ IF_PROB = 0.5
 REPLACE_COUNT = 5
 
 # The max seeds in population
-MAX_POPULATION = 30
+MAX_POPULATION = 40
 
 # Wether if adding to population depends on coverage or outcome
 # True means coverage
