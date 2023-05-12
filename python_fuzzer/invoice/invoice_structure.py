@@ -456,14 +456,20 @@ class PricingReference():
     AlternativeConditionPrice: Price #Optional[Price] #multiple instances possible
 
 @dataclass 
+class Temperature():
+    AttributeID: str 
+    Measure: int #measure Type   
+    Description: str #Optional[str] #multiple instances possible
+
+@dataclass 
 class HazardousGoodsTransit():
     TransportEmergencyCardCode: str #Optional[str] # code
     PackingCriteriaCode: str #Optional[str] # code
     HazardousRegulationCode: str #Optional[str] # code
     InhalationToxicityZoneCode: str #Optional[str] # code
     TransportAuthorizationCode: str #Optional[str] # code
-    #MaximumTemperature #Optional[
-    #MinimumTemperature #Optional[
+    MaximumTemperature: Temperature #Optional[
+    MinimumTemperature: Temperature #Optional[
 
 @dataclass 
 class SecondaryHazard():
@@ -522,9 +528,9 @@ class HazardousItem():
     ContactParty: Party #Optional[Party
     SecondaryHazard: SecondaryHazard #Optional[List[]] #multiple instances possible
     HazardousGoodsTransit: HazardousGoodsTransit #Optional[List[]] #multiple instances possible
-    #EmergencyTemperature #Optional[
-    #FlashpointTemperature #Optional[
-    #AdditionalTemperature #Optional[List[]] #multiple instances possible
+    EmergencyTemperature: Temperature #Optional[
+    FlashpointTemperature: Temperature #Optional[
+    AdditionalTemperature: Temperature #Optional[List[]] #multiple instances possible
 
 @dataclass 
 class LotIdentification():
@@ -789,5 +795,10 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'CommodityClassification': CommodityClassification,
 'LotIdentification': LotIdentification,
 'SecondaryHazard': SecondaryHazard,
-'HazardousGoodsTransit': HazardousGoodsTransit
+'HazardousGoodsTransit': HazardousGoodsTransit,
+'EmergencyTemperature': Temperature,
+'FlashpointTemperature': Temperature,
+'AdditionalTemperature': Temperature,
+'MaximumTemperature': Temperature,
+'MinimumTemperature': Temperature
 }
