@@ -17,6 +17,7 @@ class Seed:
         self.energy = 0.0
         self.chosen_count = 0
         self.population_name = "first"
+        self.num_replace = 5
 
     def __str__(self) -> str:
         """Returns data as string representation of the seed"""

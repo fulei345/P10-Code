@@ -32,32 +32,36 @@ class GreyboxFuzzer(Fuzzer):
                  population_path: str,
                  mutation_count: int) -> None:
 
-        self.seeds: List[ElementTree] = seeds
+        # List of existing seeds
+        self.seeds: List[Seed] = list(map(lambda x: Seed(x), seeds))
 
+        # 
         self.seed_index: int = 0
         self.population: List[Seed] = []
-        self.population_path: str = population_path
         self.verbose: bool = verbose
         self.total_coverage = set()
 
+        self.population_path: str = population_path
         self.schedule: PowerSchedule = schedule
         self.runner: RaspRunner = runner
         self.logger: FeedbackLogger = logger
         self.mutator: Mutator = mutator
         self.mutation_count: int = mutation_count
 
-        self.outcome_list: List[str] = []
-        self.coverage_list: List[set] = []
         self.log_count = 0
 
+
+        # Current dictionary over the amount
+        self.current_dict: dict = {"schema": 0, "pass": 0, "schematron": 0}
+        
+
         self.chosen_seed = None
-        self.reset()
+
 
     def reset(self) -> None:
         """"Reset the initial population, seed index, coverage information"""
         self.coverages_list: List[set] = []
         self.outcome_list: List[str] = []
-        self.population = list(map(lambda x: Seed(x), self.seeds))
         self.seed_index: int = 0
 
     def create_candidate(self) -> str:
@@ -78,8 +82,7 @@ class GreyboxFuzzer(Fuzzer):
         if self.seed_index < len(self.seeds):
             # Still seeding
             self.inp = self.seeds[self.seed_index]
-            self.chosen_seed = self.population[self.seed_index]
-            self.seed_index += 1
+            self.chosen_seed = self.inp
         else:
             # Mutating
             self.inp = self.create_candidate()
@@ -93,7 +96,6 @@ class GreyboxFuzzer(Fuzzer):
         seed.result = result
 
         # Administration
-        if len(self.population)
         self.population.append(seed)
         self.total_coverage = self.total_coverage.union(self.runner.code_coverage)
 
@@ -103,6 +105,7 @@ class GreyboxFuzzer(Fuzzer):
         document.write(document_path, encoding="utf-8", xml_declaration=True)
         self.logger.log_crash(filename, result)
         seed.population_name = filename
+        self.seed_index += 1
 
     def only_log(self, result: str, outcome: str, document: ElementTree):
         # Write and log new file
