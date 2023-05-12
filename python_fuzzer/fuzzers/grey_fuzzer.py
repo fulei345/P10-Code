@@ -18,7 +18,7 @@ from runners import RaspRunner
 from loggers import FeedbackLogger
 from utils import Seed
 from scheduler import PowerSchedule
-from config import MUTATION_COUNT, COVERAGE_BASED
+from config import MUTATION_COUNT
 
 
 class GreyboxFuzzer(Fuzzer):
@@ -78,7 +78,7 @@ class GreyboxFuzzer(Fuzzer):
         if self.seed_index < len(self.seeds):
             # Still seeding
             self.inp = self.seeds[self.seed_index]
-            self.chosen_seed = self.population[0]
+            self.chosen_seed = self.population[self.seed_index]
             self.seed_index += 1
         else:
             # Mutating
@@ -93,6 +93,7 @@ class GreyboxFuzzer(Fuzzer):
         seed.result = result
 
         # Administration
+        if len(self.population)
         self.population.append(seed)
         self.total_coverage = self.total_coverage.union(self.runner.code_coverage)
 
@@ -102,7 +103,6 @@ class GreyboxFuzzer(Fuzzer):
         document.write(document_path, encoding="utf-8", xml_declaration=True)
         self.logger.log_crash(filename, result)
         seed.population_name = filename
-        self.seed_index += 1
 
     def only_log(self, result: str, outcome: str, document: ElementTree):
         # Write and log new file
@@ -118,18 +118,7 @@ class GreyboxFuzzer(Fuzzer):
         if "E-RSP15324" in outcome or "UNKNOWN" in outcome:
             self.only_log(result, outcome, document)
 
-        # Coverage based eller Outcome based
-        if COVERAGE_BASED:
-            if new_coverage not in self.coverages_list:
-                # Add to seen coverage
-                self.coverages_list.append(new_coverage)
-                self.add_to_population(result, outcome, document)
-        else:
-            if outcome not in self.outcome_list:
-                # Add to outcome list
-                self.coverages_list.append(new_coverage)
-                self.outcome_list.append(outcome)
-                self.add_to_population(result, outcome, document)
+        self.add_to_population(result, outcome, document)
 
 
     def run(self) -> Tuple[Any, str]:

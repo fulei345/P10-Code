@@ -15,6 +15,5 @@ REPLACE_COUNT = 5
 # The max seeds in population
 MAX_POPULATION = 40
 
-# Wether if adding to population depends on coverage or outcome
-# True means coverage
-COVERAGE_BASED = True
+# Max number of different seed type in population
+MAX_DICT = {"schema": 5, "pass": 5, "schematron": 5}
