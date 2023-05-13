@@ -1,5 +1,5 @@
 import random
-from typing import Any, List, Callable, Optional
+from typing import Any, List, Callable, Optional, get_origin, Union, get_args
 from xml.etree.cElementTree import ElementTree, Element
 from dataclasses import dataclass, fields
 from datetime import date, time
@@ -11,7 +11,7 @@ import sys
 sys.path.append("..")
 from invoice import Invoice
 from utils import TypeGenerator
-from config import IF_PROB
+from config import IF_PROB, OPT_PROP
 
 
 class StructureMutator(Mutator):
@@ -21,10 +21,7 @@ class StructureMutator(Mutator):
         self.parent_map = dict()
         self.total_size = 0
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [self.insert_field,
-                                                     self.delete_field,
-                                                     self.move_field,
-                                                     self.add_field]
+        self.mutators: List[Callable[[Any], Any]] = [self.add_field]
 
     def mutate(self, document: ElementTree) -> ElementTree:
         """
@@ -106,24 +103,33 @@ class StructureMutator(Mutator):
         #make element with the name
         elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" + "}" + field.name)
 
+        field_type = None
+        
+        #check if the field is optional (as its type is then Union(type, None)) and set field_type to its type
+        if(get_origin(field.type) is Union):
+            field_type = get_args(field.type)[0]
+        else:
+            field_type = field.type
+        
         #makes text for element according to its field type
-        if field.type == str: #or field.type == Optional[str]:
+        if field_type == str: 
             elem.text = TypeGenerator.make_string()
-        elif field.type == int: #or field.type == Optional[int]:
+        elif field_type == int: 
             elem.text = TypeGenerator.make_int()
-        elif field.type == bool: #or field.type == Optional[bool]:
+        elif field_type == bool: 
             elem.text = TypeGenerator.make_bool()
-        elif field.type == time: #or field.type == Optional[time]:
+        elif field_type == time: 
             elem.text = TypeGenerator.make_time()
-        elif field.type == date: #or field.type == Optional[date]:
+        elif field_type == date: 
             elem.text = TypeGenerator.make_date()
-        elif field.type == bytes: #or field.type == Optional[bytes]:
+        elif field_type == bytes: 
             elem.text = TypeGenerator.make_string() #TODO change this (look at oioubl documentation for attachement binary object)
-        elif field.type == float: #or field.type == Optional[float]:
+        elif field_type == float: 
             elem.text = TypeGenerator.make_float()
         else:
+            #change namespace to class namespace
             elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" + "}" + field.name)
-            elem = self.make_subclass(elem, field.type)
+            elem = self.make_subclass(elem, field_type)
             
         return elem   
     
@@ -131,10 +137,11 @@ class StructureMutator(Mutator):
 
         # finds the fields of the dataclass type          
         names = fields(type) 
-        
+               
         # make elements for all the class fields iteratively
         for field in names:
-            subelem = self.make_element(field)
-            elem.append(subelem)
+            if(not get_origin(field.type) is Union or random.random() < OPT_PROP):   
+                subelem = self.make_element(field)
+                elem.append(subelem)
                 
         return elem
