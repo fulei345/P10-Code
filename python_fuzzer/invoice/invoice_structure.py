@@ -458,6 +458,25 @@ class Price(): #!
     PricingExchangeRate: PricingExchangeRate
 
 @dataclass 
+class DeliveryUnit():
+    BatchQuantity: float #datatype: quantity
+    ConsumerUnitQuantity: Optional[float] #datatype: quantity
+    HazardousRiskIndicator: Optional[bool]
+
+@dataclass 
+class Package():
+    ID: Optional[str]
+    Quantity: Optional[float] #datatype: quantity
+    ReturnableMaterialIndicator: Optional[bool]
+    PackageLevelCode: Optional[str] # code
+    PackagingTypeCode: Optional[str] # code
+    PackingMaterial: Optional[str] #multiple instances possible
+    ContainedPackage: Optional['Package'] #TODO test this #multiple instances possible
+    #GoodsItem: Optional[ #multiple instances possible
+    MeasurementDimension: Optional[Dimension] #multiple instances possible
+    DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
+
+@dataclass 
 class ItemLocationQuantity():
     LeadTimeMeasure: Optional[int] #measure Type   
     MinimumQuantity: Optional[float] #datatype: quantity
@@ -466,9 +485,9 @@ class ItemLocationQuantity():
     TradingRestrictions: Optional[str] #multiple instances possible
     ApplicableTerritoryAddress: Optional[Address] #multiple instances possible
     Price: Optional[Price]
-    # DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
+    DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
     ApplicableTaxCategory: Optional[TaxCategory] #multiple instances possible
-    # Package
+    Package: Optional[Package]
 
 @dataclass 
 class PricingReference():
@@ -829,5 +848,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'ItemPropertyGroup': ItemPropertyGroup,
 'MeasurementDimension': Dimension,
 'RangeDimension': Dimension,
-'OriginalItemLocationQuantity': ItemLocationQuantity
+'OriginalItemLocationQuantity': ItemLocationQuantity,
+'Package': Package
 }
