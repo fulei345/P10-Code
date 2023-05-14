@@ -849,5 +849,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'MeasurementDimension': Dimension,
 'RangeDimension': Dimension,
 'OriginalItemLocationQuantity': ItemLocationQuantity,
-'Package': Package
+'Package': Package,
+'DeliveryUnit': DeliveryUnit
 }
