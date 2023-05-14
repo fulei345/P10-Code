@@ -458,8 +458,21 @@ class Price(): #!
     PricingExchangeRate: PricingExchangeRate
 
 @dataclass 
+class ItemLocationQuantity():
+    LeadTimeMeasure: Optional[int] #measure Type   
+    MinimumQuantity: Optional[float] #datatype: quantity
+    MaximumQuantity: Optional[float] #datatype: quantity
+    HazardousRiskIndicator: Optional[bool]
+    TradingRestrictions: Optional[str] #multiple instances possible
+    ApplicableTerritoryAddress: Optional[Address] #multiple instances possible
+    Price: Optional[Price]
+    # DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
+    ApplicableTaxCategory: Optional[TaxCategory] #multiple instances possible
+    # Package
+
+@dataclass 
 class PricingReference():
-    #OriginalItemLocationQuantity: ItemLocationQuantity #Optional[
+    OriginalItemLocationQuantity: Optional[ItemLocationQuantity]
     AlternativeConditionPrice: Optional[Price] #multiple instances possible
 
 @dataclass 
@@ -815,5 +828,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'MinimumTemperature': Temperature,
 'ItemPropertyGroup': ItemPropertyGroup,
 'MeasurementDimension': Dimension,
-'RangeDimension': Dimension
+'RangeDimension': Dimension,
+'OriginalItemLocationQuantity': ItemLocationQuantity
 }
