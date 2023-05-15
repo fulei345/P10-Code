@@ -190,7 +190,7 @@ class AllowanceCharge(): #!
     PaymentMeans: Optional[PaymentMeans] #multiple instances possible
 
 @dataclass 
-class DeliveryLocation():
+class Location():
     ID: str 
     Description: Optional[str] 
     Conditions: Optional[str] 
@@ -205,7 +205,7 @@ class DeliveryTerms():
     SpecialTerms: Optional[str] 
     LossRiskResponsibilityCode: Optional[str] # code
     LossRisk: Optional[str]  
-    DeliveryLocation: Optional[DeliveryLocation]
+    DeliveryLocation: Optional[Location]
 
 @dataclass 
 class OtherCommunication(): #!
@@ -588,10 +588,31 @@ class Item():
     ItemInstance: Optional[ItemInstance] #Optional[List[]] #multiple instances possible
 
 @dataclass 
+class TransportEquipment():
+    ID: Optional[str]
+    TransportEquipmentTypeCode: Optional[str] # code
+    ProviderTypeCode: Optional[str] # code
+    OwnerTypeCode: Optional[str] # code
+    SizeTypeCode: Optional[str] # code
+    DispositionCode: Optional[str] # code
+    FullnessIndicationCode: Optional[str] # code
+    RefrigerationOnIndicator: Optional[bool]
+    Information: Optional[str]
+    ReturnabilityIndicator: Optional[bool]
+    LegalStatusIndicator: Optional[bool]
+    MeasurementDimension: Optional[Dimension] #multiple instances possible
+    #TransportEquipmentSeal: Optional[TransportEquipmentSeal] #multiple instances possible
+    MinimumTemperature: Optional[Temperature]
+    MaximumTemperature: Optional[Temperature]
+    ProviderParty: Optional[Party] 
+    LoadingProofParty: Optional[Party] 
+    LoadingLocation: Optional[Location]
+   
+@dataclass 
 class GoodsItemContainer():
     ID: str
     Quantity: Optional[float] #datatype: quantity
-    #TransportEquipment: Optional[TransportEquipment] #multiple instances possible
+    TransportEquipment: Optional[TransportEquipment] #multiple instances possible
 
 @dataclass 
 class GoodsItem():
@@ -800,7 +821,7 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'PayeeFinancialAccount': FinancialAccount,
 'PaymentMeans': PaymentMeans,
 'AllowanceCharge': AllowanceCharge,
-'DeliveryLocation': DeliveryLocation,
+'DeliveryLocation': Location,
 'DeliveryTerms': DeliveryTerms,
 'OtherCommunication': OtherCommunication,
 'Contact': Contact,
@@ -896,5 +917,9 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'FreightAllowanceCharge': AllowanceCharge,
 'Temperature': Temperature,
 'ContainedGoodsItem': GoodsItem,
-'GoodsItemContainer': GoodsItemContainer
+'GoodsItemContainer': GoodsItemContainer,
+'TransportEquipment': TransportEquipment,
+'ProviderParty': Party,
+'LoadingProofParty': Party,
+'LoadingLocation': Location
 }
