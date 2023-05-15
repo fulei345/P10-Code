@@ -588,6 +588,12 @@ class Item():
     ItemInstance: Optional[ItemInstance] #Optional[List[]] #multiple instances possible
 
 @dataclass 
+class GoodsItemContainer():
+    ID: str
+    Quantity: Optional[float] #datatype: quantity
+    #TransportEquipment: Optional[TransportEquipment] #multiple instances possible
+
+@dataclass 
 class GoodsItem():
     ID: str
     SequenceNumberID: Optional[str]
@@ -612,7 +618,7 @@ class GoodsItem():
     CustomsTariffQuantity: Optional[float] #datatype: quantity
     CustomsImportClassifiedIndicator: Optional[bool]
     Item: Optional[Item] #multiple instances possible
-    #GoodsItemContainer
+    GoodsItemContainer: Optional[GoodsItemContainer] #multiple instances possible
     FreightAllowanceCharge: Optional[AllowanceCharge] #multiple instances possible
     InvoiceLine: Optional['InvoiceLine'] #TODO test this #multiple instances possible
     Temperature: Optional[Temperature] #multiple instances possible
@@ -889,5 +895,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'GoodsItem': GoodsItem,
 'FreightAllowanceCharge': AllowanceCharge,
 'Temperature': Temperature,
-'ContainedGoodsItem': GoodsItem
+'ContainedGoodsItem': GoodsItem,
+'GoodsItemContainer': GoodsItemContainer
 }
