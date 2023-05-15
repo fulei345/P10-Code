@@ -2,7 +2,6 @@ from typing import List, Set, Union, Any
 from xml.etree.cElementTree import Element, ElementTree, parse, ParseError
 import sys
 sys.path.append("..")
-from config import REPLACE_COUNT
 
 
 class Seed:
@@ -20,7 +19,6 @@ class Seed:
         self.energy = 0.0
         self.chosen_count = 0
         self.population_name = "first"
-        self.num_replace = REPLACE_COUNT
 
     def __str__(self) -> str:
         """Returns data as string representation of the seed"""

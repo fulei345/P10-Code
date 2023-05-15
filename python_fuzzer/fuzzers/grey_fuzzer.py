@@ -52,7 +52,7 @@ class GreyboxFuzzer(Fuzzer):
 
 
         # Current dictionary over the amount
-        self.current_dict: dict = {"schema": 0, "pass": 0, "schematron": 0, "unknown": 0}
+        self.current_dict: dict = {"SCHEMA": 0, "PASS": 0, "SCHEMATRON": 0, "UNKNOWN": 0, "FAIL": 0}
         
 
         self.chosen_seed = None
@@ -69,9 +69,11 @@ class GreyboxFuzzer(Fuzzer):
         seed = self.schedule.choose(self.population)
 
         if seed.chosen_count == 6:
-            pass
-        seed.chosen_count += 1
-        self.chosen_seed = seed
+            self.population.remove(seed)
+            self.current_dict[seed.outcome] =- 1
+        else:
+            seed.chosen_count += 1
+            self.chosen_seed = seed
 
         # Stacking: Apply multiple mutations to generate the candidate
         candidate = deepcopy(seed.data)
@@ -119,33 +121,17 @@ class GreyboxFuzzer(Fuzzer):
         document.write(document_path, encoding="utf-8", xml_declaration=True)
         self.logger.log_crash(filename, result)
     
-    def handle_feedback(self, new_coverage: frozenset, result: str, outcome: str, document: ElementTree):
-        set_string = ""
-        if "UNKNOWN" in outcome:
-            set_string = "unknown"
-            
-        elif result.find("Schema"):
-            set_string = "schema"
-
-        elif result.find("Schematron"):
-            set_string = "schematron"
-        
-        elif "PASS" in outcome:
-            set_string = "pass"
-        
-        else:
-            print("fuck")
-
-        if self.current_dict[set_string] < MAX_DICT[set_string]:
+    def handle_feedback(self, result: str, outcome: str, document: ElementTree):
+        if self.current_dict[outcome] < MAX_DICT[outcome]:
             self.add_to_population(result, outcome, document)
-            self.current_dict[set_string] += 1
+            self.current_dict[outcome] += 1
 
     def run(self) -> Tuple[Any, str]:
         # "" since it needs an input
         document: ElementTree = self.fuzz()
         # Make new name
         filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
-        result, outcome, _ = self.runner.run(document, filename)
+        result, outcome = self.runner.run(document, filename)
         new_coverage = frozenset(self.runner.code_coverage)
         self.handle_feedback(new_coverage, result, outcome, document)
         return result, outcome
