@@ -90,17 +90,24 @@ class RaspRunner(Runner):
             # Regex to find E-RSP num
             # ersp_num = findall(r"E-RSP\d+", standard_out)
 
+
+            xml_list = ["NoDocumentTypeFoundFromXmlDocumentException",
+                        "System.Xml.XmlException",
+                        "SearchForDocumentTypeFromXmlDocumentFailedException",]
+
             if standard_out.find("Schema ") != -1:
                 return standard_out, self.SCHEMA
             
             elif standard_out.find("Schematron") != -1:
                 return standard_out, self.SCHEMATRON
-            
-            elif "System.Xml.XmlException" in standard_out or "SearchForDocumentTypeFromXmlDocumentFailedException" in standard_out:
-                return standard_out, self.XML
-            else:
-                return standard_out, self.UNKNOWN
 
+            else:
+                for s in xml_list:
+                    if s in standard_out:
+                        return standard_out, self.XML
+                return standard_out, self.UNKNOWN
+        
+            
 
 if __name__ == '__main__':
     cwd_path = getcwd()
