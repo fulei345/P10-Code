@@ -41,6 +41,12 @@ class Country():
     Name: Optional[str]
 
 @dataclass 
+class Temperature():
+    AttributeID: str 
+    Measure: int #measure Type   
+    Description: Optional[str] #multiple instances possible
+
+@dataclass 
 class Address():
     ID: Optional[str]
     AddressTypeCode: Optional[str] # code
@@ -458,53 +464,10 @@ class Price(): #!
     PricingExchangeRate: PricingExchangeRate
 
 @dataclass 
-class DeliveryUnit():
-    BatchQuantity: float #datatype: quantity
-    ConsumerUnitQuantity: Optional[float] #datatype: quantity
-    HazardousRiskIndicator: Optional[bool]
-
-@dataclass 
-class Package():
-    ID: Optional[str]
-    Quantity: Optional[float] #datatype: quantity
-    ReturnableMaterialIndicator: Optional[bool]
-    PackageLevelCode: Optional[str] # code
-    PackagingTypeCode: Optional[str] # code
-    PackingMaterial: Optional[str] #multiple instances possible
-    ContainedPackage: Optional['Package'] #TODO test this #multiple instances possible
-    #GoodsItem: Optional[ #multiple instances possible
-    MeasurementDimension: Optional[Dimension] #multiple instances possible
-    DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
-
-@dataclass 
-class ItemLocationQuantity():
-    LeadTimeMeasure: Optional[int] #measure Type   
-    MinimumQuantity: Optional[float] #datatype: quantity
-    MaximumQuantity: Optional[float] #datatype: quantity
-    HazardousRiskIndicator: Optional[bool]
-    TradingRestrictions: Optional[str] #multiple instances possible
-    ApplicableTerritoryAddress: Optional[Address] #multiple instances possible
-    Price: Optional[Price]
-    DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
-    ApplicableTaxCategory: Optional[TaxCategory] #multiple instances possible
-    Package: Optional[Package]
-
-@dataclass 
-class PricingReference():
-    OriginalItemLocationQuantity: Optional[ItemLocationQuantity]
-    AlternativeConditionPrice: Optional[Price] #multiple instances possible
-
-@dataclass 
 class ItemPropertyGroup():
     ID: str 
     Name: Optional[str] # name
     ImportanceCode: Optional[str] # code
-
-@dataclass 
-class Temperature():
-    AttributeID: str 
-    Measure: int #measure Type   
-    Description: Optional[str] #multiple instances possible
 
 @dataclass 
 class HazardousGoodsTransit():
@@ -623,6 +586,75 @@ class Item():
     InformationContentProviderParty: Optional[Party]
     OriginAddress: Optional[Address]
     ItemInstance: Optional[ItemInstance] #Optional[List[]] #multiple instances possible
+
+@dataclass 
+class GoodsItem():
+    ID: str
+    SequenceNumberID: Optional[str]
+    Description: Optional[str] #multiple instances possible
+    HazardousRiskIndicator: Optional[bool]
+    DeclaredCustomsValueAmount: Optional[float] #datatype: amount
+    DeclaredForCarriageValueAmount: Optional[float] #datatype: amount
+    DeclaredStatisticsValueAmount: Optional[float] #datatype: amount
+    FreeOnBoardValueAmount: Optional[float] #datatype: amount
+    InsuranceValueAmount: Optional[float] #datatype: amount
+    ValueAmount: Optional[float] #datatype: amount
+    GrossWeightMeasure: Optional[int] #measure Type   
+    NetWeightMeasure: Optional[int] #measure Type   
+    NetNetWeightMeasure: Optional[int] #measure Type   
+    ChargeableWeightMeasure: Optional[int] #measure Type   
+    GrossVolumeMeasure: Optional[int] #measure Type   
+    NetVolumeMeasure: Optional[int] #measure Type   
+    Quantity: Optional[float] #datatype: quantity
+    PreferenceCriterionCode: Optional[str] # code
+    RequiredCustomsID: Optional[str]
+    CustomsStatusCode: Optional[str] # code
+    CustomsTariffQuantity: Optional[float] #datatype: quantity
+    CustomsImportClassifiedIndicator: Optional[bool]
+    Item: Optional[Item] #multiple instances possible
+    #GoodsItemContainer
+    FreightAllowanceCharge: Optional[AllowanceCharge] #multiple instances possible
+    InvoiceLine: Optional['InvoiceLine'] #TODO test this #multiple instances possible
+    Temperature: Optional[Temperature] #multiple instances possible
+    ContainedGoodsItem : Optional['GoodsItem'] #TODO test this #multiple instances possible
+    OriginAddress: Optional[Address]
+    
+@dataclass 
+class DeliveryUnit():
+    BatchQuantity: float #datatype: quantity
+    ConsumerUnitQuantity: Optional[float] #datatype: quantity
+    HazardousRiskIndicator: Optional[bool]
+
+@dataclass 
+class Package():
+    ID: Optional[str]
+    Quantity: Optional[float] #datatype: quantity
+    ReturnableMaterialIndicator: Optional[bool]
+    PackageLevelCode: Optional[str] # code
+    PackagingTypeCode: Optional[str] # code
+    PackingMaterial: Optional[str] #multiple instances possible
+    ContainedPackage: Optional['Package'] #TODO test this #multiple instances possible
+    GoodsItem: Optional[GoodsItem] #multiple instances possible
+    MeasurementDimension: Optional[Dimension] #multiple instances possible
+    DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
+
+@dataclass 
+class ItemLocationQuantity():
+    LeadTimeMeasure: Optional[int] #measure Type   
+    MinimumQuantity: Optional[float] #datatype: quantity
+    MaximumQuantity: Optional[float] #datatype: quantity
+    HazardousRiskIndicator: Optional[bool]
+    TradingRestrictions: Optional[str] #multiple instances possible
+    ApplicableTerritoryAddress: Optional[Address] #multiple instances possible
+    Price: Optional[Price]
+    DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
+    ApplicableTaxCategory: Optional[TaxCategory] #multiple instances possible
+    Package: Optional[Package]
+
+@dataclass 
+class PricingReference():
+    OriginalItemLocationQuantity: Optional[ItemLocationQuantity]
+    AlternativeConditionPrice: Optional[Price] #multiple instances possible
 
 @dataclass 
 class OrderReference():
@@ -850,5 +882,12 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'RangeDimension': Dimension,
 'OriginalItemLocationQuantity': ItemLocationQuantity,
 'Package': Package,
-'DeliveryUnit': DeliveryUnit
+'DeliveryUnit': DeliveryUnit,
+'ApplicableTerritoryAddress': Address,
+'ApplicableTaxCategory': TaxCategory,
+'ContainedPackage': Package,
+'GoodsItem': GoodsItem,
+'FreightAllowanceCharge': AllowanceCharge,
+'Temperature': Temperature,
+'ContainedGoodsItem': GoodsItem
 }
