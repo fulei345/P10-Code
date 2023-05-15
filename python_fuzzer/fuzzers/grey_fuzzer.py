@@ -68,7 +68,7 @@ class GreyboxFuzzer(Fuzzer):
 
         if seed.chosen_count == 6:
             self.population.remove(seed)
-            self.current_dict[seed.outcome] =- 1
+            self.current_dict[seed.outcome] -= 1
         else:
             seed.chosen_count += 1
             self.chosen_seed = seed
