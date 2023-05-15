@@ -588,6 +588,14 @@ class Item():
     ItemInstance: Optional[ItemInstance] #Optional[List[]] #multiple instances possible
 
 @dataclass 
+class TransportEquipmentSeal():
+    ID: str
+    SealIssuerTypeCode: Optional[str] # code
+    Condition: Optional[str]
+    SealStatusCode: Optional[str] # code
+    SealingPartyType: Optional[str]
+
+@dataclass 
 class TransportEquipment():
     ID: Optional[str]
     TransportEquipmentTypeCode: Optional[str] # code
@@ -601,7 +609,7 @@ class TransportEquipment():
     ReturnabilityIndicator: Optional[bool]
     LegalStatusIndicator: Optional[bool]
     MeasurementDimension: Optional[Dimension] #multiple instances possible
-    #TransportEquipmentSeal: Optional[TransportEquipmentSeal] #multiple instances possible
+    TransportEquipmentSeal: Optional[TransportEquipmentSeal] #multiple instances possible
     MinimumTemperature: Optional[Temperature]
     MaximumTemperature: Optional[Temperature]
     ProviderParty: Optional[Party] 
@@ -921,5 +929,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'TransportEquipment': TransportEquipment,
 'ProviderParty': Party,
 'LoadingProofParty': Party,
-'LoadingLocation': Location
+'LoadingLocation': Location,
+'TransportEquipmentSeal': TransportEquipmentSeal
 }
