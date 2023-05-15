@@ -139,16 +139,22 @@ class GreyboxFuzzer(Fuzzer):
     def multiple_runs(self, run_count: int, stats: bool) -> List[Tuple[Any, str]]:
         results = []
         code_block_total = 55
-        for i in range(run_count):
-            result , _ = self.run()
-            run_num = i + 1
-            pop_count = sum(self.current_dict.values())
-            percent_coverage = len(self.total_coverage)/code_block_total * 100
-            to_print = "Run: " + str(run_num) + " Population count: " + str(pop_count)
-            to_print += " Coverage: " + str(format(percent_coverage, '.2f')) + " %"
-            if stats:
-                print(to_print,  end='\r')
+        try:
+            for i in range(run_count):
+                result , _ = self.run()
+                run_num = i + 1
+                pop_count = sum(self.current_dict.values())
+                percent_coverage = len(self.total_coverage)/code_block_total * 100
+                to_print = "Run: " + str(run_num) + " Population count: " + str(pop_count)
+                to_print += " Coverage: " + str(format(percent_coverage, '.2f')) + " %"
+                if stats:
+                    print(to_print,  end='\r')
+        except KeyboardInterrupt:
+            print("Program terminated manually, writing population, do not stop it")
+            for seed in self.population:
+                self.only_log(seed.result, seed.outcome, seed.data)
 
+        
         # Filter results marked as "PASS"
         if self.verbose:
             for cov in self.coverages_list:
