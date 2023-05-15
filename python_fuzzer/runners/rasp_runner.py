@@ -96,7 +96,7 @@ class RaspRunner(Runner):
             elif standard_out.find("Schematron") != -1:
                 return standard_out, self.SCHEMATRON
             
-            elif "System.Xml.XmlException" in standard_out:
+            elif "System.Xml.XmlException" in standard_out or "SearchForDocumentTypeFromXmlDocumentFailedException" in standard_out:
                 return standard_out, self.XML
             else:
                 return standard_out, self.UNKNOWN
