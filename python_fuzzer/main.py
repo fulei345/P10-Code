@@ -35,14 +35,13 @@ def main(verbose: bool, stats: bool) -> None:
     # Initialize the mutator
     mut: GeneralMutator = GeneralMutator(verbose)
 
+    fuzzed_path: str = os.path.join(cwd_path, "documents", "fuzzed_documents")
     population_path: str = os.path.join(cwd_path, "documents", "population")
     # Initialize and run the fuzzer
-    # fuzz: RaspFuzzer = RaspFuzzer(corpus_str, run, mut, log, verbose, parser, document_path, mutation_count=1)
-    # result = fuzz.multiple_runs(run_count=3)
     # print(result)
 
     # Greybox fuzzer
-    fuzz: GreyboxFuzzer = GreyboxFuzzer(corpus, run, mut, log, PowerSchedule(), verbose, population_path,
+    fuzz: GreyboxFuzzer = GreyboxFuzzer(corpus, run, mut, log, PowerSchedule(), verbose, fuzzed_path,
                                         mutation_count=1)
     result = fuzz.multiple_runs(run_count=14, stats=stats)
     # print(result)
