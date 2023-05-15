@@ -68,7 +68,7 @@ class GreyboxFuzzer(Fuzzer):
 
         if seed.chosen_count == 6:
             self.population.remove(seed)
-            self.current_dict[seed.outcome] =- 1
+            self.current_dict[seed.outcome] -= 1
         else:
             seed.chosen_count += 1
             self.chosen_seed = seed
@@ -140,9 +140,9 @@ class GreyboxFuzzer(Fuzzer):
         results = []
         code_block_total = 55
         try:
-            for i in range(run_count):
+            for i in range(1, run_count + 1):
                 result , _ = self.run()
-                run_num = i + 1
+                run_num = i
                 pop_count = sum(self.current_dict.values())
                 percent_coverage = len(self.total_coverage)/code_block_total * 100
                 to_print = "Run: " + str(run_num) + " Population count: " + str(pop_count)
