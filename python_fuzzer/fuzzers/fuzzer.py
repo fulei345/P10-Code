@@ -8,7 +8,7 @@ class Fuzzer(ABC):
         pass
 
     @abstractmethod
-    def fuzz(self, inp: Any) -> Any:
+    def fuzz(self) -> Any:
         pass
 
     @abstractmethod

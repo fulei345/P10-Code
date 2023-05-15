@@ -20,8 +20,9 @@ class RaspRunner(Runner):
     def __init__(self, log: FeedbackLogger, path: str, verbose: bool) -> None:
         self.PASS: str = 'PASS'
         self.FAIL: str = 'FAIL'
-        self.UNRESOLVED: str = 'UNRESOLVED'
-        self.EXCEPTION: str = 'EXCEPTION'
+        self.SCHEMA: str = 'SCHEMA'
+        self.SCHEMATRON: str = 'SCHEMATRON'
+        self.XML: str = 'XML'
         self.UNKNOWN: str = 'UNKNOWN'
 
         self.logger: FeedbackLogger = log
@@ -37,10 +38,10 @@ class RaspRunner(Runner):
     def run(self, document: ElementTree, filename: str) -> Tuple[Any, str, List[str]]:
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
         document.write(document_path, encoding="utf-8", xml_declaration=True)
-        message, outcome, code_coverage = self.start_process(document_path)
-        return message, outcome, code_coverage
+        message, outcome = self.start_process(document_path)
+        return message, outcome
 
-    def start_process(self, doc_path: str) -> Tuple[str, str, List[str]]:
+    def start_process(self, doc_path: str) -> Tuple[str, str]:
         # Initialize coverage if something goes wrong
         self.code_coverage = {}
         try:
@@ -55,8 +56,7 @@ class RaspRunner(Runner):
                 standard_error = process.stderr.decode("utf-8", errors="replace")
                 if self.verbose:
                     print(standard_error)
-                outcome = self.FAIL + str(self.count)
-                return standard_error, outcome, []
+                return standard_error, self.FAIL
 
             elif process.returncode == 0:
                 # TODO find better way to handle decode error for ø (+ æ and å, i suppose)
@@ -64,7 +64,7 @@ class RaspRunner(Runner):
                 return self.handle_feedback(standard_out)
         except Exception:
             traceback.print_exc()
-            return str(traceback.format_exception()), self.FAIL, []
+            return str(traceback.format_exception()), self.FAIL
 
     def handle_feedback(self, standard_out: str) -> Tuple[str, str, List[str]]:
         # Find code blocks for code coverage
@@ -79,7 +79,7 @@ class RaspRunner(Runner):
          
         if "Response received" in standard_out:
             # It was succesful
-            return standard_out, self.PASS, self.code_coverage
+            return standard_out, self.PASS
         # It did not pass
         else:
             # # Kunne også tjekke F fault code
@@ -88,24 +88,26 @@ class RaspRunner(Runner):
             # self.ersp_nums.append(f_num.group(0))
             
             # Regex to find E-RSP num
-            ersp_num = findall(r"E-RSP\d+", standard_out)
+            # ersp_num = findall(r"E-RSP\d+", standard_out)
 
-            if len(ersp_num) == 0:
-                # We don't know
-                # Denne her exception har ikke et nummer
-                if "System.Xml.XmlException" in standard_out:
-                    return standard_out, self.EXCEPTION, self.code_coverage
-                return standard_out, self.UNKNOWN, self.code_coverage
 
-            # Loop all E-RSP nums
-            outcome = ""
-            for num in ersp_num:
-                outcome += "-"
-                outcome += num
+            xml_list = ["NoDocumentTypeFoundFromXmlDocumentException",
+                        "System.Xml.XmlException",
+                        "SearchForDocumentTypeFromXmlDocumentFailedException",]
 
-            # If it was an E-RSP fault
-            return standard_out, outcome, self.code_coverage
+            if standard_out.find("Schema ") != -1:
+                return standard_out, self.SCHEMA
+            
+            elif standard_out.find("Schematron") != -1:
+                return standard_out, self.SCHEMATRON
 
+            else:
+                for s in xml_list:
+                    if s in standard_out:
+                        return standard_out, self.XML
+                return standard_out, self.UNKNOWN
+        
+            
 
 if __name__ == '__main__':
     cwd_path = getcwd()

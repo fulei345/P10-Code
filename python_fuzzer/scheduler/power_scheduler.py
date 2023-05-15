@@ -14,15 +14,17 @@ class PowerSchedule:
 
     def assignEnergy(self, population: Sequence[Seed]) -> None:
         """Assigns Schema 1, Valid 3 and else 2"""
+        good_list = ["FAIL", "PASS", "SCHEMATRON", "UNKNOWN"]
         if WEIGHTED_PS:
+            set_high = False
             for seed in population:
-                if seed.result.find("Schema"):
+                set_high = False
+                for i in good_list:
+                    if seed.outcome == i:
+                        seed.energy = 5
+                        set_high = True
+                if not set_high:
                     seed.energy = 1
-                else:
-                    if seed.outcome == "PASS":
-                        seed.energy = 3
-                    else:
-                        seed.energy = 2
         else:
             # 1 to each
             for seed in population:
