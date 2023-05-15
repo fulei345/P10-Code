@@ -67,11 +67,12 @@ class GreyboxFuzzer(Fuzzer):
         seed = self.schedule.choose(self.population)
 
         if seed.chosen_count == 6:
-            self.population.remove(seed)
-            self.current_dict[seed.outcome] -= 1
+            if self.current_dict[seed.outcome] != 1:
+                self.population.remove(seed)
+                self.current_dict[seed.outcome] -= 1
         else:
             seed.chosen_count += 1
-            self.chosen_seed = seed
+        self.chosen_seed = seed
 
         # Stacking: Apply multiple mutations to generate the candidate
         candidate = deepcopy(seed.data)
