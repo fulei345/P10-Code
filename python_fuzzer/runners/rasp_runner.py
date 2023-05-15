@@ -22,6 +22,7 @@ class RaspRunner(Runner):
         self.FAIL: str = 'FAIL'
         self.SCHEMA: str = 'SCHEMA'
         self.SCHEMATRON: str = 'SCHEMATRON'
+        self.XML: str = 'XML'
         self.UNKNOWN: str = 'UNKNOWN'
 
         self.logger: FeedbackLogger = log
@@ -95,6 +96,8 @@ class RaspRunner(Runner):
             elif standard_out.find("Schematron") != -1:
                 return standard_out, self.SCHEMATRON
             
+            elif "System.Xml.XmlException" in standard_out:
+                return standard_out, self.XML
             else:
                 return standard_out, self.UNKNOWN
 

@@ -50,7 +50,7 @@ class GreyboxFuzzer(Fuzzer):
 
 
         # Current dictionary over the amount
-        self.current_dict: dict = {"SCHEMA": 0, "PASS": 0, "SCHEMATRON": 0, "UNKNOWN": 0, "FAIL": 0}
+        self.current_dict: dict = {"SCHEMA": 0, "PASS": 0, "SCHEMATRON": 0, "UNKNOWN": 0, "FAIL": 0, "XML": 0}
         
 
         self.chosen_seed = None
