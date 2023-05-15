@@ -1,5 +1,7 @@
 from typing import List, Set, Union, Any
 from xml.etree.cElementTree import Element, ElementTree, parse, ParseError
+import sys
+sys.path.append("..")
 
 
 class Seed:
@@ -23,4 +25,3 @@ class Seed:
         return self.data.__str__()
 
     __repr__ = __str__
-    
