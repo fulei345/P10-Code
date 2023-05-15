@@ -89,10 +89,10 @@ class RaspRunner(Runner):
             # Regex to find E-RSP num
             # ersp_num = findall(r"E-RSP\d+", standard_out)
 
-            if standard_out.find("Schema "):
+            if standard_out.find("Schema ") != -1:
                 return standard_out, self.SCHEMA
             
-            elif standard_out.find("Schematron"):
+            elif standard_out.find("Schematron") != -1:
                 return standard_out, self.SCHEMATRON
             
             else:
