@@ -4,8 +4,6 @@ from xml.etree.cElementTree import ElementTree
 from os.path import join
 from copy import deepcopy
 
-from python_fuzzer import Mutator
-
 if __name__ == "__main__":
     from fuzzer import Fuzzer
 else:
@@ -86,8 +84,8 @@ class GreyboxFuzzer(Fuzzer):
         """Returns first each seed once and then generates new inputs"""
         if self.seed_index < len(self.seeds):
             # Still seeding
-            self.inp = self.seeds[self.seed_index]
-            self.chosen_seed = self.inp
+            self.chosen_seed = self.seeds[self.seed_index]
+            self.inp = self.chosen_seed.data
         else:
             # Mutating
             self.inp = self.create_candidate()
@@ -125,6 +123,8 @@ class GreyboxFuzzer(Fuzzer):
         if self.current_dict[outcome] < MAX_DICT[outcome]:
             self.add_to_population(result, outcome, document)
             self.current_dict[outcome] += 1
+        else:
+            self.seed_index += 1
 
     def run(self) -> Tuple[Any, str]:
         # "" since it needs an input
@@ -133,22 +133,18 @@ class GreyboxFuzzer(Fuzzer):
         filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
         result, outcome = self.runner.run(document, filename)
         new_coverage = frozenset(self.runner.code_coverage)
-        self.handle_feedback(new_coverage, result, outcome, document)
+        self.handle_feedback(result, outcome, document)
         return result, outcome
 
     def multiple_runs(self, run_count: int, stats: bool) -> List[Tuple[Any, str]]:
         results = []
-        result_num = 0
         code_block_total = 55
         for i in range(run_count):
-            result = self.run()
+            result , _ = self.run()
             run_num = i + 1
-            path_num = len(self.coverages_list)
-            if result[0] not in results:
-                results.append(result[0])
-                result_num += 1
+            pop_count = sum(self.current_dict.values())
             percent_coverage = len(self.total_coverage)/code_block_total * 100
-            to_print = "Run: " + str(run_num) + " Paths: " + str(path_num)
+            to_print = "Run: " + str(run_num) + " Population count: " + str(pop_count)
             to_print += " Coverage: " + str(format(percent_coverage, '.2f')) + " %"
             if stats:
                 print(to_print,  end='\r')
