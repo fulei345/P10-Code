@@ -16,4 +16,4 @@ REPLACE_COUNT = 5
 MAX_POPULATION = 40
 
 # Max number of different seed type in population
-MAX_DICT = {"schema": 5, "pass": 5, "schematron": 5}
+MAX_DICT = {"schema": 5, "pass": 5, "schematron": 10, "unknown": 100}

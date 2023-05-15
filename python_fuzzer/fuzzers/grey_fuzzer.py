@@ -52,7 +52,7 @@ class GreyboxFuzzer(Fuzzer):
 
 
         # Current dictionary over the amount
-        self.current_dict: dict = {"schema": 0, "pass": 0, "schematron": 0}
+        self.current_dict: dict = {"schema": 0, "pass": 0, "schematron": 0, "unknown": 0}
         
 
         self.chosen_seed = None
@@ -100,11 +100,12 @@ class GreyboxFuzzer(Fuzzer):
         self.total_coverage = self.total_coverage.union(self.runner.code_coverage)
 
         # Write and log new file
-        filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
-        document_path = join(self.population_path, filename)
-        document.write(document_path, encoding="utf-8", xml_declaration=True)
-        self.logger.log_crash(filename, result)
-        seed.population_name = filename
+        # filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
+        # document_path = join(self.population_path, filename)
+        # document.write(document_path, encoding="utf-8", xml_declaration=True)
+        # self.logger.log_crash(filename, result)
+        
+        seed.population_name = outcome
         self.seed_index += 1
 
     def only_log(self, result: str, outcome: str, document: ElementTree):
@@ -116,6 +117,10 @@ class GreyboxFuzzer(Fuzzer):
         self.logger.log_crash(filename, result)
     
     def handle_feedback(self, new_coverage: frozenset, result: str, outcome: str, document: ElementTree):
+        
+        if "UNKNOWN" in outcome:
+            if self.current_dict["unknown"] < 
+
 
         # Log special stuff        
         if "E-RSP15324" in outcome or "UNKNOWN" in outcome:
