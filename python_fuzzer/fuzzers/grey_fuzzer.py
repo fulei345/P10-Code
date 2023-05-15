@@ -18,7 +18,7 @@ from runners import RaspRunner
 from loggers import FeedbackLogger
 from utils import Seed
 from scheduler import PowerSchedule
-from config import MUTATION_COUNT
+from config import MUTATION_COUNT, MAX_DICT
 
 
 class GreyboxFuzzer(Fuzzer):
@@ -117,17 +117,25 @@ class GreyboxFuzzer(Fuzzer):
         self.logger.log_crash(filename, result)
     
     def handle_feedback(self, new_coverage: frozenset, result: str, outcome: str, document: ElementTree):
-        
+        set_string = ""
         if "UNKNOWN" in outcome:
-            if self.current_dict["unknown"] < 
+            set_string = "unknown"
+            
+        elif result.find("Schema"):
+            set_string = "schema"
 
+        elif result.find("Schematron"):
+            set_string = "schematron"
+        
+        elif "PASS" in outcome:
+            set_string = "pass"
+        
+        else:
+            print("fuck")
 
-        # Log special stuff        
-        if "E-RSP15324" in outcome or "UNKNOWN" in outcome:
-            self.only_log(result, outcome, document)
-
-        self.add_to_population(result, outcome, document)
-
+        if self.current_dict[set_string] < MAX_DICT[set_string]:
+            self.add_to_population(result, outcome, document)
+            self.current_dict[set_string] += 1
 
     def run(self) -> Tuple[Any, str]:
         # "" since it needs an input
@@ -162,9 +170,7 @@ class GreyboxFuzzer(Fuzzer):
                 print(cov)
             print(len(self.population))
 
-        # Print how many times each is chosen
-        # for s in self.population:
-        #    print(s.outcome, s.chosen_count)
+        
 
         # TODO Better filter? Perhaps look at response from runner
         return [result for result in results if result[1] != "PASS"]
