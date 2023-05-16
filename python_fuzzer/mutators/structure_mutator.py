@@ -11,7 +11,7 @@ import sys
 sys.path.append("..")
 from invoice import Invoice
 from utils import TypeGenerator
-from config import IF_PROB
+from config import DUPLICATE_PROB
 
 
 class StructureMutator(Mutator):
@@ -21,7 +21,7 @@ class StructureMutator(Mutator):
         self.parent_map = dict()
         self.total_size = 0
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [self.insert_field,
+        self.mutators: List[Callable[[Any], Any]] = [self.duplicate_field,
                                                      self.delete_field,
                                                      self.move_field,
                                                      self.add_field]
@@ -59,20 +59,24 @@ class StructureMutator(Mutator):
                 child = temp_p
         return False
 
-    # when used directly it insert duplicate of the field - is also used to insert fields when moving fields or add new fields
-    def insert_field(self, parent: Element, subelement: Element) -> Element:
-        # 50% sætte i parent eller uniformt i hele file
-        if(random.random() < IF_PROB ):
-            index = random.randint(0, len(parent))
+    def duplicate_field(self, parent: Element, subelement: Element) -> Element:
+        if(random.random() < DUPLICATE_PROB ):
+            #find the fields index in the parent element and duplicate it there
+            index = list(parent).index(subelement)
             parent.insert(index, subelement) #insert field in parent class
         else:
-            index = random.randint(1, self.total_size)
-            for i, elem in enumerate(self.root.iter()):
-                if i >= index and self.check_if_ancestor(elem, subelement): 
-                    parent = self.parent_map[elem]
-                    insert_index = random.randint(0, len(parent))
-                    parent.insert(insert_index, subelement)
-                    return parent
+            self.insert_field(parent, subelement)
+        return parent
+
+    # insert field at random place
+    def insert_field(self, parent: Element, subelement: Element) -> Element:
+        index = random.randint(1, self.total_size)
+        for i, elem in enumerate(self.root.iter()):
+            if i >= index and self.check_if_ancestor(elem, subelement): 
+                parent = self.parent_map[elem]
+                insert_index = random.randint(0, len(parent))
+                parent.insert(insert_index, subelement)
+                return parent
         return parent
 
 
