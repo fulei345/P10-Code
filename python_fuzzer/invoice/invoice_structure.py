@@ -272,6 +272,17 @@ class PartyIdentification():
     ID: str 
     
 @dataclass 
+class Person():
+    FirstName: Optional[str] # name
+    FamilyName: Optional[str] # name
+    Title: Optional[str] 
+    MiddleName: Optional[str] # name
+    NameSuffix: Optional[str] 
+    JobTitle: Optional[str] 
+    OrganizationDepartment: Optional[str] 
+    Contact: Optional[Contact]
+    
+@dataclass 
 class PayeeParty():
     WebsiteURI: Optional[str]
     LogoReferenceID: Optional[str]
@@ -280,11 +291,11 @@ class PayeeParty():
     PartyName: Optional[PartyName] #multiple instances possible
     #Language Optional[
     PostalAddress: Optional[Address]
-    #PhysicalLocation Optional[
+    PhysicalLocation: Optional[Location]
     PartyTaxScheme: Optional[PartyTaxScheme] #multiple instances possible
     PartyLegalEntity: PartyLegalEntity
     Contact: Optional[Contact]
-    #Person Optional[
+    Person: Optional[Person]
 
 @dataclass 
 class Party():
@@ -295,11 +306,11 @@ class Party():
     PartyName: Optional[PartyName] #multiple instances possible
     #Language Optional[
     PostalAddress: Optional[Address]
-    #PhysicalLocation Optional[
+    PhysicalLocation: Optional[Location]
     PartyTaxScheme: Optional[PartyTaxScheme] #multiple instances possible
     PartyLegalEntity: PartyLegalEntity
     Contact: Contact #(Optional for AccountingSupplierParty, BuyerCustomerParty, and SellerSupplierParty, but mandatory for AccountingCustomerParty)
-    #Person Optional[
+    Person: Optional[Person]
 
 @dataclass 
 class Despatch():
@@ -967,5 +978,7 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'SellerContact': Contact,
 'Despatch': Despatch,
 'DespatchAddress': Address,
-'DespatchParty': Party
+'DespatchParty': Party,
+'PhysicalLocation': Location,
+'Person': Person
 }
