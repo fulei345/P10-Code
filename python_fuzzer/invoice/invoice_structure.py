@@ -301,7 +301,19 @@ class Party():
     Contact: Contact #(Optional for AccountingSupplierParty, BuyerCustomerParty, and SellerSupplierParty, but mandatory for AccountingCustomerParty)
     #Person Optional[
 
-
+@dataclass 
+class Despatch():
+    ID: Optional[str]
+    RequestedDespatchDate: Optional[date]
+    RequestedDespatchTime: Optional[time]
+    EstimatedDespatchDate: Optional[date]
+    EstimatedDespatchTime: Optional[time]
+    ActualDespatchDate: Optional[date]
+    ActualDespatchTime: Optional[time]
+    DespatchAddress: Optional[Address]
+    DespatchParty: Optional[Party]
+    Contact: Optional[Contact]
+        
 @dataclass 
 class Delivery():
     ID: Optional[str]
@@ -313,10 +325,10 @@ class Delivery():
     LatestDeliveryDate: Optional[date]
     LatestDeliveryTime: Optional[time]
     TrackingID: Optional[str]
-    #DeliveryLocation #Optional[
+    DeliveryLocation: Optional[Location]
     RequestedDeliveryPeriod: Optional[Period]
     DeliveryParty: Optional[Party]
-    #Despatch #Optional[
+    Despatch: Optional[Despatch]
 
 @dataclass 
 class SellerSupplierParty():
@@ -952,5 +964,8 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'AccountingContact': Contact,
 'BuyerContact': Contact,
 'DespatchContact': Contact,
-'SellerContact': Contact
+'SellerContact': Contact,
+'Despatch': Despatch,
+'DespatchAddress': Address,
+'DespatchParty': Party
 }
