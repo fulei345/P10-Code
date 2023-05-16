@@ -272,6 +272,12 @@ class PartyIdentification():
     ID: str 
     
 @dataclass 
+class Language():
+    ID: Optional[str]
+    Name: Optional[str] # name
+    LocaleCode: Optional[str] # code
+
+@dataclass 
 class Person():
     FirstName: Optional[str] # name
     FamilyName: Optional[str] # name
@@ -289,7 +295,7 @@ class PayeeParty():
     EndpointID: Optional[str]
     PartyIdentification: Optional[PartyIdentification] #multiple instances possible
     PartyName: Optional[PartyName] #multiple instances possible
-    #Language Optional[
+    Language: Optional[Language]
     PostalAddress: Optional[Address]
     PhysicalLocation: Optional[Location]
     PartyTaxScheme: Optional[PartyTaxScheme] #multiple instances possible
@@ -304,7 +310,7 @@ class Party():
     EndpointID: str #optional for BuyerCustomerParty, and SellerSupplierParty
     PartyIdentification: Optional[PartyIdentification] #multiple instances possible
     PartyName: Optional[PartyName] #multiple instances possible
-    #Language Optional[
+    Language: Optional[Language]
     PostalAddress: Optional[Address]
     PhysicalLocation: Optional[Location]
     PartyTaxScheme: Optional[PartyTaxScheme] #multiple instances possible
@@ -980,5 +986,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'DespatchAddress': Address,
 'DespatchParty': Party,
 'PhysicalLocation': Location,
-'Person': Person
+'Person': Person,
+'Language': Language
 }
