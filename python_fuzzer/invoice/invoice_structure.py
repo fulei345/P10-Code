@@ -451,6 +451,13 @@ class AdditionalItemIdentification(BuyersItemIdentification):
     pass
 
 @dataclass 
+class PriceList():
+    ID: Optional[str]
+    StatusCode: Optional[str] # code
+    ValidityPeriod: Optional[Period] #multiple instances possible
+    PreviousPriceList: Optional['PriceList']
+
+@dataclass 
 class Price(): #!
     PriceAmount: float #datatype: amount
     BaseQuantity: Optional[float] #datatype: quantity 
@@ -459,7 +466,7 @@ class Price(): #!
     PriceType: Optional[str] 
     OrderableUnitFactorRate: Optional[int] #rate
     ValidityPeriod: Optional[Period] #multiple instances possible
-    # PriceList #Optional[PriceList]
+    PriceList: Optional[PriceList]
     AllowanceCharge: Optional[AllowanceCharge] #multiple instances possible
     PricingExchangeRate: PricingExchangeRate
 
@@ -930,5 +937,7 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'ProviderParty': Party,
 'LoadingProofParty': Party,
 'LoadingLocation': Location,
-'TransportEquipmentSeal': TransportEquipmentSeal
+'TransportEquipmentSeal': TransportEquipmentSeal,
+'PriceList': PriceList,
+'PreviousPriceList': PriceList
 }
