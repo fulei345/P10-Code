@@ -223,11 +223,22 @@ class Contact():
     Note: Optional[str]
     OtherCommunication: Optional[OtherCommunication]
 
-
+@dataclass 
+class ExternalReference():
+    URI: Optional[str]
+    DocumentHash: Optional[str]
+    ExpiryDate: Optional[date] 
+    ExpiryTime: Optional[time] 
+    MimeCode: Optional[str] # code
+    FormatCode: Optional[str] # code
+    EncodingCode: Optional[str] # code
+    CharacterSetCode: Optional[str] # code
+    FileName: Optional[str] # name
+    
 @dataclass 
 class Attachment():
     EmbeddedDocumentBinaryObject: Optional[bytes] # binary type
-    #ExternalReference Optional[
+    ExternalReference: Optional[ExternalReference]
 
 @dataclass 
 class DocumentReference():
@@ -238,7 +249,6 @@ class DocumentReference():
     XPath: Optional[str] #Optional[List[str]] #multiple instances possible
     Attachment: Optional[Attachment]
 
-    
 @dataclass 
 class CorporateRegistrationScheme():
     ID: Optional[str]
@@ -259,7 +269,6 @@ class PartyLegalEntity(): #!
     CorporateRegistrationScheme: Optional[CorporateRegistrationScheme]
     StakeholderParty: 'Party' #Optional[Party #multiple instances possible #TODO test this one plz and op
     CompanyDossierDocumentReference: Optional[DocumentReference]
-
 
 @dataclass 
 class PartyTaxScheme():
@@ -996,5 +1005,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'PhysicalLocation': Location,
 'Person': Person,
 'Language': Language,
-'CorporateRegistrationScheme': CorporateRegistrationScheme
+'CorporateRegistrationScheme': CorporateRegistrationScheme,
+'ExternalReference': ExternalReference
 }
