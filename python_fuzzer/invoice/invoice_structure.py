@@ -459,7 +459,7 @@ class Price(): #!
     PriceType: Optional[str] 
     OrderableUnitFactorRate: Optional[int] #rate
     ValidityPeriod: Optional[Period] #multiple instances possible
-    # PriceList #Optional[ 
+    # PriceList #Optional[PriceList]
     AllowanceCharge: Optional[AllowanceCharge] #multiple instances possible
     PricingExchangeRate: PricingExchangeRate
 
