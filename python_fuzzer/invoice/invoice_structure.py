@@ -238,6 +238,14 @@ class DocumentReference():
     XPath: Optional[str] #Optional[List[str]] #multiple instances possible
     Attachment: Optional[Attachment]
 
+    
+@dataclass 
+class CorporateRegistrationScheme():
+    ID: Optional[str]
+    Name: Optional[str] # name
+    CorporateRegistrationTypeCode: Optional[str] # code
+    JurisdictionRegionAddress: Optional[Address] #multiple instances possible
+
 @dataclass 
 class PartyLegalEntity(): #!
     RegistrationName: Optional[str] # name
@@ -248,8 +256,8 @@ class PartyLegalEntity(): #!
     RegistrationExpirationDate: Optional[date]
     CorporateStockAmount: Optional[float] #datatype: amount
     RegistrationAddress: Optional[Address]
-    #CorporateRegistrationScheme Optional[
-    #StakeholderParty: 'Party' #Optional[Party #multiple instances possible #TODO test this one plz and op
+    CorporateRegistrationScheme: Optional[CorporateRegistrationScheme]
+    StakeholderParty: 'Party' #Optional[Party #multiple instances possible #TODO test this one plz and op
     CompanyDossierDocumentReference: Optional[DocumentReference]
 
 
@@ -987,5 +995,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'DespatchParty': Party,
 'PhysicalLocation': Location,
 'Person': Person,
-'Language': Language
+'Language': Language,
+'CorporateRegistrationScheme': CorporateRegistrationScheme
 }
