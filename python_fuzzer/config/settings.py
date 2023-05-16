@@ -6,8 +6,8 @@ MUTATION_COUNT = 5
 # If power scheduler should use weighted energy
 WEIGHTED_PS = True
 
-# Pobability of being inserted in the whole document or in parent
-IF_PROB = 0.5
+# Pobability for being inserted at same index, else at random posistion through the whole document
+DUPLICATE_PROB = 0.95
 
 # The number of times that seed is send before the seeds is getting replaced
 REPLACE_COUNT = 10
