@@ -427,10 +427,17 @@ class BuyersItemIdentification():
     IssuerParty: Optional[Party]
 
 @dataclass 
+class PhysicalAttribute():
+    AttributeID: str
+    PositionCode: Optional[str] #code
+    DescriptionCode: Optional[str] #code
+    Description: Optional[str] 
+
+@dataclass 
 class SellersItemIdentification():
     ID: str
     ExtendedID: Optional[str]
-    #PhysicalAttribute #Optional[List[]] #multiple instances possible
+    PhysicalAttribute: PhysicalAttribute #Optional[List[]] #multiple instances possible
     MeasurementDimension: Optional[Dimension] #Optional[List[]] #multiple instances possible
     IssuerParty: Optional[Party]
 
@@ -939,5 +946,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'LoadingLocation': Location,
 'TransportEquipmentSeal': TransportEquipmentSeal,
 'PriceList': PriceList,
-'PreviousPriceList': PriceList
+'PreviousPriceList': PriceList,
+'PhysicalAttribute': PhysicalAttribute
 }
