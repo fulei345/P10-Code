@@ -323,9 +323,9 @@ class SellerSupplierParty():
     CustomerAssignedAccountID: Optional[str]
     AdditionalAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
     Party: Party
-    #DespatchContact: Optional[
-    #AccountingContact: Optional[
-    #SellerContact: Optional[
+    DespatchContact: Optional[Contact]
+    AccountingContact: Optional[Contact]
+    SellerContact: Optional[Contact]
 
 @dataclass 
 class BuyerCustomerParty():
@@ -333,9 +333,9 @@ class BuyerCustomerParty():
     SupplierAssignedAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
     AdditionalAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
     Party: Party
-    #DeliveryContact: Optional[
-    #AccountingContact: Optional[
-    #BuyerContact: Optional[
+    DeliveryContact: Optional[Contact]
+    AccountingContact: Optional[Contact]
+    BuyerContact: Optional[Contact]
 
 @dataclass 
 class AccountingCustomerParty():
@@ -343,18 +343,18 @@ class AccountingCustomerParty():
     SupplierAssignedAccountID: Optional[str]
     AdditionalAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
     Party: Party
-    #DespatchContact: Optional[
-    #AccountingContact: Optional[
-    #SellerContact: Optional[
+    DespatchContact: Optional[Contact]
+    AccountingContact: Optional[Contact]
+    SellerContact: Optional[Contact]
 
 @dataclass 
 class AccountingSupplierParty():
     CustomerAssignedAccountID: Optional[str]
     AdditionalAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
     Party: Party
-    #DeliveryContact: Optional[
-    #AccountingContact: Optional[
-    #BuyerContact: Optional[
+    DeliveryContact: Optional[Contact]
+    AccountingContact: Optional[Contact]
+    BuyerContact: Optional[Contact]
 
 
 @dataclass 
@@ -431,7 +431,7 @@ class PhysicalAttribute():
     AttributeID: str
     PositionCode: Optional[str] #code
     DescriptionCode: Optional[str] #code
-    Description: Optional[str] 
+    Description: Optional[str] #multiple instances possible
 
 @dataclass 
 class SellersItemIdentification():
@@ -947,5 +947,10 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'TransportEquipmentSeal': TransportEquipmentSeal,
 'PriceList': PriceList,
 'PreviousPriceList': PriceList,
-'PhysicalAttribute': PhysicalAttribute
+'PhysicalAttribute': PhysicalAttribute,
+'DeliveryContact': Contact,
+'AccountingContact': Contact,
+'BuyerContact': Contact,
+'DespatchContact': Contact,
+'SellerContact': Contact
 }
