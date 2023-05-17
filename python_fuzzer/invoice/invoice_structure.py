@@ -120,25 +120,6 @@ class TaxTotal(): #!
     TaxSubtotal: Optional[TaxSubtotal] #multiple instances possible
 
 @dataclass 
-class PaymentTerms():
-    ID: Optional[str]
-    PaymentMeansID: Optional[str] #multiple instances possible
-    PrepaidPaymentReferenceID: Optional[str]
-    Note: Optional[str] #multiple instances possible
-    ReferenceEventCode: Optional[str] #datatype: code
-    SettlementDiscountPercent: Optional[str] #Percent Type
-    PenaltySurchargePercent: Optional[str] #Percent Type
-    PaymentPercent: Optional[str] #Percent Type
-    Amount: Optional[float] #datatype: amount
-    SettlementDiscountAmount: Optional[float] #datatype: amount
-    PenaltyAmount: Optional[float] #datatype: amount
-    PaymentDueDate: Optional[date]
-    InstallmentDueDate: Optional[date]
-    SettlementPeriod: Optional[Period]
-    PenaltyPeriod: Optional[Period]
-    #TradeFinancing #Optional[TradeFinancing
-
-@dataclass 
 class FinancialInstitution():
     ID: Optional[str]
     Name: Optional[str] #datatype: name
@@ -291,7 +272,7 @@ class PartyLegalEntity(): #!
     CorporateStockAmount: Optional[float] #datatype: amount
     RegistrationAddress: Optional[Address]
     CorporateRegistrationScheme: Optional[CorporateRegistrationScheme]
-    StakeholderParty: 'Party' #Optional[Party #multiple instances possible #TODO test this one plz and op
+    StakeholderParty: Optional['Party'] #multiple instances possible #TODO test this one plz and op
     CompanyDossierDocumentReference: Optional[DocumentReference]
 
 @dataclass 
@@ -803,6 +784,36 @@ class OrderLineReference():
     OrderReference: Optional[OrderReference]
 
 @dataclass 
+class TradeFinancing():
+    ID: Optional[str]
+    FinancingInstrumentCode: Optional[str] #code #multiple instances possible
+    ClauseCode: Optional[str] #code #multiple instances possible
+    Clause: Optional[str] #multiple instances possible
+    ContractDocumentReference: Optional[DocumentReference]
+    DocumentReference: Optional[DocumentReference] #multiple instances possible
+    FinancingParty: Party
+    FinancingFinancialAccount: Optional[FinancialAccount]
+    
+@dataclass 
+class PaymentTerms():
+    ID: Optional[str]
+    PaymentMeansID: Optional[str] #multiple instances possible
+    PrepaidPaymentReferenceID: Optional[str]
+    Note: Optional[str] #multiple instances possible
+    ReferenceEventCode: Optional[str] #datatype: code
+    SettlementDiscountPercent: Optional[str] #Percent Type
+    PenaltySurchargePercent: Optional[str] #Percent Type
+    PaymentPercent: Optional[str] #Percent Type
+    Amount: Optional[float] #datatype: amount
+    SettlementDiscountAmount: Optional[float] #datatype: amount
+    PenaltyAmount: Optional[float] #datatype: amount
+    PaymentDueDate: Optional[date]
+    InstallmentDueDate: Optional[date]
+    SettlementPeriod: Optional[Period]
+    PenaltyPeriod: Optional[Period]
+    TradeFinancing: Optional[TradeFinancing]
+
+@dataclass 
 class InvoiceLine():
     ID: str 
     UUID: Optional[str]
@@ -1033,5 +1044,8 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'ExternalReference': ExternalReference,
 'CreditAccount': CreditAccount,
 'CardAccount': CardAccount,
-'FinancialInstitution': FinancialInstitution
+'FinancialInstitution': FinancialInstitution,
+'TradeFinancing': TradeFinancing,
+'FinancingParty': Party,
+'FinancingFinancialAccount': FinancialAccount
 }
