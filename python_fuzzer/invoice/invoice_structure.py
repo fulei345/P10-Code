@@ -139,10 +139,16 @@ class PaymentTerms():
     #TradeFinancing #Optional[TradeFinancing
 
 @dataclass 
+class FinancialInstitution():
+    ID: Optional[str]
+    Name: Optional[str] #datatype: name
+    Address: Optional[Address]
+
+@dataclass 
 class FinancialInstitutionBranch():
     ID: Optional[str]
     Name: Optional[str] #datatype: name
-    #FinancialInstitution #Optional[
+    FinancialInstitution: Optional[FinancialInstitution]
     Address: Optional[Address]
 
 @dataclass 
@@ -1026,5 +1032,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'CorporateRegistrationScheme': CorporateRegistrationScheme,
 'ExternalReference': ExternalReference,
 'CreditAccount': CreditAccount,
-'CardAccount': CardAccount
+'CardAccount': CardAccount,
+'FinancialInstitution': FinancialInstitution
 }
