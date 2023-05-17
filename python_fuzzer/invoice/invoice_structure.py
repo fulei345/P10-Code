@@ -57,6 +57,10 @@ class LocationCoordinate():
     LongitudeDirectionCode: Optional[str] # code
     
 @dataclass 
+class AddressLine():
+    Line: str
+
+@dataclass 
 class Address():
     ID: Optional[str]
     AddressTypeCode: Optional[str] # code
@@ -82,7 +86,7 @@ class Address():
     Region: Optional[str] 
     District: Optional[str]
     TimezoneOffset: Optional[str]
-    #AddressLine #Optional[ #multiple instances possible
+    AddressLine: Optional[AddressLine] #multiple instances possible
     Country: Optional[Country]
     LocationCoordinate: Optional[LocationCoordinate]
 
@@ -1056,5 +1060,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'TradeFinancing': TradeFinancing,
 'FinancingParty': Party,
 'FinancingFinancialAccount': FinancialAccount,
-'LocationCoordinate': LocationCoordinate
+'LocationCoordinate': LocationCoordinate,
+'AddressLine': AddressLine
 }
