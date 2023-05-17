@@ -47,6 +47,16 @@ class Temperature():
     Description: Optional[str] #multiple instances possible
 
 @dataclass 
+class LocationCoordinate():
+    CoordinateSystemCode: Optional[str] # code
+    LatitudeDegreesMeasure: Optional[int] #measure Type
+    LatitudeMinutesMeasure: Optional[int] #measure Type
+    LatitudeDirectionCode: Optional[str] # code
+    LongitudeDegreesMeasure: Optional[int] #measure Type
+    LongitudeMinutesMeasure: Optional[int] #measure Type
+    LongitudeDirectionCode: Optional[str] # code
+    
+@dataclass 
 class Address():
     ID: Optional[str]
     AddressTypeCode: Optional[str] # code
@@ -74,7 +84,7 @@ class Address():
     TimezoneOffset: Optional[str]
     #AddressLine #Optional[ #multiple instances possible
     Country: Optional[Country]
-    #LocationCoordinate #Optional[
+    LocationCoordinate: Optional[LocationCoordinate]
 
 @dataclass 
 class TaxScheme():
@@ -83,7 +93,6 @@ class TaxScheme():
     TaxTypeCode: Optional[str] # code
     CurrencyCode: Optional[str] # code
     JurisdictionRegionAddress: Optional[Address] #multiple instances possible
-
 
 @dataclass 
 class TaxCategory():
@@ -176,7 +185,6 @@ class PaymentMeans():
     PayeeFinancialAccount: Optional[FinancialAccount]
     CreditAccount: Optional[CreditAccount] 
     
-
 @dataclass 
 class AllowanceCharge(): #!
     ID: Optional[str]
@@ -1047,5 +1055,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'FinancialInstitution': FinancialInstitution,
 'TradeFinancing': TradeFinancing,
 'FinancingParty': Party,
-'FinancingFinancialAccount': FinancialAccount
+'FinancingFinancialAccount': FinancialAccount,
+'LocationCoordinate': LocationCoordinate
 }
