@@ -158,6 +158,20 @@ class FinancialAccount():
     Country: Optional[Country]
 
 @dataclass 
+class CardAccount():
+    PrimaryAccountNumberID: str
+    NetworkID: str
+    CardTypeCode: Optional[str] #code
+    ValidityStartDate: Optional[date] 
+    ExpiryDate: Optional[date] 
+    IssuerID: Optional[str]
+    IssueNumberID: Optional[str]
+    CV2ID: Optional[str]
+    CardChipCode: Optional[str] #code
+    ChipApplicationID: Optional[str]
+    HolderName: Optional[str] #datatype: name
+
+@dataclass 
 class CreditAccount():
     AccountID: str
 
@@ -170,7 +184,7 @@ class PaymentMeans():
     InstructionID: Optional[str]
     InstructionNote: Optional[str] 
     PaymentID: Optional[str] #multiple instances possible
-    #CardAccount #Optional[ 
+    CardAccount: Optional[CardAccount] 
     PayerFinancialAccount: Optional[FinancialAccount] 
     PayeeFinancialAccount: Optional[FinancialAccount]
     CreditAccount: Optional[CreditAccount] 
@@ -1011,5 +1025,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'Language': Language,
 'CorporateRegistrationScheme': CorporateRegistrationScheme,
 'ExternalReference': ExternalReference,
-'CreditAccount': CreditAccount
+'CreditAccount': CreditAccount,
+'CardAccount': CardAccount
 }
