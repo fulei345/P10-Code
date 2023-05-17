@@ -154,9 +154,13 @@ class FinancialAccount():
     AccountFormatCode: Optional[str] #datatype: code
     CurrencyCode: Optional[str] #datatype: code
     PaymentNote: Optional[str] #multiple instances possible
-    #FinancialInstitutionBranch #Optional[
+    FinancialInstitutionBranch: Optional[FinancialInstitutionBranch]
     Country: Optional[Country]
-    
+
+@dataclass 
+class CreditAccount():
+    AccountID: str
+
 @dataclass 
 class PaymentMeans():
     ID: Optional[str]
@@ -169,7 +173,7 @@ class PaymentMeans():
     #CardAccount #Optional[ 
     PayerFinancialAccount: Optional[FinancialAccount] 
     PayeeFinancialAccount: Optional[FinancialAccount]
-    #CreditAccount #Optional[ 
+    CreditAccount: Optional[CreditAccount] 
     
 
 @dataclass 
@@ -1006,5 +1010,6 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'Person': Person,
 'Language': Language,
 'CorporateRegistrationScheme': CorporateRegistrationScheme,
-'ExternalReference': ExternalReference
+'ExternalReference': ExternalReference,
+'CreditAccount': CreditAccount
 }
