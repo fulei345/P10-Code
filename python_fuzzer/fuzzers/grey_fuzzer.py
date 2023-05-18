@@ -67,9 +67,10 @@ class GreyboxFuzzer(Fuzzer):
         seed = self.schedule.choose(self.population)
 
         if seed.chosen_count == REPLACE_COUNT + 1:
-            if self.current_dict[seed.outcome] != 1:
-                self.population.remove(seed)
-                self.current_dict[seed.outcome] -= 1
+            if seed.outcome != "UNKNOWN" and seed.outcome != "FAIL":
+                if self.current_dict[seed.outcome] != 1:
+                    self.population.remove(seed)
+                    self.current_dict[seed.outcome] -= 1
         else:
             seed.chosen_count += 1
         self.chosen_seed = seed
