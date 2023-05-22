@@ -1,5 +1,5 @@
 import random
-from typing import Any, List, Callable
+from typing import Any, List, Callable, get_origin, Union, get_args
 from xml.etree.cElementTree import ElementTree, tostring, fromstring, Element
 from dataclasses import dataclass, fields, field
 
@@ -57,7 +57,11 @@ class FieldMutator(Mutator):
                 class_name = elem.tag.split("}")[1]
                 for f in fields(parent): 
                     if f.name == class_name:
-                        field_type = f.type
+                        #check if the field is optional (as its type is then Union(type, None)) and set field_type to its type
+                        if(get_origin(f.type) is Union):
+                            field_type = get_args(f.type)[0]
+                        else:
+                            field_type = f.type
                 mutator: Callable[[Any], Any]
                 if field_type == int:
                     mutator = random.choice(self.int_mutators)
