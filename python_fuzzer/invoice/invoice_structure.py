@@ -1,5 +1,5 @@
 from datetime import date, time
-from typing import Optional, List, Union, Any
+from typing import Optional, List, Union, Any, TYPE_CHECKING
 from dataclasses import dataclass, fields
 
 
@@ -284,7 +284,7 @@ class PartyLegalEntity(): #!
     CorporateStockAmount: Optional[float] #datatype: amount
     RegistrationAddress: Optional[Address]
     CorporateRegistrationScheme: Optional[CorporateRegistrationScheme]
-    StakeholderParty: Optional['Party'] #multiple instances possible #TODO test this one plz and op
+    #StakeholderParty: Optional['Party'] #multiple instances possible #TODO test this one plz and op
     CompanyDossierDocumentReference: Optional[DocumentReference]
 
 @dataclass 
@@ -525,7 +525,7 @@ class PriceList():
     ID: Optional[str]
     StatusCode: Optional[str] # code
     ValidityPeriod: Optional[Period] #multiple instances possible
-    PreviousPriceList: Optional['PriceList']
+    #PreviousPriceList: Optional['PriceList'] #TODO
 
 @dataclass 
 class Price(): #!
@@ -726,9 +726,9 @@ class GoodsItem():
     Item: Optional[Item] #multiple instances possible
     GoodsItemContainer: Optional[GoodsItemContainer] #multiple instances possible
     FreightAllowanceCharge: Optional[AllowanceCharge] #multiple instances possible
-    InvoiceLine: Optional['InvoiceLine'] #TODO test this #multiple instances possible
+    #InvoiceLine: Optional['InvoiceLine'] #TODO test this #multiple instances possible
     Temperature: Optional[Temperature] #multiple instances possible
-    ContainedGoodsItem : Optional['GoodsItem'] #TODO test this #multiple instances possible
+    #ContainedGoodsItem : Optional['GoodsItem'] #TODO test this #multiple instances possible
     OriginAddress: Optional[Address]
     
 @dataclass 
@@ -745,7 +745,7 @@ class Package():
     PackageLevelCode: Optional[str] # code
     PackagingTypeCode: Optional[str] # code
     PackingMaterial: Optional[str] #multiple instances possible
-    ContainedPackage: Optional['Package'] #TODO test this #multiple instances possible
+    #ContainedPackage: Optional['Package'] #TODO test this #multiple instances possible
     GoodsItem: Optional[GoodsItem] #multiple instances possible
     MeasurementDimension: Optional[Dimension] #multiple instances possible
     DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
@@ -1061,5 +1061,8 @@ invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
 'FinancingParty': Party,
 'FinancingFinancialAccount': FinancialAccount,
 'LocationCoordinate': LocationCoordinate,
-'AddressLine': AddressLine
+'AddressLine': AddressLine,
+'ContactParty': Party,
+'UsabilityPeriod': Period,
+'AlternativeConditionPrice': Price
 }
