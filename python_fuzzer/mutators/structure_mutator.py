@@ -21,7 +21,10 @@ class StructureMutator(Mutator):
         self.parent_map = dict()
         self.total_size = 0
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [self.add_field]
+        self.mutators: List[Callable[[Any], Any]] = [self.duplicate_field,
+                                                     self.delete_field,
+                                                     self.move_field,
+                                                     self.add_field]
 
     def mutate(self, document: ElementTree) -> ElementTree:
         """
