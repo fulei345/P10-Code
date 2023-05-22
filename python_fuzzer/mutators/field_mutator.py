@@ -67,7 +67,7 @@ class FieldMutator(Mutator):
                     mutator = random.choice(self.int_mutators)
                 else:
                     mutator = random.choice(self.string_mutators)
-                if elem.text is None:
+                if elem.text is None or elem.text == "":
                     return document
                 field: str = mutator(elem.text)
                 elem.text = field
