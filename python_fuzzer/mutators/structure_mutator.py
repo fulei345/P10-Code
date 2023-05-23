@@ -1,5 +1,5 @@
 import random
-from typing import Any, List, Callable, Optional, get_origin, Union, get_args
+from typing import Any, List, Callable, Optional, get_origin, Union, get_args, TYPE_CHECKING, get_type_hints, ForwardRef
 from xml.etree.cElementTree import ElementTree, Element
 from dataclasses import dataclass, fields
 from datetime import date, time
@@ -9,17 +9,18 @@ from .mutator import Mutator
 
 import sys
 sys.path.append("..")
-from invoice import Invoice
+from invoice import *
 from utils import TypeGenerator
-from config import IF_PROB, OPT_PROP
+from config import IF_PROB, OPT_PROP, MAX_RECUR_DEPTH
 
-
+    
 class StructureMutator(Mutator):
     def __init__(self, verbose: bool) -> None:
         self.verbose: bool = verbose
         self.root = None
         self.parent_map = dict()
         self.total_size = 0
+        self.recur_level = 0
         # List mutator functions here
         self.mutators: List[Callable[[Any], Any]] = [self.add_field]
 
@@ -33,6 +34,7 @@ class StructureMutator(Mutator):
         # mapper alle elementer til deres parent element
         self.parent_map = {c:p for p in root.iter() for c in p}
         self.root = root
+        self.recur_level = 0
         mutator: Callable[[Any], Any] = random.choice(self.mutators)
         if mutator == self.add_field:
             mutator(root)
@@ -95,11 +97,19 @@ class StructureMutator(Mutator):
         elem = self.make_element(field)
 
         self.insert_field(parent, elem)
-
+        
+        #below code is for making invoice document from the ground (change with the rest)
+        #root = Element("<Invoice xmlns=\"urn:oasis:names:specification:ubl:schema:xsd:Invoice-2\" xmlns:cac=\"urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2\" xmlns:cbc=\"urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2\" xmlns:ccts=\"urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2\" xmlns:sdt=\"urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2\" xmlns:udt=\"urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.0.xsd\">")
+        #
+        #elem = self.make_class(root, Invoice)
+        #    
+        #parent = elem
         return parent
     
     def make_element(self, field) -> Element:
         
+        self.recur_level += 1
+
         #make element with the name
         elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" + "}" + field.name)
 
@@ -129,19 +139,32 @@ class StructureMutator(Mutator):
         else:
             #change namespace to class namespace
             elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" + "}" + field.name)
-            elem = self.make_subclass(elem, field_type)
-            
+            elem = self.make_class(elem, field_type)
+        
+        self.recur_level -= 1         
         return elem   
     
-    def make_subclass(self, elem: Element, type) -> Element:   
+    def make_class(self, elem: Element, type) -> Element:   
 
+        self.recur_level += 1
+        
+        #if above max recursion level return without making elements of the class
+        if(self.recur_level > MAX_RECUR_DEPTH):
+            self.recur_level -= 1
+            return elem
+
+        #if the type is a forward reference change it to the actual type
+        if(isinstance(type, ForwardRef)):
+            type = type._evaluate(locals(), globals())
+        
         # finds the fields of the dataclass type          
         names = fields(type) 
-               
+
         # make elements for all the class fields iteratively
         for field in names:
             if(not get_origin(field.type) is Union or random.random() < OPT_PROP):   
                 subelem = self.make_element(field)
                 elem.append(subelem)
-                
+
+        self.recur_level -= 1
         return elem
