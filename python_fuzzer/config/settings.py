@@ -1,21 +1,22 @@
 
 
 # Number of mutations done before sending
-MUTATION_COUNT = 1
+MUTATION_COUNT = 5
 
 # If power scheduler should use weighted energy
 WEIGHTED_PS = True
 
-# Pobability of being inserted in the whole document or in parent
-IF_PROB = 0.5
+# Pobability for being inserted at same index, else at random posistion through the whole document
+DUPLICATE_PROB = 0.95
 
 # probability of and optional field being made
 OPT_PROP = 0.5
 
-# Wether if adding to population depends on coverage or outcome
-# True means coverage
-COVERAGE_BASED = True
+# The number of times that seed is send before the seeds is getting replaced
+REPLACE_COUNT = 10
 
 # maximal recursion depth when creating invoice classes
 MAX_RECUR_DEPTH = 30
 
+# Max number of different seed type in population
+MAX_DICT = {"SCHEMA": 5, "PASS": 5, "SCHEMATRON": 15, "UNKNOWN": 50, "FAIL": 50, "XML": 5}
