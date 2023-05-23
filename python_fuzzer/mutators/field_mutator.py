@@ -7,7 +7,7 @@ from .mutator import Mutator
 import sys
 
 sys.path.append("..")
-from invoice.invoice_structure import invoice_type_dict
+from invoice import invoice_type_dict
 from utils import TypeGenerator
 
 INTERESTING8 = [-128, -1, 0, 1, 16, 32, 64, 100, 127]
