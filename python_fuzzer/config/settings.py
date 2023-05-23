@@ -16,3 +16,6 @@ OPT_PROP = 0.5
 # True means coverage
 COVERAGE_BASED = True
 
+# maximal recursion depth when creating invoice classes
+MAX_RECUR_DEPTH = 30
+
