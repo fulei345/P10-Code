@@ -152,6 +152,7 @@ class StructureMutator(Mutator):
         if(self.recur_level > MAX_RECUR_DEPTH):
             self.recur_level -= 1
             return elem
+        #TODO make failsafe
 
         #if the type is a forward reference change it to the actual type
         if(isinstance(type, ForwardRef)):
