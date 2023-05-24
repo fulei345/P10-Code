@@ -152,8 +152,7 @@ class GreyboxFuzzer(Fuzzer):
                     print(to_print,  end='\r')
         except KeyboardInterrupt:
             print("Program terminated manually, writing population, do not stop it")
-            for seed in self.population:
-                self.only_log(seed.result, seed.outcome, seed.data)
+            # This is just here for catching the expeption, it then runs the rest of the code
 
         
         # Filter results marked as "PASS"
