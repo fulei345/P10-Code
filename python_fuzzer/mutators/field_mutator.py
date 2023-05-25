@@ -58,10 +58,10 @@ class FieldMutator(Mutator):
                 for f in fields(parent): 
                     if f.name == class_name:
                         #check if the field is optional (as its type is then Union(type, None)) or list and set field_type to its type
-                        if(get_origin(f.type) in [Union, list]): 
+                        if get_origin(f.type) in [Union, list] : 
                             field_type = get_args(f.type)[0]
-                            #check if it it still list as optional comes before list if it has both
-                            if(get_origin(field_type) == list):
+                            #check if it is still list as optional comes before list if it has both
+                            if get_origin(field_type) == list:
                                 field_type = get_args(field_type)[0] 
                         else:
                             field_type = f.type

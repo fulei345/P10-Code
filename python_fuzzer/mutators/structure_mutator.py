@@ -22,7 +22,9 @@ class StructureMutator(Mutator):
         self.total_size = 0
         self.recur_level = 0
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [
+        self.mutators: List[Callable[[Any], Any]] = [self.duplicate_field,
+                                                     self.delete_field,
+                                                     self.move_field,
                                                      self.add_field]
 
     def mutate(self, document: ElementTree) -> ElementTree:
@@ -99,7 +101,7 @@ class StructureMutator(Mutator):
         #randomly choose one of the Invoice direct subelements to create   
 
         #insert at correct index
-        if(random.random() < DUPLICATE_PROB ):
+        if random.random() < DUPLICATE_PROB:
             index = random.randint(0, len(fields(Invoice)) - 1)
 
             field = fields(Invoice)[index]
@@ -144,7 +146,7 @@ class StructureMutator(Mutator):
         if(get_origin(field.type) in [Union, list]): 
             field_type = get_args(field.type)[0]
             #check if it it still list as optional comes before list if it has both
-            if(get_origin(field_type) == list):
+            if get_origin(field_type) == list:
                 field_type = get_args(field_type)[0] 
         else:
             field_type = field.type
