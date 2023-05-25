@@ -7,7 +7,7 @@ from .mutator import Mutator
 import sys
 
 sys.path.append("..")
-from invoice.invoice_structure import invoice_type_dict
+from invoice import invoice_type_dict
 from utils import TypeGenerator
 
 INTERESTING8 = [-128, -1, 0, 1, 16, 32, 64, 100, 127]
@@ -57,9 +57,12 @@ class FieldMutator(Mutator):
                 class_name = elem.tag.split("}")[1]
                 for f in fields(parent): 
                     if f.name == class_name:
-                        #check if the field is optional (as its type is then Union(type, None)) and set field_type to its type
-                        if(get_origin(f.type) is Union):
+                        #check if the field is optional (as its type is then Union(type, None)) or list and set field_type to its type
+                        if get_origin(f.type) in [Union, list] : 
                             field_type = get_args(f.type)[0]
+                            #check if it is still list as optional comes before list if it has both
+                            if get_origin(field_type) == list:
+                                field_type = get_args(field_type)[0] 
                         else:
                             field_type = f.type
                 mutator: Callable[[Any], Any]

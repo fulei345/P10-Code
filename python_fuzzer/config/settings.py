@@ -15,5 +15,8 @@ OPT_PROP = 0.5
 # The number of times that seed is send before the seeds is getting replaced
 REPLACE_COUNT = 10
 
+# maximal recursion depth when creating invoice classes
+MAX_RECUR_DEPTH = 30
+
 # Max number of different seed type in population
 MAX_DICT = {"SCHEMA": 5, "PASS": 5, "SCHEMATRON": 15, "UNKNOWN": 50, "FAIL": 50, "XML": 5}
