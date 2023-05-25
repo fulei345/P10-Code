@@ -20,8 +20,8 @@ class Period():
     EndDate: Optional[date]
     EndTime: Optional[time]
     DurationMeasure: Optional[int] #measure Type
-    DescriptionCode: Optional[str] # code #multiple instances possible
-    Description: Optional[str] #multiple instances possible
+    DescriptionCode: Optional[List[str]] # code #multiple instances possible
+    Description: Optional[List[str]] #multiple instances possible
 
 @dataclass 
 class LegalMonetaryTotal(): #!
@@ -44,7 +44,7 @@ class Country():
 class Temperature():
     AttributeID: str 
     Measure: int #measure Type   
-    Description: Optional[str] #multiple instances possible
+    Description: Optional[List[str]] #multiple instances possible
 
 @dataclass 
 class LocationCoordinate():
@@ -86,7 +86,7 @@ class Address():
     Region: Optional[str] 
     District: Optional[str]
     TimezoneOffset: Optional[str]
-    AddressLine: Optional[AddressLine] #multiple instances possible
+    AddressLine: Optional[List[AddressLine]] #multiple instances possible
     Country: Optional[Country]
     LocationCoordinate: Optional[LocationCoordinate]
 
@@ -96,7 +96,7 @@ class TaxScheme():
     Name: Optional[str] # name
     TaxTypeCode: Optional[str] # code
     CurrencyCode: Optional[str] # code
-    JurisdictionRegionAddress: Optional[Address] #multiple instances possible
+    JurisdictionRegionAddress: Optional[List[Address]] #multiple instances possible
 
 @dataclass 
 class TaxCategory():
@@ -130,7 +130,7 @@ class TaxTotal(): #!
     RoundingAmount: Optional[float] #datatype: amount
     TaxEvidenceIndicator: Optional[bool] 
     TaxIncludedIndicator: Optional[bool] 
-    TaxSubtotal: Optional[TaxSubtotal] #multiple instances possible
+    TaxSubtotal: Optional[List[TaxSubtotal]] #multiple instances possible
 
 @dataclass 
 class FinancialInstitution():
@@ -153,7 +153,7 @@ class FinancialAccount():
     AccountTypeCode: Optional[str] #datatype: code
     AccountFormatCode: Optional[str] #datatype: code
     CurrencyCode: Optional[str] #datatype: code
-    PaymentNote: Optional[str] #multiple instances possible
+    PaymentNote: Optional[List[str]] #multiple instances possible
     FinancialInstitutionBranch: Optional[FinancialInstitutionBranch]
     Country: Optional[Country]
 
@@ -183,7 +183,7 @@ class PaymentMeans():
     PaymentChannelCode: Optional[str] #datatype: code
     InstructionID: Optional[str]
     InstructionNote: Optional[str] 
-    PaymentID: Optional[str] #multiple instances possible
+    PaymentID: Optional[List[str]] #multiple instances possible
     CardAccount: Optional[CardAccount] 
     PayerFinancialAccount: Optional[FinancialAccount] 
     PayeeFinancialAccount: Optional[FinancialAccount]
@@ -202,9 +202,9 @@ class AllowanceCharge(): #!
     BaseAmount: Optional[float] #datatype: amount
     AccountingCostCode: Optional[str] #datatype: code
     AccountingCost: Optional[str] 
-    TaxCategory: Optional[TaxCategory] #multiple instances possible
+    TaxCategory: Optional[List[TaxCategory]] #multiple instances possible
     TaxTotal: Optional[TaxTotal] 
-    PaymentMeans: Optional[PaymentMeans] #multiple instances possible
+    PaymentMeans: Optional[List[PaymentMeans]] #multiple instances possible
 
 @dataclass 
 class Location():
@@ -263,7 +263,7 @@ class DocumentReference():
     CopyIndicator: Optional[bool]
     UUID: Optional[str]
     IssueDate: Optional[date] #date type (yyyy-mm-dd)
-    XPath: Optional[str] #Optional[List[str]] #multiple instances possible
+    XPath: Optional[List[str]] #multiple instances possible
     Attachment: Optional[Attachment]
 
 @dataclass 
@@ -271,7 +271,7 @@ class CorporateRegistrationScheme():
     ID: Optional[str]
     Name: Optional[str] # name
     CorporateRegistrationTypeCode: Optional[str] # code
-    JurisdictionRegionAddress: Optional[Address] #multiple instances possible
+    JurisdictionRegionAddress: Optional[List[Address]] #multiple instances possible
 
 @dataclass 
 class PartyLegalEntity(): #!
@@ -284,7 +284,7 @@ class PartyLegalEntity(): #!
     CorporateStockAmount: Optional[float] #datatype: amount
     RegistrationAddress: Optional[Address]
     CorporateRegistrationScheme: Optional[CorporateRegistrationScheme]
-    StakeholderParty: Optional['Party'] #multiple instances possible #TODO test this one plz and op
+    StakeholderParty: Optional['Party'] #multiple instances possible #TODO test this one plz and op - Optional[List['Party']] - but don't want to, thats a rat hole i dont wanna explore
     CompanyDossierDocumentReference: Optional[DocumentReference]
 
 @dataclass 
@@ -327,12 +327,12 @@ class PayeeParty():
     WebsiteURI: Optional[str]
     LogoReferenceID: Optional[str]
     EndpointID: Optional[str]
-    PartyIdentification: Optional[PartyIdentification] #multiple instances possible
-    PartyName: Optional[PartyName] #multiple instances possible
+    PartyIdentification: Optional[List[PartyIdentification]] #multiple instances possible
+    PartyName: Optional[List[PartyName]] #multiple instances possible
     Language: Optional[Language]
     PostalAddress: Optional[Address]
     PhysicalLocation: Optional[Location]
-    PartyTaxScheme: Optional[PartyTaxScheme] #multiple instances possible
+    PartyTaxScheme: Optional[List[PartyTaxScheme]] #multiple instances possible
     PartyLegalEntity: PartyLegalEntity
     Contact: Optional[Contact]
     Person: Optional[Person]
@@ -342,12 +342,12 @@ class Party():
     WebsiteURI: Optional[str]
     LogoReferenceID: Optional[str]
     EndpointID: str #optional for BuyerCustomerParty, and SellerSupplierParty
-    PartyIdentification: Optional[PartyIdentification] #multiple instances possible
-    PartyName: Optional[PartyName] #multiple instances possible
+    PartyIdentification: Optional[List[PartyIdentification]] #multiple instances possible
+    PartyName: Optional[List[PartyName]] #multiple instances possible
     Language: Optional[Language]
     PostalAddress: Optional[Address]
     PhysicalLocation: Optional[Location]
-    PartyTaxScheme: Optional[PartyTaxScheme] #multiple instances possible
+    PartyTaxScheme: Optional[List[PartyTaxScheme]] #multiple instances possible
     PartyLegalEntity: PartyLegalEntity
     Contact: Contact #(Optional for AccountingSupplierParty, BuyerCustomerParty, and SellerSupplierParty, but mandatory for AccountingCustomerParty)
     Person: Optional[Person]
@@ -384,7 +384,7 @@ class Delivery():
 @dataclass 
 class SellerSupplierParty():
     CustomerAssignedAccountID: Optional[str]
-    AdditionalAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
+    AdditionalAccountID: Optional[List[str]] #multiple instances possible
     Party: Party
     DespatchContact: Optional[Contact]
     AccountingContact: Optional[Contact]
@@ -393,8 +393,8 @@ class SellerSupplierParty():
 @dataclass 
 class BuyerCustomerParty():
     CustomerAssignedAccountID: Optional[str]
-    SupplierAssignedAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
-    AdditionalAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
+    SupplierAssignedAccountID: Optional[List[str]] #multiple instances possible
+    AdditionalAccountID: Optional[List[str]] #multiple instances possible
     Party: Party
     DeliveryContact: Optional[Contact]
     AccountingContact: Optional[Contact]
@@ -404,7 +404,7 @@ class BuyerCustomerParty():
 class AccountingCustomerParty():
     CustomerAssignedAccountID: Optional[str]
     SupplierAssignedAccountID: Optional[str]
-    AdditionalAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
+    AdditionalAccountID: Optional[List[str]] #multiple instances possible
     Party: Party
     DespatchContact: Optional[Contact]
     AccountingContact: Optional[Contact]
@@ -413,7 +413,7 @@ class AccountingCustomerParty():
 @dataclass 
 class AccountingSupplierParty():
     CustomerAssignedAccountID: Optional[str]
-    AdditionalAccountID: Optional[str] #Optional[List[str]] #multiple instances possible
+    AdditionalAccountID: Optional[List[str]] #multiple instances possible
     Party: Party
     DeliveryContact: Optional[Contact]
     AccountingContact: Optional[Contact]
@@ -479,8 +479,8 @@ class BillingReference():
 class Dimension():
     AttributeID: str
     Measure: Optional[int] #measure Type
-    Description: Optional[str] #multiple instances possible
-    MinimumMeasure: Optional[int] #measure Type
+    Description: Optional[List[str]] #multiple instances possible
+    MinimumMeasure: Optional[int] #measure Type - actually float
     MaximumMeasure: Optional[int] #measure Type
     
 @dataclass 
@@ -494,14 +494,14 @@ class PhysicalAttribute():
     AttributeID: str
     PositionCode: Optional[str] #code
     DescriptionCode: Optional[str] #code
-    Description: Optional[str] #multiple instances possible
+    Description: Optional[List[str]] #multiple instances possible
 
 @dataclass 
 class SellersItemIdentification():
     ID: str
     ExtendedID: Optional[str]
-    PhysicalAttribute: PhysicalAttribute #Optional[List[]] #multiple instances possible
-    MeasurementDimension: Optional[Dimension] #Optional[List[]] #multiple instances possible
+    PhysicalAttribute: Optional[List[PhysicalAttribute]] #multiple instances possible
+    MeasurementDimension: Optional[List[Dimension]] #multiple instances possible
     IssuerParty: Optional[Party]
 
 @dataclass 
@@ -524,20 +524,20 @@ class AdditionalItemIdentification(BuyersItemIdentification):
 class PriceList():
     ID: Optional[str]
     StatusCode: Optional[str] # code
-    ValidityPeriod: Optional[Period] #multiple instances possible
+    ValidityPeriod: Optional[List[Period]] #multiple instances possible
     PreviousPriceList: Optional['PriceList'] #TODO
 
 @dataclass 
 class Price(): #!
     PriceAmount: float #datatype: amount
     BaseQuantity: Optional[float] #datatype: quantity 
-    PriceChangeReason: Optional[str] #multiple instances possible
+    PriceChangeReason: Optional[List[str]] #multiple instances possible
     PriceTypeCode: Optional[str] # code
     PriceType: Optional[str] 
     OrderableUnitFactorRate: Optional[int] #rate
-    ValidityPeriod: Optional[Period] #multiple instances possible
+    ValidityPeriod: Optional[List[Period]] #multiple instances possible
     PriceList: Optional[PriceList]
-    AllowanceCharge: Optional[AllowanceCharge] #multiple instances possible
+    AllowanceCharge: Optional[List[AllowanceCharge]] #multiple instances possible
     PricingExchangeRate: PricingExchangeRate
 
 @dataclass 
@@ -575,8 +575,8 @@ class CommodityClassification():
 class TransactionConditions():
     ID: Optional[str]
     ActionCode: Optional[str] # code
-    Description: Optional[str] #multiple instances possible
-    DocumentReference: Optional[DocumentReference] #multiple instances possible
+    Description: Optional[List[str]] #multiple instances possible
+    DocumentReference: Optional[List[DocumentReference]] #multiple instances possible
 
 @dataclass 
 class ItemProperty():
@@ -587,7 +587,7 @@ class ItemProperty():
     Value: Optional[str] #multiple instances possible
     ImportanceCode: Optional[str] # code
     UsabilityPeriod: Optional[Period]
-    ItemPropertyGroup: Optional[ItemPropertyGroup] #Optional[List[]] #multiple instances possible
+    ItemPropertyGroup: Optional[List[ItemPropertyGroup]] #multiple instances possible
     RangeDimension: Optional[Dimension]
 
 @dataclass 
@@ -610,17 +610,17 @@ class HazardousItem():
     NetVolumeMeasure: Optional[int] #measure Type
     Quantity: Optional[float] #datatype: quantity
     ContactParty: Optional[Party]
-    SecondaryHazard: Optional[SecondaryHazard] #Optional[List[]] #multiple instances possible
-    HazardousGoodsTransit: Optional[HazardousGoodsTransit] #Optional[List[]] #multiple instances possible
+    SecondaryHazard: Optional[List[SecondaryHazard]] #multiple instances possible
+    HazardousGoodsTransit: Optional[List[HazardousGoodsTransit]] #multiple instances possible
     EmergencyTemperature: Optional[Temperature]
     FlashpointTemperature: Optional[Temperature]
-    AdditionalTemperature: Optional[Temperature] #Optional[List[]] #multiple instances possible
+    AdditionalTemperature: Optional[List[Temperature]] #multiple instances possible
 
 @dataclass 
 class LotIdentification():
     LotNumberID: Optional[str]
     ExpiryDate: Optional[date] 
-    AdditionalItemProperty: Optional[ItemProperty] #Optional[List[]] #multiple instances possible
+    AdditionalItemProperty: Optional[List[ItemProperty]] #multiple instances possible
 
 @dataclass 
 class ItemInstance():
@@ -630,12 +630,12 @@ class ItemInstance():
     BestBeforeDate: Optional[date] 
     RegistrationID: Optional[str] 
     SerialID: Optional[str] 
-    AdditionalItemProperty: Optional[ItemProperty] #Optional[List[]] #multiple instances possible
+    AdditionalItemProperty: Optional[List[ItemProperty]] #multiple instances possible
     LotIdentification: Optional[LotIdentification]
 
 @dataclass 
 class Item():
-    Description: Optional[str] #Optional[List[str]] #multiple instances possible
+    Description: Optional[List[str]] #multiple instances possible
     PackQuantity: Optional[float] #datatype: quantity
     PackSizeNumeric: Optional[int] #numeric
     CatalogueIndicator: Optional[bool]
@@ -654,15 +654,15 @@ class Item():
     CatalogueDocumentReference: Optional[DocumentReference]
     ItemSpecificationDocumentReference: Optional[DocumentReference]
     OriginCountry: Optional[Country]
-    CommodityClassification: Optional[CommodityClassification] #Optional[List[]] #multiple instances possible
-    TransactionConditions: Optional[TransactionConditions] #Optional[List[]] #multiple instances possible
-    HazardousItem: Optional[HazardousItem] #Optional[List[]] #multiple instances possible
-    ClassifiedTaxCategory: Optional[TaxCategory] #Optional[List[]] #multiple instances possible
-    AdditionalItemProperty: Optional[ItemProperty] #Optional[List[]] #multiple instances possible
-    ManufacturerParty: Optional[Party] #Optional[List[]] #multiple instances possible
+    CommodityClassification: Optional[List[CommodityClassification]] #multiple instances possible
+    TransactionConditions: Optional[List[TransactionConditions]] #multiple instances possible
+    HazardousItem: Optional[List[HazardousItem]] #multiple instances possible
+    ClassifiedTaxCategory: Optional[List[TaxCategory]] #multiple instances possible
+    AdditionalItemProperty: Optional[List[ItemProperty]] #multiple instances possible
+    ManufacturerParty: Optional[List[Party]] #multiple instances possible
     InformationContentProviderParty: Optional[Party]
     OriginAddress: Optional[Address]
-    ItemInstance: Optional[ItemInstance] #Optional[List[]] #multiple instances possible
+    ItemInstance: Optional[List[ItemInstance]] #multiple instances possible
 
 @dataclass 
 class TransportEquipmentSeal():
@@ -685,8 +685,8 @@ class TransportEquipment():
     Information: Optional[str]
     ReturnabilityIndicator: Optional[bool]
     LegalStatusIndicator: Optional[bool]
-    MeasurementDimension: Optional[Dimension] #multiple instances possible
-    TransportEquipmentSeal: Optional[TransportEquipmentSeal] #multiple instances possible
+    MeasurementDimension: Optional[List[Dimension]] #multiple instances possible
+    TransportEquipmentSeal: Optional[List[TransportEquipmentSeal]] #multiple instances possible
     MinimumTemperature: Optional[Temperature]
     MaximumTemperature: Optional[Temperature]
     ProviderParty: Optional[Party] 
@@ -697,13 +697,13 @@ class TransportEquipment():
 class GoodsItemContainer():
     ID: str
     Quantity: Optional[float] #datatype: quantity
-    TransportEquipment: Optional[TransportEquipment] #multiple instances possible
+    TransportEquipment: Optional[List[TransportEquipment]] #multiple instances possible
 
 @dataclass 
 class GoodsItem():
     ID: str
     SequenceNumberID: Optional[str]
-    Description: Optional[str] #multiple instances possible
+    Description: Optional[List[str]] #multiple instances possible
     HazardousRiskIndicator: Optional[bool]
     DeclaredCustomsValueAmount: Optional[float] #datatype: amount
     DeclaredForCarriageValueAmount: Optional[float] #datatype: amount
@@ -723,12 +723,12 @@ class GoodsItem():
     CustomsStatusCode: Optional[str] # code
     CustomsTariffQuantity: Optional[float] #datatype: quantity
     CustomsImportClassifiedIndicator: Optional[bool]
-    Item: Optional[Item] #multiple instances possible
-    GoodsItemContainer: Optional[GoodsItemContainer] #multiple instances possible
-    FreightAllowanceCharge: Optional[AllowanceCharge] #multiple instances possible
-    InvoiceLine: Optional['InvoiceLine'] #TODO test this #multiple instances possible
-    Temperature: Optional[Temperature] #multiple instances possible
-    ContainedGoodsItem : Optional['GoodsItem'] #TODO test this #multiple instances possible
+    Item: Optional[List[Item]] #multiple instances possible
+    GoodsItemContainer: Optional[List[GoodsItemContainer]] #multiple instances possible
+    FreightAllowanceCharge: Optional[List[AllowanceCharge]] #multiple instances possible
+    InvoiceLine: Optional['InvoiceLine'] #TODO test this #multiple instances possible Optional[List['GoodsItem']] - but don't want to, thats a rat hole i dont wanna explore
+    Temperature: Optional[List[Temperature]] #multiple instances possible
+    ContainedGoodsItem : Optional['GoodsItem'] #TODO test this #multiple instances possible Optional[List['GoodsItem']] - but don't want to, thats a rat hole i dont wanna explore
     OriginAddress: Optional[Address]
     
 @dataclass 
@@ -744,11 +744,11 @@ class Package():
     ReturnableMaterialIndicator: Optional[bool]
     PackageLevelCode: Optional[str] # code
     PackagingTypeCode: Optional[str] # code
-    PackingMaterial: Optional[str] #multiple instances possible
-    ContainedPackage: Optional['Package'] #TODO test this #multiple instances possible
-    GoodsItem: Optional[GoodsItem] #multiple instances possible
-    MeasurementDimension: Optional[Dimension] #multiple instances possible
-    DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
+    PackingMaterial: Optional[List[str]] #multiple instances possible
+    ContainedPackage: Optional['Package'] #TODO test this #multiple instances possible Optional[List['Package']] - but don't want to, thats a rat hole i dont wanna explore
+    GoodsItem: Optional[List[GoodsItem]] #multiple instances possible
+    MeasurementDimension: Optional[List[Dimension]] #multiple instances possible
+    DeliveryUnit: Optional[List[DeliveryUnit]] #multiple instances possible
 
 @dataclass 
 class ItemLocationQuantity():
@@ -756,17 +756,17 @@ class ItemLocationQuantity():
     MinimumQuantity: Optional[float] #datatype: quantity
     MaximumQuantity: Optional[float] #datatype: quantity
     HazardousRiskIndicator: Optional[bool]
-    TradingRestrictions: Optional[str] #multiple instances possible
-    ApplicableTerritoryAddress: Optional[Address] #multiple instances possible
+    TradingRestrictions: Optional[List[str]] #multiple instances possible
+    ApplicableTerritoryAddress: Optional[List[Address]] #multiple instances possible
     Price: Optional[Price]
-    DeliveryUnit: Optional[DeliveryUnit] #multiple instances possible
-    ApplicableTaxCategory: Optional[TaxCategory] #multiple instances possible
+    DeliveryUnit: Optional[List[DeliveryUnit]] #multiple instances possible
+    ApplicableTaxCategory: Optional[List[TaxCategory]] #multiple instances possible
     Package: Optional[Package]
 
 @dataclass 
 class PricingReference():
     OriginalItemLocationQuantity: Optional[ItemLocationQuantity]
-    AlternativeConditionPrice: Optional[Price] #multiple instances possible
+    AlternativeConditionPrice: Optional[List[Price]] #multiple instances possible
 
 @dataclass 
 class OrderReference():
@@ -798,20 +798,20 @@ class OrderLineReference():
 @dataclass 
 class TradeFinancing():
     ID: Optional[str]
-    FinancingInstrumentCode: Optional[str] #code #multiple instances possible
-    ClauseCode: Optional[str] #code #multiple instances possible
-    Clause: Optional[str] #multiple instances possible
+    FinancingInstrumentCode: Optional[List[str]] #code #multiple instances possible
+    ClauseCode: Optional[List[str]] #code #multiple instances possible
+    Clause: Optional[List[str]] #multiple instances possible
     ContractDocumentReference: Optional[DocumentReference]
-    DocumentReference: Optional[DocumentReference] #multiple instances possible
+    DocumentReference: Optional[List[DocumentReference]] #multiple instances possible
     FinancingParty: Party
     FinancingFinancialAccount: Optional[FinancialAccount]
     
 @dataclass 
 class PaymentTerms():
     ID: Optional[str]
-    PaymentMeansID: Optional[str] #multiple instances possible
+    PaymentMeansID: Optional[List[str]] #multiple instances possible
     PrepaidPaymentReferenceID: Optional[str]
-    Note: Optional[str] #multiple instances possible
+    Note: Optional[List[str]] #multiple instances possible
     ReferenceEventCode: Optional[str] #datatype: code
     SettlementDiscountPercent: Optional[str] #Percent Type
     PenaltySurchargePercent: Optional[str] #Percent Type
@@ -837,15 +837,15 @@ class InvoiceLine():
     AccountingCost: Optional[str]
     FreeOfChargeIndicator: Optional[bool]
     OrderLineReference: Optional[OrderLineReference]
-    DespatchLineReference: Optional[LineReference] #multiple instances possible
-    ReceiptLineReference: Optional[LineReference] #multiple instances possible
-    BillingReference: Optional[BillingReference] #Optional[List[BillingReference]] #multiple instances possible
+    DespatchLineReference: Optional[List[LineReference]] #multiple instances possible
+    ReceiptLineReference: Optional[List[LineReference]] #multiple instances possible
+    BillingReference: Optional[List[BillingReference]] #multiple instances possible
     PricingReference: Optional[PricingReference] 
-    DocumentReference: Optional[DocumentReference] #Optional[List[DocumentReference]] #multiple instances possible
+    DocumentReference: Optional[List[DocumentReference]] #multiple instances possible
     OriginatorParty: Optional[Party] 
-    Delivery: Optional[Delivery] #Optional[List[Delivery]] #multiple instances possible
-    AllowanceCharge: Optional[AllowanceCharge] #multiple instances possible
-    TaxTotal: TaxTotal #multiple instances possible
+    Delivery: Optional[List[Delivery]] #multiple instances possible
+    AllowanceCharge: Optional[List[AllowanceCharge]] #multiple instances possible
+    TaxTotal: List[TaxTotal] #multiple instances possible
     Item: Item 
     Price: Price
 
@@ -864,11 +864,11 @@ class UBLExtension(): #?????????????????????????????`?????????????```?`?????`
 
 @dataclass 
 class UBLExtensions():
-    UBLExtension: UBLExtension #multiple instances possible
+    UBLExtension: List[UBLExtension] #multiple instances possible
 
 @dataclass #provide automatic generation of __init__(), among other things
 class Invoice():
-    UBLExtensions: UBLExtensions #Optional[
+    UBLExtensions: Optional[UBLExtensions]
     UBLVersionID: str # identifier
     CustomizationID: str
     ProfileID: str
@@ -878,7 +878,7 @@ class Invoice():
     IssueDate: date #date type (yyyy-mm-dd)
     IssueTime: Optional[time] #time type (00:00:00)
     InvoiceTypeCode: Optional[str] #code type (example doc has e.g. 380 and DKK, so string to generalize)
-    Note: Optional[str] #multiple instances possible List[str] - list of?
+    Note: Optional[List[str]] #multiple instances possible List[str] - list of?
     TaxPointDate: Optional[date]
     DocumentCurrencyCode: str #code
     TaxCurrencyCode: Optional[str] #code
@@ -890,31 +890,31 @@ class Invoice():
     LineCountNumeric: Optional[int] #numeric: int?
     InvoicePeriod: Optional[Period]
     OrderReference: Optional[OrderReference]
-    BillingReference: Optional[BillingReference] #Optional[List[BillingReference]] # multiple instances possible
-    DespatchDocumentReference: Optional[DocumentReference] # multiple instances possible
-    ReceiptDocumentReference: Optional[DocumentReference] # multiple instances possible
-    OriginatorDocumentReference: Optional[DocumentReference] # multiple instances possible
+    BillingReference: Optional[List[BillingReference]] # multiple instances possible
+    DespatchDocumentReference: Optional[List[DocumentReference]] # multiple instances possible
+    ReceiptDocumentReference: Optional[List[DocumentReference]] # multiple instances possible
+    OriginatorDocumentReference: Optional[List[DocumentReference]] # multiple instances possible
     ContractDocumentReference: Optional[DocumentReference] 
-    AdditionalDocumentReference: Optional[DocumentReference] # multiple instances possible
-    Signature: Optional[Signature] # - multiple instances possible
+    AdditionalDocumentReference: Optional[List[DocumentReference]] # multiple instances possible
+    Signature: Optional[List[Signature]] # - multiple instances possible
     AccountingSupplierParty: AccountingSupplierParty
     AccountingCustomerParty: AccountingCustomerParty
     PayeeParty: Optional[PayeeParty]
     BuyerCustomerParty: Optional[BuyerCustomerParty]
     SellerSupplierParty: Optional[SellerSupplierParty]
-    Delivery: Optional[Delivery] #- multiple instances possible
+    Delivery: Optional[List[Delivery]] #- multiple instances possible
     DeliveryTerms: Optional[DeliveryTerms]
-    PaymentMeans: Optional[PaymentMeans] # - multiple instances possible
-    PaymentTerms: Optional[PaymentTerms] # - multiple instances possible
-    PrepaidPayment: Optional[Payment] # - multiple instances possible
-    AllowanceCharge: Optional[AllowanceCharge] # - multiple instances possible
+    PaymentMeans: Optional[List[PaymentMeans]] # - multiple instances possible
+    PaymentTerms: Optional[List[PaymentTerms]] # - multiple instances possible
+    PrepaidPayment: Optional[List[Payment]] # - multiple instances possible
+    AllowanceCharge: Optional[List[AllowanceCharge]] # - multiple instances possible
     TaxExchangeRate: Optional[TaxExchangeRate]
     PricingExchangeRate: Optional[PricingExchangeRate]
     PaymentExchangeRate: Optional[PaymentExchangeRate]
     PaymentAlternativeExchangeRate: Optional[PaymentAlternativeExchangeRate]
-    TaxTotal: TaxTotal # - multiple instances possible
+    TaxTotal: List[TaxTotal] # - multiple instances possible
     LegalMonetaryTotal: LegalMonetaryTotal
-    InvoiceLine: InvoiceLine # - multiple instances possible
+    InvoiceLine: List[InvoiceLine] # - multiple instances possible
 
 
 invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
