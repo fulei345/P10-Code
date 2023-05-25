@@ -202,7 +202,7 @@ class StructureMutator(Mutator):
                     continue
             else:
                 field_type = field.type
-            if(get_origin(field_type) == list):
+            if get_origin(field_type) == list:
                 field_type = get_args(field_type)[0]
                 i = 0
                 s = random.randint(1,5)
