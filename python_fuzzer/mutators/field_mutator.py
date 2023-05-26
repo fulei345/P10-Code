@@ -137,7 +137,7 @@ class FieldMutator(Mutator):
         return str(data)
     
     def generate_type_mutator(self, data: str) -> str:
-        data: str
+        data: str = ""
         if self.field_type == str:
             data = TypeGenerator.make_string()
         elif self.field_type == bool:
