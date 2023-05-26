@@ -185,7 +185,7 @@ class StructureMutator(Mutator):
 
         #if the type is a forward reference change it to the actual type
         if(isinstance(type, ForwardRef)):
-            type = type._evaluate(locals(), globals())
+            type = type._evaluate(locals(), globals(), frozenset())
 
         # finds the fields of the dataclass type
         names = fields(type)
