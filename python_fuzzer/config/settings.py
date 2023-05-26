@@ -10,7 +10,7 @@ WEIGHTED_PS = True
 DUPLICATE_PROB = 0.95
 
 # probability of and optional field being made
-OPT_PROP = 0.5
+OPT_PROB = 0.5
 
 # The number of times that seed is send before the seeds is getting replaced
 REPLACE_COUNT = 10

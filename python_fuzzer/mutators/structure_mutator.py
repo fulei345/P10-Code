@@ -11,7 +11,7 @@ import sys
 sys.path.append("..")
 from invoice import *
 from utils import TypeGenerator
-from config import DUPLICATE_PROB, OPT_PROP, MAX_RECUR_DEPTH
+from config import DUPLICATE_PROB, OPT_PROB, MAX_RECUR_DEPTH
 
     
 class StructureMutator(Mutator):
@@ -196,7 +196,7 @@ class StructureMutator(Mutator):
         # make elements for all the class fields iteratively
         for field in names:
             if get_origin(field.type) is Union:
-                if random.random() < OPT_PROP:
+                if random.random() < OPT_PROB:
                     field_type = get_args(field.type)[0]
                 else:
                     continue
