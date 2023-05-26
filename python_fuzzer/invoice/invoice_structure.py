@@ -19,7 +19,7 @@ class Period():
     StartTime: Optional[time]
     EndDate: Optional[date]
     EndTime: Optional[time]
-    DurationMeasure: Optional[int] #measure Type
+    DurationMeasure: Optional[float] #measure Type
     DescriptionCode: Optional[List[str]] # code #multiple instances possible
     Description: Optional[List[str]] #multiple instances possible
 
@@ -49,11 +49,11 @@ class Temperature():
 @dataclass 
 class LocationCoordinate():
     CoordinateSystemCode: Optional[str] # code
-    LatitudeDegreesMeasure: Optional[int] #measure Type
-    LatitudeMinutesMeasure: Optional[int] #measure Type
+    LatitudeDegreesMeasure: Optional[float] #measure Type
+    LatitudeMinutesMeasure: Optional[float] #measure Type
     LatitudeDirectionCode: Optional[str] # code
-    LongitudeDegreesMeasure: Optional[int] #measure Type
-    LongitudeMinutesMeasure: Optional[int] #measure Type
+    LongitudeDegreesMeasure: Optional[float] #measure Type
+    LongitudeMinutesMeasure: Optional[float] #measure Type
     LongitudeDirectionCode: Optional[str] # code
     
 @dataclass 
@@ -103,7 +103,7 @@ class TaxCategory():
     ID: Optional[str]
     Name: Optional[str] #datatype: name
     Percent: Optional[str] #Percent Type
-    BaseUnitMeasure: Optional[int] #measure Type
+    BaseUnitMeasure: Optional[float] #measure Type
     PerUnitAmount: Optional[float] #datatype: amoun
     TaxExemptionReasonCode: Optional[str] #datatype: code
     TaxExemptionReason: Optional[str] 
@@ -115,10 +115,10 @@ class TaxCategory():
 class TaxSubtotal(): #!
     TaxableAmount: Optional[float] #datatype: amount
     TaxAmount: float #datatype: amount
-    CalculationSequenceNumeric: Optional[int] #numeric
+    CalculationSequenceNumeric: Optional[float] #numeric
     TransactionCurrencyTaxAmount: Optional[float] #datatype: amount
     Percent: Optional[str] #Percent Type
-    BaseUnitMeasure: Optional[int] #measure Type
+    BaseUnitMeasure: Optional[float] #measure Type
     PerUnitAmount: Optional[float] #datatype: amount
     TierRange: Optional[str] 
     TierRatePercent: Optional[str] #Percent Type  
@@ -195,9 +195,9 @@ class AllowanceCharge(): #!
     ChargeIndicator: bool 
     AllowanceChargeReasonCode: Optional[str] #datatype: code
     AllowanceChargeReason: Optional[str]
-    MultiplierFactorNumeric: Optional[int] #numeric
+    MultiplierFactorNumeric: Optional[float] #numeric
     PrepaidIndicator: Optional[bool]
-    SequenceNumeric: Optional[int] #numeric
+    SequenceNumeric: Optional[float] #numeric
     Amount: float #datatype: amount
     BaseAmount: Optional[float] #datatype: amount
     AccountingCostCode: Optional[str] #datatype: code
@@ -446,11 +446,11 @@ class ForeignExchangeContract():
 @dataclass 
 class TaxExchangeRate():
     SourceCurrencyCode: str # code 
-    SourceCurrencyBaseRate: Optional[int] #rate
+    SourceCurrencyBaseRate: Optional[float] #rate
     TargetCurrencyCode: str # code
-    TargetCurrencyBaseRate: Optional[int] #rate
+    TargetCurrencyBaseRate: Optional[float] #rate
     ExchangeMarketID: Optional[str]
-    CalculationRate: Optional[int] #rate
+    CalculationRate: Optional[float] #rate
     MathematicOperatorCode: Optional[str] # code
     Date: Optional[date]
     ForeignExchangeContract: Optional[ForeignExchangeContract]
@@ -478,10 +478,10 @@ class BillingReference():
 @dataclass 
 class Dimension():
     AttributeID: str
-    Measure: Optional[int] #measure Type
+    Measure: Optional[float] #measure Type
     Description: Optional[List[str]] #multiple instances possible
-    MinimumMeasure: Optional[int] #measure Type - actually float
-    MaximumMeasure: Optional[int] #measure Type
+    MinimumMeasure: Optional[float] #measure Type - actually float
+    MaximumMeasure: Optional[float] #measure Type
     
 @dataclass 
 class BuyersItemIdentification():
@@ -534,7 +534,7 @@ class Price(): #!
     PriceChangeReason: Optional[List[str]] #multiple instances possible
     PriceTypeCode: Optional[str] # code
     PriceType: Optional[str] 
-    OrderableUnitFactorRate: Optional[int] #rate
+    OrderableUnitFactorRate: Optional[float] #rate
     ValidityPeriod: Optional[List[Period]] #multiple instances possible
     PriceList: Optional[PriceList]
     AllowanceCharge: Optional[List[AllowanceCharge]] #multiple instances possible
@@ -606,8 +606,8 @@ class HazardousItem():
     LowerOrangeHazardPlacardID: Optional[str]
     MarkingID: Optional[str]
     HazardClassID: Optional[str]
-    NetWeightMeasure: Optional[int] #measure Type
-    NetVolumeMeasure: Optional[int] #measure Type
+    NetWeightMeasure: Optional[float] #measure Type
+    NetVolumeMeasure: Optional[float] #measure Type
     Quantity: Optional[float] #datatype: quantity
     ContactParty: Optional[Party]
     SecondaryHazard: Optional[List[SecondaryHazard]] #multiple instances possible
@@ -637,7 +637,7 @@ class ItemInstance():
 class Item():
     Description: Optional[List[str]] #multiple instances possible
     PackQuantity: Optional[float] #datatype: quantity
-    PackSizeNumeric: Optional[int] #numeric
+    PackSizeNumeric: Optional[float] #numeric
     CatalogueIndicator: Optional[bool]
     Name: str # name
     HazardousRiskIndicator: Optional[bool]
@@ -711,12 +711,12 @@ class GoodsItem():
     FreeOnBoardValueAmount: Optional[float] #datatype: amount
     InsuranceValueAmount: Optional[float] #datatype: amount
     ValueAmount: Optional[float] #datatype: amount
-    GrossWeightMeasure: Optional[int] #measure Type   
-    NetWeightMeasure: Optional[int] #measure Type   
-    NetNetWeightMeasure: Optional[int] #measure Type   
-    ChargeableWeightMeasure: Optional[int] #measure Type   
-    GrossVolumeMeasure: Optional[int] #measure Type   
-    NetVolumeMeasure: Optional[int] #measure Type   
+    GrossWeightMeasure: Optional[float] #measure Type   
+    NetWeightMeasure: Optional[float] #measure Type   
+    NetNetWeightMeasure: Optional[float] #measure Type   
+    ChargeableWeightMeasure: Optional[float] #measure Type   
+    GrossVolumeMeasure: Optional[float] #measure Type   
+    NetVolumeMeasure: Optional[float] #measure Type   
     Quantity: Optional[float] #datatype: quantity
     PreferenceCriterionCode: Optional[str] # code
     RequiredCustomsID: Optional[str]
@@ -752,7 +752,7 @@ class Package():
 
 @dataclass 
 class ItemLocationQuantity():
-    LeadTimeMeasure: Optional[int] #measure Type   
+    LeadTimeMeasure: Optional[float] #measure Type   
     MinimumQuantity: Optional[float] #datatype: quantity
     MaximumQuantity: Optional[float] #datatype: quantity
     HazardousRiskIndicator: Optional[bool]
@@ -887,7 +887,7 @@ class Invoice():
     PaymentAlternativeCurrencyCode: Optional[str] # code
     AccountingCostCode: Optional[str] #code
     AccountingCost: Optional[str]
-    LineCountNumeric: Optional[int] #numeric: int?
+    LineCountNumeric: Optional[float] #numeric: int?
     InvoicePeriod: Optional[Period]
     OrderReference: Optional[OrderReference]
     BillingReference: Optional[List[BillingReference]] # multiple instances possible
