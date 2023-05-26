@@ -10,9 +10,9 @@ sys.path.append("..")
 from invoice import invoice_type_dict
 from utils import TypeGenerator
 
-INTERESTING8 = [-128, -1, 0, 1, 16, 32, 64, 100, 127]
-INTERESTING16 = [0, 128, 255, 256, 512, 1000, 1024, 4096, 32767, 65535]
-INTERESTING32 = [0, 1, 32768, 65535, 65536, 100663045, 2147483647, 4294967295]
+INTERESTING8 = [-128., -1., 0., 1., 16., 32., 64., 100., 127.]
+INTERESTING16 = [0., 128., 255., 256., 512., 1000., 1024., 4096., 32767., 65535.]
+INTERESTING32 = [0., 1., 32768., 65535., 65536., 100663045., 2147483647., 4294967295.]
 
 
 class FieldMutator(Mutator):
@@ -31,9 +31,7 @@ class FieldMutator(Mutator):
 
         self.int_mutators: List[Callable[[Any], Any]] = [self.interesting8_mutator,
                                                      self.interesting16_mutator,
-                                                     self.interesting32_mutator,
-                                                     self.addition_mutator,
-                                                     self.subtraction_mutator
+                                                     self.interesting32_mutator
                                                      ]
 
         # self.dont_mutate: List[str] = ["CustomizationID",
@@ -135,19 +133,4 @@ class FieldMutator(Mutator):
     def interesting32_mutator(self, data: str) -> str:
         data = random.choice(INTERESTING32)
         return str(data)
-
-    # Should only be used when we know the type to be integer
-    def addition_mutator(self, data: str) -> str:
-        num_add: int = random.randint(1, 36)
-        num = int(data)
-
-        num = num + num_add
-        return str(num)
-
-    # Should only be used when we know the type to be integer
-    def subtraction_mutator(self, data: str) -> str:
-        num_sub: int = random.randint(1, 36)
-        num = int(data)
-
-        num = num + num_sub
-        return str(num)
+    
