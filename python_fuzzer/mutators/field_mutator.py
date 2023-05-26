@@ -66,7 +66,7 @@ class FieldMutator(Mutator):
                         else:
                             field_type = f.type
                 mutator: Callable[[Any], Any]
-                if field_type == int or field_type == float:
+                if field_type == float:
                     mutator = random.choice(self.int_mutators)
                 else:
                     mutator = random.choice(self.string_mutators)

@@ -154,9 +154,6 @@ class StructureMutator(Mutator):
         #makes text for element according to its field type
         if field_type == str:
             elem.text = TypeGenerator.make_string()
-        elif field_type == int:
-            # treat ints as float
-            elem.text = TypeGenerator.make_float()
         elif field_type == bool:
             elem.text = TypeGenerator.make_bool()
         elif field_type == time:
