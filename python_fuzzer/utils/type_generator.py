@@ -66,7 +66,7 @@ class TypeGenerator:
         commas: int = random.randint(1, 10)
         text: str = ""
         for i in range(commas):
-            text =+ "000,"
-        text =+ "000."
+            text = text + "000,"
+        text = text + "000."
         text = sign + TypeGenerator.make_int() + text 
         return text
