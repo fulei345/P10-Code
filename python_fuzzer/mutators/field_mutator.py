@@ -152,6 +152,6 @@ class FieldMutator(Mutator):
             float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
             data = float_mut()
         else:
-            print("fuck")
+            return data
 
         return data
