@@ -61,7 +61,12 @@ class TypeGenerator:
         return text
 
     @staticmethod
-    def make_float_comma() -> str:
-        text = random.uniform(0, sys.maxsize)
-        return str(text)
-
+    def make_float_thousands() -> str:
+        sign: str = random.choice(["-", "+"])
+        commas: int = random.randint(1, 10)
+        text: str = ""
+        for i in range(commas):
+            text =+ "000,"
+        text =+ "000."
+        text = sign + TypeGenerator.make_int() + text 
+        return text
