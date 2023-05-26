@@ -150,7 +150,7 @@ class FieldMutator(Mutator):
             data = TypeGenerator.make_string()
         elif self.field_type == float:
             float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
-            data = float_mut
+            data = float_mut()
         else:
             print("fuck")
 

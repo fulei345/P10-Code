@@ -164,7 +164,7 @@ class StructureMutator(Mutator):
             elem.text = TypeGenerator.make_string() #TODO change this (look at oioubl documentation for attachement binary object)
         elif field_type == float:
             float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
-            elem.text = float_mut
+            elem.text = float_mut()
         else:
             #change namespace to class namespace
             elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" + "}" + field.name)
