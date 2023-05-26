@@ -31,8 +31,11 @@ class TypeGenerator:
 
     @staticmethod
     def make_float() -> str:
-        text = random.uniform(0, sys.maxsize)
-        return str(text)
+        sign = random.choice(["-", "+"])
+        first = TypeGenerator.make_int()
+        second = TypeGenerator.make_int()
+        text: str = sign + first + "." + second
+        return text
 
     @staticmethod
     def make_bool() -> str:
@@ -56,3 +59,9 @@ class TypeGenerator:
         text = str(random.randint(1, 9999)) + "-" + str(random.randint(1, 12)) + "-" + str(random.randint(1, 31))
 
         return text
+
+    @staticmethod
+    def make_float_comma() -> str:
+        text = random.uniform(0, sys.maxsize)
+        return str(text)
+
