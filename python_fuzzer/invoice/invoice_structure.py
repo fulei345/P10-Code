@@ -43,7 +43,7 @@ class Country():
 @dataclass 
 class Temperature():
     AttributeID: str 
-    Measure: int #measure Type   
+    Measure: float #measure Type   
     Description: Optional[List[str]] #multiple instances possible
 
 @dataclass 
