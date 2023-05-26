@@ -28,7 +28,7 @@ class FieldMutator(Mutator):
                                                      self.add_sub_mutator,
                                                      self.add_char_mutator
                                                      ]
-        
+
         self.int_mutators: List[Callable[[Any], Any]] = [self.interesting8_mutator,
                                                      self.interesting16_mutator,
                                                      self.interesting32_mutator,
@@ -49,20 +49,20 @@ class FieldMutator(Mutator):
         total_size = sum(1 for _ in root.iter())
         index: int = random.randint(1, total_size)
         self.parent_map = {c:p for p in root.iter() for c in p}
-        for i, elem in enumerate(root.iter()):            
+        for i, elem in enumerate(root.iter()):
             if i == index:
                 parent_class_name = self.parent_map[elem].tag.split("}")[1]
                 parent = invoice_type_dict[parent_class_name]
                 field_type = None
                 class_name = elem.tag.split("}")[1]
-                for f in fields(parent): 
+                for f in fields(parent):
                     if f.name == class_name:
                         #check if the field is optional (as its type is then Union(type, None)) or list and set field_type to its type
-                        if get_origin(f.type) in [Union, list] : 
+                        if get_origin(f.type) in [Union, list] :
                             field_type = get_args(f.type)[0]
                             #check if it is still list as optional comes before list if it has both
                             if get_origin(field_type) == list:
-                                field_type = get_args(field_type)[0] 
+                                field_type = get_args(field_type)[0]
                         else:
                             field_type = f.type
                 mutator: Callable[[Any], Any]
@@ -143,7 +143,7 @@ class FieldMutator(Mutator):
 
         num = num + num_add
         return str(num)
-    
+
     # Should only be used when we know the type to be integer
     def subtraction_mutator(self, data: str) -> str:
         num_sub: int = random.randint(1, 36)
