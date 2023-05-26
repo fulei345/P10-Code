@@ -5,5 +5,9 @@ from .settings import OPT_PROB
 from .settings import MAX_RECUR_DEPTH
 from .settings import MAX_DICT
 from .settings import REPLACE_COUNT
+from .settings import NOT_PROB
 
-__all__ = ["MUTATION_COUNT", "DUPLICATE_PROB", "WEIGHTED_PS", "OPT_PROB", "REPLACE_COUNT", "MAX_DICT", "MAX_RECUR_DEPTH"]
+__all__ = ["MUTATION_COUNT", "DUPLICATE_PROB",
+           "WEIGHTED_PS", "OPT_PROB",
+           "REPLACE_COUNT", "MAX_DICT",
+           "MAX_RECUR_DEPTH", "NOT_PROB"]
