@@ -1,14 +1,15 @@
 import random
 from typing import Any, List, Callable, get_origin, Union, get_args
-from xml.etree.cElementTree import ElementTree, tostring, fromstring, Element
-from dataclasses import dataclass, fields, field
-
+from xml.etree.cElementTree import ElementTree, fromstring, Element
+from dataclasses import fields
+from datetime import date, time
 from .mutator import Mutator
 import sys
 
 sys.path.append("..")
 from invoice import invoice_type_dict
 from utils import TypeGenerator
+from config import NOT_PROB
 
 INTERESTING8 = [-128., -1., 0., 1., 16., 32., 64., 100., 127.]
 INTERESTING16 = [0., 128., 255., 256., 512., 1000., 1024., 4096., 32767., 65535.]
@@ -63,11 +64,12 @@ class FieldMutator(Mutator):
                                 field_type = get_args(field_type)[0]
                         else:
                             field_type = f.type
-                mutator: Callable[[Any], Any]
-                if field_type == float:
-                    mutator = random.choice(self.int_mutators)
-                else:
+                self.field_type = field_type
+                # if it is under this do not take the type into account
+                if random.random() < NOT_PROB:
                     mutator = random.choice(self.string_mutators)
+                else:
+                    mutator = self.generate_type_mutator
                 if elem.text is None or elem.text == "":
                     return document
                 field: str = mutator(elem.text)
@@ -134,3 +136,22 @@ class FieldMutator(Mutator):
         data = random.choice(INTERESTING32)
         return str(data)
     
+    def generate_type_mutator(self, data: str) -> str:
+        data: str
+        if self.field_type == str:
+            data = TypeGenerator.make_string()
+        elif self.field_type == bool:
+            data = TypeGenerator.make_bool()
+        elif self.field_type == time:
+            data = TypeGenerator.make_time()
+        elif self.field_type == date:
+            data = TypeGenerator.make_date()
+        elif self.field_type == bytes:
+            data = TypeGenerator.make_string()
+        elif self.field_type == float:
+            float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
+            data = float_mut
+        else:
+            print("fuck")
+
+        return data
