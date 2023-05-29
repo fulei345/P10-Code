@@ -1,18 +1,19 @@
 import random
 from typing import Any, List, Callable, get_origin, Union, get_args
-from xml.etree.cElementTree import ElementTree, tostring, fromstring, Element
-from dataclasses import dataclass, fields, field
-
+from xml.etree.cElementTree import ElementTree, fromstring, Element
+from dataclasses import fields
+from datetime import date, time
 from .mutator import Mutator
 import sys
 
 sys.path.append("..")
 from invoice import invoice_type_dict
 from utils import TypeGenerator
+from config import NOT_PROB
 
-INTERESTING8 = [-128, -1, 0, 1, 16, 32, 64, 100, 127]
-INTERESTING16 = [0, 128, 255, 256, 512, 1000, 1024, 4096, 32767, 65535]
-INTERESTING32 = [0, 1, 32768, 65535, 65536, 100663045, 2147483647, 4294967295]
+INTERESTING8 = [-128., -1., 0., 1., 16., 32., 64., 100., 127.]
+INTERESTING16 = [0., 128., 255., 256., 512., 1000., 1024., 4096., 32767., 65535.]
+INTERESTING32 = [0., 1., 32768., 65535., 65536., 100663045., 2147483647., 4294967295.]
 
 
 class FieldMutator(Mutator):
@@ -28,12 +29,10 @@ class FieldMutator(Mutator):
                                                      self.add_sub_mutator,
                                                      self.add_char_mutator
                                                      ]
-        
+
         self.int_mutators: List[Callable[[Any], Any]] = [self.interesting8_mutator,
                                                      self.interesting16_mutator,
-                                                     self.interesting32_mutator,
-                                                     self.addition_mutator,
-                                                     self.subtraction_mutator
+                                                     self.interesting32_mutator
                                                      ]
 
         # self.dont_mutate: List[str] = ["CustomizationID",
@@ -49,27 +48,28 @@ class FieldMutator(Mutator):
         total_size = sum(1 for _ in root.iter())
         index: int = random.randint(1, total_size)
         self.parent_map = {c:p for p in root.iter() for c in p}
-        for i, elem in enumerate(root.iter()):            
+        for i, elem in enumerate(root.iter()):
             if i == index:
                 parent_class_name = self.parent_map[elem].tag.split("}")[1]
                 parent = invoice_type_dict[parent_class_name]
                 field_type = None
                 class_name = elem.tag.split("}")[1]
-                for f in fields(parent): 
+                for f in fields(parent):
                     if f.name == class_name:
                         #check if the field is optional (as its type is then Union(type, None)) or list and set field_type to its type
-                        if get_origin(f.type) in [Union, list] : 
+                        if get_origin(f.type) in [Union, list] :
                             field_type = get_args(f.type)[0]
                             #check if it is still list as optional comes before list if it has both
                             if get_origin(field_type) == list:
-                                field_type = get_args(field_type)[0] 
+                                field_type = get_args(field_type)[0]
                         else:
                             field_type = f.type
-                mutator: Callable[[Any], Any]
-                if field_type == int:
-                    mutator = random.choice(self.int_mutators)
-                else:
+                self.field_type = field_type
+                # if it is under this do not take the type into account
+                if random.random() < NOT_PROB:
                     mutator = random.choice(self.string_mutators)
+                else:
+                    mutator = self.generate_type_mutator
                 if elem.text is None or elem.text == "":
                     return document
                 field: str = mutator(elem.text)
@@ -135,19 +135,24 @@ class FieldMutator(Mutator):
     def interesting32_mutator(self, data: str) -> str:
         data = random.choice(INTERESTING32)
         return str(data)
-
-    # Should only be used when we know the type to be integer
-    def addition_mutator(self, data: str) -> str:
-        num_add: int = random.randint(1, 36)
-        num = int(data)
-
-        num = num + num_add
-        return str(num)
     
-    # Should only be used when we know the type to be integer
-    def subtraction_mutator(self, data: str) -> str:
-        num_sub: int = random.randint(1, 36)
-        num = int(data)
+    def generate_type_mutator(self, data: str) -> str:
+        new_data: str = ""
+        if self.field_type == str:
+            mutator = random.choice(self.string_mutators)
+            new_data = mutator(data)
+        elif self.field_type == bool:
+            new_data = TypeGenerator.make_bool()
+        elif self.field_type == time:
+            new_data = TypeGenerator.make_time()
+        elif self.field_type == date:
+            new_data = TypeGenerator.make_date()
+        elif self.field_type == bytes:
+            new_data = TypeGenerator.make_string()
+        elif self.field_type == float:
+            float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
+            new_data = float_mut()
+        else:
+            return new_data
 
-        num = num + num_sub
-        return str(num)
+        return new_data
