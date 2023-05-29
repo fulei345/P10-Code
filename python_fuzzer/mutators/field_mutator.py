@@ -139,12 +139,8 @@ class FieldMutator(Mutator):
     def generate_type_mutator(self, data: str) -> str:
         new_data: str = ""
         if self.field_type == str:
-            # 1/8 for make string else 7/8 to choose one of 7
-            if random.random() < 0.125:
-                new_data = TypeGenerator.make_string()
-            else:
-                mutator = random.choice(self.string_mutators)
-                new_data = mutator(data)
+            mutator = random.choice(self.string_mutators)
+            new_data = mutator(data)
         elif self.field_type == bool:
             new_data = TypeGenerator.make_bool()
         elif self.field_type == time:
