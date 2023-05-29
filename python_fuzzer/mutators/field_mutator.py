@@ -137,21 +137,26 @@ class FieldMutator(Mutator):
         return str(data)
     
     def generate_type_mutator(self, data: str) -> str:
-        data: str = ""
+        new_data: str = ""
         if self.field_type == str:
-            data = TypeGenerator.make_string()
+            # 1/8 for make string else 7/8 to choose one of 7
+            if random.random() < 0.125:
+                new_data = TypeGenerator.make_string()
+            else:
+                mutator = random.choice(self.string_mutators)
+                new_data = mutator(data)
         elif self.field_type == bool:
-            data = TypeGenerator.make_bool()
+            new_data = TypeGenerator.make_bool()
         elif self.field_type == time:
-            data = TypeGenerator.make_time()
+            new_data = TypeGenerator.make_time()
         elif self.field_type == date:
-            data = TypeGenerator.make_date()
+            new_data = TypeGenerator.make_date()
         elif self.field_type == bytes:
-            data = TypeGenerator.make_string()
+            new_data = TypeGenerator.make_string()
         elif self.field_type == float:
             float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
-            data = float_mut()
+            new_data = float_mut()
         else:
-            return data
+            return new_data
 
-        return data
+        return new_data
