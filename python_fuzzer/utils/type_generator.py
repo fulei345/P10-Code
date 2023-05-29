@@ -12,7 +12,8 @@ class TypeGenerator:
         length = random.randint(0, 100)
 
         # random string of length composed of printable string chararcters (letters, digits, punctuation, whitespace) - alternatively string.ascii_letters + string.digits (+string.punctuation)
-        text = ''.join(random.choice(string.printable) for _ in range(length))
+        # string.printable
+        text = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(length))
 
         return text
 
