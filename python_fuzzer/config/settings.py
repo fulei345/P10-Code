@@ -22,4 +22,4 @@ MAX_RECUR_DEPTH = 30
 NOT_PROB = 0.20
 
 # Max number of different seed type in population
-MAX_DICT = {"SCHEMA": 5, "PASS": 5, "SCHEMATRON": 15, "UNKNOWN": 50, "FAIL": 50, "XML": 5}
+MAX_DICT = {"SCHEMA": 5, "PASS": 5, "SCHEMATRON": 15, "UNKNOWN": 50, "FAIL": 75, "XML": 5}

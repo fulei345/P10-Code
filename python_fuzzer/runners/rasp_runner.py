@@ -97,7 +97,10 @@ class RaspRunner(Runner):
                         "System.Xml.XmlException",
                         "SearchForDocumentTypeFromXmlDocumentFailedException",]
 
-            if standard_out.find("Schema ") != -1:
+            if standard_out.find("ERROR") != -1:
+                return standard_out, self.FAIL
+
+            elif standard_out.find("Schema ") != -1:
                 return standard_out, self.SCHEMA
             
             elif standard_out.find("Schematron") != -1:
