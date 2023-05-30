@@ -64,9 +64,9 @@ class RaspRunner(Runner):
                 # TODO find better way to handle decode error for ø (+ æ and å, i suppose)
                 standard_out = process.stdout.decode("utf-8", errors="replace")
                 return self.handle_feedback(standard_out)
-        except Exception:
+        except Exception as err:
             traceback.print_exc()
-            return str(traceback.format_exception()), self.FAIL
+            return str(traceback.format_exception(err)), self.FAIL
 
     def handle_feedback(self, standard_out: str) -> Tuple[str, str, List[str]]:
         # Find code blocks for code coverage
