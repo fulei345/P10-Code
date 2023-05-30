@@ -3,8 +3,9 @@ from subprocess import run
 from os import getcwd
 from os.path import join
 from xml.etree.cElementTree import ElementTree
-from re import search, findall
+from re import findall
 import traceback
+import os
 
 if __name__ == "__main__":
     from runner import Runner
@@ -39,6 +40,7 @@ class RaspRunner(Runner):
         document_path = join(self.executable_path, "Resources", "xml", "ProductionUddi", filename)
         document.write(document_path, encoding="utf-8", xml_declaration=True)
         message, outcome = self.start_process(document_path)
+        os.remove(document_path)
         return message, outcome
 
     def start_process(self, doc_path: str) -> Tuple[str, str]:
