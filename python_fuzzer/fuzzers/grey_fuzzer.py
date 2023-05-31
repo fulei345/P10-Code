@@ -121,6 +121,12 @@ class GreyboxFuzzer(Fuzzer):
         self.logger.log_crash(filename, result)
     
     def handle_feedback(self, result: str, outcome: str, document: ElementTree):
+        if outcome == "FAIL" or outcome == "UNKNOWN":
+            filename: str = outcome + "_" + str(self.seed_index) + ".xml"
+            document_path = join(self.write_path, filename)
+            document.write(document_path, encoding="utf-8", xml_declaration=True)
+            self.logger.log_crash(filename, result)
+
         if self.current_dict[outcome] < MAX_DICT[outcome]:
             self.add_to_population(result, outcome, document)
             self.current_dict[outcome] += 1
