@@ -122,7 +122,7 @@ class GreyboxFuzzer(Fuzzer):
     
     def handle_feedback(self, result: str, outcome: str, document: ElementTree):
         if outcome == "FAIL" or outcome == "UNKNOWN":
-            filename: str = outcome + "-" + str(self.seed_index) + ".xml"
+            filename: str = outcome + "_" + str(self.seed_index) + ".xml"
             document_path = join(self.write_path, filename)
             document.write(document_path, encoding="utf-8", xml_declaration=True)
             self.logger.log_crash(filename, result)
