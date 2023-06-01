@@ -48,6 +48,7 @@ class GreyboxFuzzer(Fuzzer):
 
         self.log_count = 0
 
+        self.class_level = 0
 
         # Current dictionary over the amount
         self.current_dict: dict = {"SCHEMA": 0, "PASS": 0, "SCHEMATRON": 0, "UNKNOWN": 0, "FAIL": 0, "XML": 0}
@@ -78,7 +79,7 @@ class GreyboxFuzzer(Fuzzer):
         candidate = deepcopy(seed.data)
         num_mutations = random.randint(1, MUTATION_COUNT)
         for _ in range(num_mutations):
-            candidate = self.mutator.mutate(candidate)
+            candidate, self.class_level = self.mutator.mutate(candidate)
         return candidate
 
     def fuzz(self) -> ElementTree:
@@ -125,6 +126,7 @@ class GreyboxFuzzer(Fuzzer):
             filename: str = outcome + "_" + str(self.seed_index) + ".xml"
             document_path = join(self.write_path, filename)
             document.write(document_path, encoding="utf-8", xml_declaration=True)
+            result += ("\n\n class_level: " + str(self.class_level))
             self.logger.log_crash(filename, result)
 
         if self.current_dict[outcome] < MAX_DICT[outcome]:

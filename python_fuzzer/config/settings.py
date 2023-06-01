@@ -10,13 +10,13 @@ WEIGHTED_PS = True
 DUPLICATE_PROB = 0.95
 
 # probability of and optional field being made
-OPT_PROB = 0.5
+OPT_PROB = 0.7
 
 # The number of times that seed is send before the seeds is getting replaced
 REPLACE_COUNT = 10
 
 # maximal recursion depth when creating invoice classes
-MAX_RECUR_DEPTH = 30
+MAX_RECUR_DEPTH = 50
 
 # Probability of making not correct type
 NOT_PROB = 0.20

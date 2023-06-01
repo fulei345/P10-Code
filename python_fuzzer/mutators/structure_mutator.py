@@ -21,10 +21,9 @@ class StructureMutator(Mutator):
         self.parent_map = dict()
         self.total_size = 0
         self.recur_level = 0
+        self.class_level = 0
         # List mutator functions here
-        self.mutators: List[Callable[[Any], Any]] = [self.duplicate_field,
-                                                     self.delete_field,
-                                                     self.move_field,
+        self.mutators: List[Callable[[Any], Any]] = [
                                                      self.add_field]
 
     def mutate(self, document: ElementTree) -> ElementTree:
@@ -46,8 +45,8 @@ class StructureMutator(Mutator):
             for i, elem in enumerate(root.iter()):
                 if i == index:
                     mutator(self.parent_map[elem], elem)
-                    return document
-        return document
+                    return document, self.class_level
+        return document, self.class_level
 
     def check_if_ancestor(self, ancestor: Element, subelement: Element) -> bool:
         parent = self.parent_map[ancestor]
@@ -99,6 +98,8 @@ class StructureMutator(Mutator):
     def add_field(self, parent: Element) -> Element:
         #TODO probably make this general so it could be other types of documents as well (if their structure was made lol)
         #randomly choose one of the Invoice direct subelements to create
+
+        self.class_level = 0
 
         #insert at correct index
         if random.random() < DUPLICATE_PROB:
@@ -176,6 +177,7 @@ class StructureMutator(Mutator):
     def make_class(self, elem: Element, type) -> Element:
 
         self.recur_level += 1
+        self.class_level += 1    
 
         #if above max recursion level return without making elements of the class
         if(self.recur_level > MAX_RECUR_DEPTH):
