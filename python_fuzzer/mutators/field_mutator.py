@@ -151,7 +151,12 @@ class FieldMutator(Mutator):
             new_data = TypeGenerator.make_string()
         elif self.field_type == float:
             float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
-            new_data = float_mut()
+            # Chance of chossing 1/5 for float generator and interesting
+            if 0.6 < random.random():
+                float_mut = random.choice(self.int_mutators)
+                new_data = float_mut(data)
+            else:
+                new_data = float_mut()
         else:
             return new_data
 
