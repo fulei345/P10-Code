@@ -11,7 +11,7 @@ import sys
 sys.path.append("..")
 from invoice import *
 from utils import TypeGenerator
-from config import DUPLICATE_PROB, OPT_PROB, MAX_RECUR_DEPTH
+from config import PLACEMENT_PROB, OPT_PROB, MAX_RECUR_DEPTH
 
 
 class StructureMutator(Mutator):
@@ -62,7 +62,7 @@ class StructureMutator(Mutator):
         return False
 
     def duplicate_field(self, parent: Element, subelement: Element) -> Element:
-        if(random.random() < DUPLICATE_PROB ):
+        if(random.random() < PLACEMENT_PROB):
             #find the fields index in the parent element and duplicate it there
             index = list(parent).index(subelement)
             parent.insert(index, subelement) #insert field in parent class
@@ -101,7 +101,7 @@ class StructureMutator(Mutator):
         #randomly choose one of the Invoice direct subelements to create
 
         #insert at correct index
-        if random.random() < DUPLICATE_PROB:
+        if random.random() < PLACEMENT_PROB:
             index = random.randint(0, len(fields(Invoice)) - 1)
 
             field = fields(Invoice)[index]

@@ -9,7 +9,7 @@ import sys
 sys.path.append("..")
 from invoice import invoice_type_dict
 from utils import TypeGenerator
-from config import NOT_PROB
+from config import TYPE_PROB
 
 INTERESTING8 = [-128., -1., 0., 1., 16., 32., 64., 100., 127.]
 INTERESTING16 = [0., 128., 255., 256., 512., 1000., 1024., 4096., 32767., 65535.]
@@ -66,7 +66,7 @@ class FieldMutator(Mutator):
                             field_type = f.type
                 self.field_type = field_type
                 # if it is under this do not take the type into account
-                if random.random() < NOT_PROB:
+                if random.random() < TYPE_PROB:
                     mutator = random.choice(self.string_mutators)
                 else:
                     mutator = self.generate_type_mutator
