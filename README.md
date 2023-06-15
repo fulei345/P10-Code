@@ -1,6 +1,6 @@
 # P10-Code
 
-This reprosetory the code for OIOFuzz developed for the master thesis "OIOFuzz: A Guided Model-based Blackbox Fuzzer for OIORASP Schematron Validation".
+This repository contains the code for OIOFuzz developed for the master thesis "OIOFuzz: A Guided Model-based Blackbox Fuzzer for OIORASP Schematron Validation".
 
 OIOFuzz is a Guided Model-based Black-box fuzzer.
 The fuzzer is in the python_fuzzer folder and the working-rasp-files has files for setting up the ClientExample and the HttpEndpointExample.
