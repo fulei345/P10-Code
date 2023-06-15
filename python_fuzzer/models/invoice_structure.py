@@ -284,7 +284,7 @@ class PartyLegalEntity(): #!
     CorporateStockAmount: Optional[float] #datatype: amount
     RegistrationAddress: Optional[Address]
     CorporateRegistrationScheme: Optional[CorporateRegistrationScheme]
-    StakeholderParty: Optional['Party'] #multiple instances possible #TODO test this one plz and op - Optional[List['Party']] - but don't want to, thats a rat hole i dont wanna explore
+    StakeholderParty: Optional['Party'] #multiple instances possible
     CompanyDossierDocumentReference: Optional[DocumentReference]
 
 @dataclass 
@@ -525,7 +525,7 @@ class PriceList():
     ID: Optional[str]
     StatusCode: Optional[str] # code
     ValidityPeriod: Optional[List[Period]] #multiple instances possible
-    PreviousPriceList: Optional['PriceList'] #TODO
+    PreviousPriceList: Optional['PriceList']
 
 @dataclass 
 class Price(): #!
@@ -726,9 +726,9 @@ class GoodsItem():
     Item: Optional[List[Item]] #multiple instances possible
     GoodsItemContainer: Optional[List[GoodsItemContainer]] #multiple instances possible
     FreightAllowanceCharge: Optional[List[AllowanceCharge]] #multiple instances possible
-    InvoiceLine: Optional['InvoiceLine'] #TODO test this #multiple instances possible Optional[List['GoodsItem']] - but don't want to, thats a rat hole i dont wanna explore
+    InvoiceLine: Optional['InvoiceLine']
     Temperature: Optional[List[Temperature]] #multiple instances possible
-    ContainedGoodsItem : Optional['GoodsItem'] #TODO test this #multiple instances possible Optional[List['GoodsItem']] - but don't want to, thats a rat hole i dont wanna explore
+    ContainedGoodsItem : Optional['GoodsItem']
     OriginAddress: Optional[Address]
     
 @dataclass 
@@ -745,7 +745,7 @@ class Package():
     PackageLevelCode: Optional[str] # code
     PackagingTypeCode: Optional[str] # code
     PackingMaterial: Optional[List[str]] #multiple instances possible
-    ContainedPackage: Optional['Package'] #TODO test this #multiple instances possible Optional[List['Package']] - but don't want to, thats a rat hole i dont wanna explore
+    ContainedPackage: Optional['Package']
     GoodsItem: Optional[List[GoodsItem]] #multiple instances possible
     MeasurementDimension: Optional[List[Dimension]] #multiple instances possible
     DeliveryUnit: Optional[List[DeliveryUnit]] #multiple instances possible
