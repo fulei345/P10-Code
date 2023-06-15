@@ -1,2 +1,5 @@
 # P10-Code
-Code Reprosetory for 10 Semester project
+
+This reprosetory the code for OIOFuzz developed for the master thesis "OIOFuzz: A Guided Model-based Blackbox Fuzzer for OIORASP Schematron Validation".
+
+blablalba
