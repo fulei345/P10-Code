@@ -9,7 +9,7 @@ import sys
 sys.path.append("..")
 from invoice import invoice_type_dict
 from utils import TypeGenerator
-from config import NOT_PROB
+from config import TYPE_PROB
 
 INTERESTING8 = [-128., -1., 0., 1., 16., 32., 64., 100., 127.]
 INTERESTING16 = [0., 128., 255., 256., 512., 1000., 1024., 4096., 32767., 65535.]
@@ -30,7 +30,7 @@ class FieldMutator(Mutator):
                                                      self.add_char_mutator
                                                      ]
 
-        self.int_mutators: List[Callable[[Any], Any]] = [self.interesting8_mutator,
+        self.interesting_floats: List[Callable[[Any], Any]] = [self.interesting8_mutator,
                                                      self.interesting16_mutator,
                                                      self.interesting32_mutator
                                                      ]
@@ -66,7 +66,7 @@ class FieldMutator(Mutator):
                             field_type = f.type
                 self.field_type = field_type
                 # if it is under this do not take the type into account
-                if random.random() < NOT_PROB:
+                if random.random() < TYPE_PROB:
                     mutator = random.choice(self.string_mutators)
                 else:
                     mutator = self.generate_type_mutator
@@ -150,8 +150,13 @@ class FieldMutator(Mutator):
         elif self.field_type == bytes:
             new_data = TypeGenerator.make_string()
         elif self.field_type == float:
-            float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
-            new_data = float_mut()
+            float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands, TypeGenerator.make_int])
+            # 6 mutators, 3/6 of choosing a generator, 3/6 of choosing an interesting
+            if 0.5 < random.random():
+                float_mut = random.choice(self.interesting_floats)
+                new_data = float_mut(data)
+            else:
+                new_data = float_mut()
         else:
             return new_data
 
