@@ -22,6 +22,5 @@ class Ddos:
                 capture_output=True)
             print(process.stdout)
         except Exception as e:
-            # TODO handle this better
             print(e)
 
