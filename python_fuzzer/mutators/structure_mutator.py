@@ -9,7 +9,7 @@ from .mutator import Mutator
 
 import sys
 sys.path.append("..")
-from invoice import *
+from models import *
 from utils import TypeGenerator
 from config import PLACEMENT_PROB, OPT_PROB, MAX_RECUR_DEPTH
 
