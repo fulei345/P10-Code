@@ -30,7 +30,7 @@ class FieldMutator(Mutator):
                                                      self.add_char_mutator
                                                      ]
 
-        self.int_mutators: List[Callable[[Any], Any]] = [self.interesting8_mutator,
+        self.interesting_floats: List[Callable[[Any], Any]] = [self.interesting8_mutator,
                                                      self.interesting16_mutator,
                                                      self.interesting32_mutator
                                                      ]
@@ -154,7 +154,7 @@ class FieldMutator(Mutator):
             # Chance of chossing 1/5 for float generator and interesting
             # 5 mutators, 2/5 of chossing a genertor, 3/5 of chossing a interesiting
             if 0.6 < random.random():
-                float_mut = random.choice(self.int_mutators)
+                float_mut = random.choice(self.interesting_floats)
                 new_data = float_mut(data)
             else:
                 new_data = float_mut()
