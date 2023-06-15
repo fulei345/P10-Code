@@ -7,7 +7,7 @@ from .mutator import Mutator
 import sys
 
 sys.path.append("..")
-from invoice import invoice_type_dict
+from models import invoice_type_dict
 from utils import TypeGenerator
 from config import TYPE_PROB
 
