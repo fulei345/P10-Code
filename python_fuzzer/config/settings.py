@@ -9,7 +9,7 @@ WEIGHTED_PS = True
 # Pobability for being inserted at same index, else at random posistion through the whole document
 PLACEMENT_PROB = 0.95
 
-# probability of and optional field being made
+# probability of an optional field being made
 OPT_PROB = 0.5
 
 # The number of times that seed is send before the seeds is getting replaced
