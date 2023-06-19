@@ -131,7 +131,7 @@ class GreyboxFuzzer(Fuzzer):
         # Make new name for file
         filename: str = "fuzzed_document_" + str(self.seed_index) + ".xml"
         
-        result, outcome: str = self.runner.run(document, filename)
+        result, outcome = self.runner.run(document, filename)
         self.handle_feedback(result, outcome, document)
         return result, outcome 
 
@@ -141,7 +141,7 @@ class GreyboxFuzzer(Fuzzer):
         try:
             for i in range(1, run_count + 1):
                 result: Tuple[str,str] = self.run()
-                results.append[result]
+                results.append(result)
                 run_num: int = i
                 pop_count: int = sum(self.current_dict.values())
                 percent_coverage: float = len(self.total_coverage)/code_block_total * 100
