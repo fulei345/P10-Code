@@ -1,6 +1,6 @@
 from datetime import date, time
-from typing import Optional, List, Union, Any, TYPE_CHECKING
-from dataclasses import dataclass, fields
+from typing import Optional, List, Any
+from dataclasses import dataclass
 
 
 @dataclass 
@@ -878,7 +878,7 @@ class Invoice():
     IssueDate: date #date type (yyyy-mm-dd)
     IssueTime: Optional[time] #time type (00:00:00)
     InvoiceTypeCode: Optional[str] #code type (example doc has e.g. 380 and DKK, so string to generalize)
-    Note: Optional[List[str]] #multiple instances possible List[str] - list of?
+    Note: Optional[List[str]] #multiple instances possible List[str] 
     TaxPointDate: Optional[date]
     DocumentCurrencyCode: str #code
     TaxCurrencyCode: Optional[str] #code
@@ -887,7 +887,7 @@ class Invoice():
     PaymentAlternativeCurrencyCode: Optional[str] # code
     AccountingCostCode: Optional[str] #code
     AccountingCost: Optional[str]
-    LineCountNumeric: Optional[float] #numeric: int?
+    LineCountNumeric: Optional[float] #numeric
     InvoicePeriod: Optional[Period]
     OrderReference: Optional[OrderReference]
     BillingReference: Optional[List[BillingReference]] # multiple instances possible
@@ -916,8 +916,8 @@ class Invoice():
     LegalMonetaryTotal: LegalMonetaryTotal
     InvoiceLine: List[InvoiceLine] # - multiple instances possible
 
-
-invoice_type_dict={'LegalMonetaryTotal': LegalMonetaryTotal,
+# dictionary with class element names and classtype
+invoice_type_dict: dict[str,Any] ={'LegalMonetaryTotal': LegalMonetaryTotal,
 'Country': Country,
 'Address': Address,
 'JurisdictionRegionAddress': Address,
