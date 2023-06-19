@@ -1,5 +1,7 @@
 # P10-Code
 
+Python 3.10 or above is required to be able to run all of the code
+
 This repository contains the code for OIOFuzz developed for the master thesis "OIOFuzz: A Guided Model-based Blackbox Fuzzer for OIORASP Schematron Validation".
 
 OIOFuzz is a Guided Model-based Black-box fuzzer.

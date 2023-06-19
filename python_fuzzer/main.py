@@ -1,5 +1,7 @@
 import argparse
 import os
+from typing import List
+from xml.etree.cElementTree import ElementTree
 
 from fuzzers import GreyboxFuzzer
 from loggers import FeedbackLogger
@@ -10,8 +12,6 @@ from scheduler import PowerSchedule
 from utils import Ddos
 
 
-# TODO Add types to everything without and change existing types
-
 def main(verbose: bool, stats: bool) -> None:
     # Get current working directory to create folders
     cwd_path: str = os.getcwd()
@@ -19,7 +19,6 @@ def main(verbose: bool, stats: bool) -> None:
         cwd_path = os.path.join(cwd_path, "python_fuzzer")
 
     # Initialize the logger
-    # Maybe used for logging the good files that make it crash
     logger_path: str = os.path.join(cwd_path, "log_files")
     log: FeedbackLogger = FeedbackLogger(logger_path, verbose)
 
@@ -30,19 +29,17 @@ def main(verbose: bool, stats: bool) -> None:
     # Parse OIOUBL documents
     document_path: str = os.path.join(cwd_path, "documents", "existing")
     parser: DocumentParser = DocumentParser(document_path, verbose)
-    corpus_str, corpus = parser.load_corpus()
+    corpus: List[ElementTree] = parser.load_corpus()
 
     # Initialize the mutator
     mut: GeneralMutator = GeneralMutator(verbose)
 
+    # Define path to folder to save fuzzed documents
     fuzzed_path: str = os.path.join(cwd_path, "documents", "fuzzed_documents")
-    population_path: str = os.path.join(cwd_path, "documents", "population")
+    # population_path: str = os.path.join(cwd_path, "documents", "population")
+    
     # Initialize and run the fuzzer
-    # print(result)
-
-    # Greybox fuzzer
-    fuzz: GreyboxFuzzer = GreyboxFuzzer(corpus, run, mut, log, PowerSchedule(), verbose, fuzzed_path,
-                                        mutation_count=1)
+    fuzz: GreyboxFuzzer = GreyboxFuzzer(corpus, run, mut, log, PowerSchedule(), verbose, fuzzed_path)
     result = fuzz.multiple_runs(run_count=5, stats=stats)
     # print(result)
 
@@ -82,5 +79,6 @@ if __name__ == '__main__':
     # Run ddos code
     if args.ddos:
         ddos()
+    # Run normal code
     else:
         main(args.verbose, args.stats)

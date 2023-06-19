@@ -1,6 +1,6 @@
 import random
-from typing import Any, List, Callable
-from xml.etree.cElementTree import ElementTree, tostring, fromstring, Element
+from typing import List
+from xml.etree.cElementTree import ElementTree
 
 if __name__ == "__main__":
     from mutator import Mutator
@@ -25,6 +25,6 @@ class GeneralMutator(Mutator):
         :return: Mutated documents.
         """
         # Randomly chooses a mutator class, could be set to one of them
-        mutator = random.choice(self.mutator_classes)
+        mutator: Mutator = random.choice(self.mutator_classes)
         document = mutator.mutate(document)
         return document
