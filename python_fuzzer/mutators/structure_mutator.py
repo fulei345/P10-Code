@@ -84,7 +84,7 @@ class StructureMutator(Mutator):
         index: int = random.randint(1, self.total_size)
         for i, elem in enumerate(self.root.iter()):
             # check that the subelement is not an ancestor of the element it is inserted into, as it would then be inserted in itself
-            if i >= index and not self.check_if_not_ancestor(elem, subelement):
+            if i >= index and self.check_if_not_ancestor(elem, subelement):
                 parent = self.parent_map[elem]
                 insert_index = random.randint(0, len(parent))
                 parent.insert(insert_index, subelement)
