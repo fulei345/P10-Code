@@ -13,28 +13,28 @@ class TypeGenerator:
 
         # random string of length composed of printable string chararcters (letters, digits, punctuation, whitespace) - alternatively string.ascii_letters + string.digits (+string.punctuation)
         # string.printable
-        text = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(length))
+        text: str = ''.join(random.choice(string.printable) for _ in range(length))
 
         return text
 
     @staticmethod
     def make_char() -> str:
 
-        text = '' + random.choice(string.printable)
+        text: str = '' + random.choice(string.printable)
 
         return text
 
     @staticmethod
     def make_int() -> str:
-        text = random.randint(0, sys.maxsize)
+        text: int = random.randint(0, sys.maxsize)
 
         return str(text)
 
     @staticmethod
     def make_float() -> str:
-        sign = random.choice(["-", "+"])
-        first = TypeGenerator.make_int()
-        second = TypeGenerator.make_int()
+        sign: str = random.choice(["-", "+"])
+        first: str = TypeGenerator.make_int()
+        second: str = TypeGenerator.make_int()
         text: str = sign + first + "." + second
         return text
 
@@ -50,19 +50,20 @@ class TypeGenerator:
     @staticmethod
     def make_time() -> str:
         # create time with random values, first argument is hours, second argument is minutes, and last argument is seconds
-        text = time(random.randint(0, 23), random.randint(0, 59), random.randint(0, 59))
+        text: time = time(random.randint(0, 23), random.randint(0, 59), random.randint(0, 59))
 
         return str(text)
 
     @staticmethod
     def make_date() -> str:
         # create date with random values, first argument is year with the range for datetime modules minyear and maxyear, second argument is month, and last argument is day
-        text = str(random.randint(1, 9999)) + "-" + str(random.randint(1, 12)) + "-" + str(random.randint(1, 31))
+        text: str = str(random.randint(1, 9999)) + "-" + str(random.randint(1, 12)) + "-" + str(random.randint(1, 31))
 
         return text
 
     @staticmethod
     def make_float_thousands() -> str:
+        # makes floats with comma separated thousands
         sign: str = random.choice(["-", "+"])
         commas: int = random.randint(1, 10)
         text: str = ""

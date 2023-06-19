@@ -1,5 +1,5 @@
-from typing import List, Set, Union, Any
-from xml.etree.cElementTree import Element, ElementTree, parse, ParseError
+from typing import Set, Any
+from xml.etree.cElementTree import ElementTree
 import sys
 sys.path.append("..")
 
@@ -7,12 +7,11 @@ sys.path.append("..")
 class Seed:
     """Represent an input with additional attributes"""
 
-    # Type Should probably be ElementTree
-    def __init__(self, data: Any) -> None:
+    def __init__(self, data: ElementTree) -> None:
         """Initialize from seed data"""
         self.data: Any = data
 
-        # These will be needed for advanced power schedules
+        # These are needed for power schedules
         self.coverage: Set[str] = set()
         self.outcome: str = ""
         self.result: str = ""
