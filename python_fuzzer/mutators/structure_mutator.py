@@ -1,9 +1,8 @@
 import random
-from typing import Any, List, Callable, Optional, get_origin, Union, get_args, TYPE_CHECKING, get_type_hints, ForwardRef
+from typing import Any, List, Callable, get_origin, Union, get_args, ForwardRef
 from xml.etree.cElementTree import ElementTree, Element
-from dataclasses import dataclass, fields
+from dataclasses import fields
 from datetime import date, time
-import string
 
 from .mutator import Mutator
 
@@ -21,7 +20,7 @@ class StructureMutator(Mutator):
         self.parent_map = dict()
         self.total_size = 0
         self.recur_level = 0
-        # List mutator functions here
+        # List of mutator functions
         self.mutators: List[Callable[[Any], Any]] = [self.duplicate_field,
                                                      self.delete_field,
                                                      self.move_field,
@@ -33,14 +32,17 @@ class StructureMutator(Mutator):
         :return: Mutated documents.
         """
         root:Element = document.getroot()
-        self.total_size = sum(1 for _ in root.iter())
         # mapper alle elementer til deres parent element
         self.parent_map = {c:p for p in root.iter() for c in p}
+        self.total_size = len(self.parent_map) + 1
         self.root = root
         self.recur_level = 0
+        #choose random mutator
         mutator: Callable[[Any], Any] = random.choice(self.mutators)
+        # if the mutator is add field, call directly
         if mutator == self.add_field:
             mutator(root)
+        #else choose random index for an element for the mutation, find the element at index and call mutator
         else:
             index: int = random.randint(1, self.total_size)
             for i, elem in enumerate(root.iter()):
@@ -49,32 +51,40 @@ class StructureMutator(Mutator):
                     return document
         return document
 
-    def check_if_ancestor(self, ancestor: Element, subelement: Element) -> bool:
-        parent = self.parent_map[ancestor]
+    # check if an element is not an ancestor of another element
+    def check_if_not_ancestor(self, element: Element, element_to_check: Element) -> bool:
+        parent = self.parent_map[element]
+        # child is initialized to parent such that it can be used to find the parent of the parent in the first iteration
         child = parent
-        while subelement != parent:
-            if parent not in self.parent_map or child not in self.parent_map:
+        # if element_to_check is equal to parent it is an ancestor
+        while element_to_check != parent:
+            #if the parent is not in parent map, it is the root element and not an ancestor
+            if parent not in self.parent_map:
                 return True
+            #else find the parent of the parent and set child to current parent
             else:
                 temp_p = parent
                 parent = self.parent_map[child]
                 child = temp_p
         return False
+    
 
     def duplicate_field(self, parent: Element, subelement: Element) -> Element:
         if(random.random() < PLACEMENT_PROB):
             #find the fields index in the parent element and duplicate it there
-            index = list(parent).index(subelement)
+            index: int = list(parent).index(subelement)
             parent.insert(index, subelement) #insert field in parent class
         else:
+            #insert at random place
             self.insert_field(parent, subelement)
         return parent
 
     # insert field at random place
     def insert_field(self, parent: Element, subelement: Element) -> Element:
-        index = random.randint(1, self.total_size)
+        index: int = random.randint(1, self.total_size)
         for i, elem in enumerate(self.root.iter()):
-            if i >= index and self.check_if_ancestor(elem, subelement):
+            # check that the subelement is not an ancestor of the element it is inserted into, as it would then be inserted in itself
+            if i >= index and not self.check_if_not_ancestor(elem, subelement):
                 parent = self.parent_map[elem]
                 insert_index = random.randint(0, len(parent))
                 parent.insert(insert_index, subelement)
@@ -97,24 +107,31 @@ class StructureMutator(Mutator):
 
     #create new field and insert in the document
     def add_field(self, parent: Element) -> Element:
-        #TODO probably make this general so it could be other types of documents as well (if their structure was made lol)
+        #TODO make this general so it could be other types of documents as well
         #randomly choose one of the Invoice direct subelements to create
 
         #insert at correct index
         if random.random() < PLACEMENT_PROB:
-            index = random.randint(0, len(fields(Invoice)) - 1)
-
+            #choose random index
+            index: int = random.randint(0, len(fields(Invoice)) - 1)
+            #find field at the index
             field = fields(Invoice)[index]
-
-            counter = 0
+            counter: int = 0
+            
+            # loop through elements in parent class
             for i, elem in enumerate(parent):
+                # find name of elem
                 elem_name = elem.tag.split("}")[1]
+                #if elem is the chosen field, make element and insert in parent at index 
                 if elem_name == field:
                     subelement = self.make_element(field)
                     parent.insert(i, subelement)
                     return parent
+                # loop through possible fields in an invoice document, starting from a counter for the latest elements position, until field matching the element is encountered
                 while elem_name != fields(Invoice)[counter].name:
+                    #increment counter
                     counter += 1
+                    #if the counter is above the index, the position to insert element is found and the element is made and inserted in parent at index of outer loop
                     if counter > index:
                         subelement = self.make_element(field)
                         parent.insert(i, subelement)
@@ -122,23 +139,22 @@ class StructureMutator(Mutator):
         #insert random place in document
         else:
             field = random.choice(fields(Invoice))
-            elem = self.make_element(field)
+            elem: Element = self.make_element(field)
             self.insert_field(parent, elem)
 
         #below code is for making invoice document from the ground (change with the rest)
         #root = Element("<Invoice xmlns=\"urn:oasis:names:specification:ubl:schema:xsd:Invoice-2\" xmlns:cac=\"urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2\" xmlns:cbc=\"urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2\" xmlns:ccts=\"urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2\" xmlns:sdt=\"urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2\" xmlns:udt=\"urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.0.xsd\">")
-        #
         #elem = self.make_class(root, Invoice)
-        #
         #parent = elem
         return parent
 
+    #make new element
     def make_element(self, field) -> Element:
 
         self.recur_level += 1
 
-        #make element with the name
-        elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" + "}" + field.name)
+        #make element with the field name
+        elem: Element = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" + "}" + field.name)
 
         field_type = None
 
@@ -173,6 +189,7 @@ class StructureMutator(Mutator):
         self.recur_level -= 1
         return elem
 
+    # make new class element
     def make_class(self, elem: Element, type) -> Element:
 
         self.recur_level += 1
@@ -181,7 +198,6 @@ class StructureMutator(Mutator):
         if(self.recur_level > MAX_RECUR_DEPTH):
             self.recur_level -= 1
             return elem
-        #TODO make failsafe
 
         #if the type is a forward reference change it to the actual type
         if(isinstance(type, ForwardRef)):
@@ -194,23 +210,29 @@ class StructureMutator(Mutator):
 
         # make elements for all the class fields iteratively
         for field in names:
+            #check if the field is optional (as its type is then Union(type, None)) and change type to actual type or skip at a specified probability
             if get_origin(field.type) is Union:
                 if random.random() < OPT_PROB:
                     field_type = get_args(field.type)[0]
                 else:
                     continue
             else:
+                #set type
                 field_type = field.type
+            #check if type is list
             if get_origin(field_type) == list:
+                #find actual type 
                 field_type = get_args(field_type)[0]
-                i = 0
-                s = random.randint(1,5)
-                while i < s:
-                    subelem = self.make_element(field)
+                i: int = 0
+                # chose random amount, between 1 and 5, of the element to be made 
+                amount: int = random.randint(1,5)
+                while i < amount:
+                    subelem: Element = self.make_element(field)
                     elem.append(subelem)
                     i += 1
+            #else just make element
             else:
-                    subelem = self.make_element(field)
+                    subelem: Element = self.make_element(field)
                     elem.append(subelem)
 
         self.recur_level -= 1
