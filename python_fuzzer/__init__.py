@@ -8,7 +8,7 @@ from .utils import *
 from .config import *
 
 __all__ = ["Logger", "FeedbackLogger",
-           "Mutator", "FieldMutator", "StructureMutator", "GeneralMutator"
+           "Mutator", "FieldMutator", "StructureMutator", "GeneralMutator",
            "Parser", "DocumentParser",
            "Runner", "RaspRunner",
            "Fuzzer", "RaspFuzzer",
