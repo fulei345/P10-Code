@@ -5,5 +5,5 @@ from xml.etree.cElementTree import ElementTree
 
 class Runner(ABC):
     @abstractmethod
-    def run(self, document: ElementTree, filename: str) -> Tuple[Any, str]:
+    def run(self, document: ElementTree, filename: str) -> Tuple[str, str]:
         pass
