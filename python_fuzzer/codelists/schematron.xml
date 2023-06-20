@@ -18,56 +18,22 @@
                  select="',1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,ZZZ,'"/>
    <xsl:variable name="Allowance_listID" select="'UN/ECE 4465'"/>
    <xsl:variable name="Allowance_agencyID" select="'6'"/>
-   <xsl:variable name="CatDocType" select="',Brochure,Drawing,Picture,ProductSheet,'"/>
-   <xsl:variable name="CatDocType_listID"
-                 select="'urn:oioubl:codelist:cataloguedocumenttypecode-1.1'"/>
-   <xsl:variable name="CatDocType_agencyID" select="'320'"/>
-   <xsl:variable name="CatDocType2"
-                 select="',Brochure,Drawing,Picture,ProductSheet,PictureURL,'"/>
-   <xsl:variable name="CatDocType2_listID2"
-                 select="'urn:oioubl:codelist:cataloguedocumenttypecode-1.2'"/>
-   <xsl:variable name="CatAction" select="',Update,Delete,Add,'"/>
-   <xsl:variable name="CatAction_listID"
-                 select="'urn:oioubl:codelist:catalogueactioncode-1.1'"/>
-   <xsl:variable name="CatAction_agencyID" select="'320'"/>
-   <xsl:variable name="CountryCode"
+   <xsl:variable name="IdentificationCode"
                  select="',AD,AE,AF,AG,AI,AL,AM,AO,AQ,AR,AS,AT,AU,AW,AX,AZ,BA,BB,BD,BE,BF,BG,BH,BI,BJ,BM,BN,BO,BQ,BR,BS,BT,BV,BW,BY,BZ,CA,CC,CD,CF,CG,CH,CI,CK,CL,CM,CN,CO,CR,CU,CV,CW,CX,CY,CZ,DE,DJ,DK,DM,DO,DZ,EC,EE,EG,EH,ER,ES,ET,FI,FJ,FK,FM,FO,FR,GA,GB,GD,GE,GF,GG,GH,GI,GL,GM,GN,GP,GQ,GR,GS,GT,GU,GW,GY,HK,HM,HN,HR,HT,HU,ID,IE,IL,IM,IN,IO,IQ,IR,IS,IT,JE,JM,JO,JP,KE,KG,KH,KI,KM,KN,KP,KR,KW,KY,KZ,LA,LB,LC,LI,LK,LR,LS,LT,LU,LV,LY,MA,MC,MD,ME,MG,MH,MK,ML,MM,MN,MO,MP,MQ,MR,MS,MT,MU,MV,MW,MX,MY,MZ,NA,NC,NE,NF,NG,NI,NL,NO,NP,NR,NU,NZ,OM,PA,PE,PF,PG,PH,PK,PL,PM,PN,PR,PS,PT,PW,PY,QA,RE,RO,RS,RU,RW,SA,SB,SC,SD,SE,SG,SH,SI,SJ,SK,SL,SM,SN,SO,SR,SS,ST,SV,SX,SY,SZ,TC,TD,TF,TG,TH,TJ,TK,TL,TM,TN,TO,TR,TT,TV,TW,TZ,UA,UG,UM,US,UY,UZ,VA,VC,VE,VG,VI,VN,VU,WF,WS,YE,YT,ZA,ZM,ZW,'"/>
-   <xsl:variable name="CountryCode_listID" select="'ISO3166-2'"/>
-   <xsl:variable name="CountryCode_agencyID" select="'6'"/>
-   <xsl:variable name="CountrySub" select="',DK-81,'"/>
-   <xsl:variable name="CountrySub_listID" select="'ISO 3166-2'"/>
-   <xsl:variable name="CountrySub_agencyID" select="'6'"/>
+   <xsl:variable name="IdentificationCode_listID" select="'ISO3166-2'"/>
+   <xsl:variable name="IdentificationCode_agencyID" select="'6'"/>
+   <xsl:variable name="CountrySubentityCode" select="',DK-81,'"/>
+   <xsl:variable name="CountrySubentityCode_listID" select="'ISO 3166-2'"/>
+   <xsl:variable name="CountrySubentityCode_agencyID" select="'6'"/>
    <xsl:variable name="CurrencyCode"
                  select="',EUR,AFA,DZD,ADP,ARS,AMD,AWG,AUD,AZM,BSD,BHD,THB,PAB,BBD,BYB,BYR,BEF,BZD,BMD,VEB,BOB,BRL,BND,BGN,BIF,CAD,CVE,KYD,GHC,XOF,XAF,XPF,CLP,COP,KMF,BAM,NIO,CRC,HRK,CUP,CYP,CZK,GMD,DKK,MKD,DEM,DJF,STD,DOP,VND,GRD,XCD,EGP,SVC,ETB,FKP,FJD,HUF,CDF,FRF,GIP,HTG,PYG,GNF,GWP,GYD,HKD,UAH,ISK,INR,IRR,IQD,IEP,ITL,JMD,JOD,KES,PGK,LAK,EEK,KWD,MWK,ZMK,AOA,MMK,GEL,LVL,LBP,ALL,HNL,SLL,ROL,BGL,LRD,LYD,SZL,LTL,LSL,LUF,MGF,MYR,MTL,TMM,FIM,MUR,MZM,MXN,MXV,MDL,MAD,BOV,NGN,ERN,NAD,NPR,ANG,NLG,ILS,TWD,NZD,BTN,KPW,NOK,PEN,MRO,TOP,PKR,MOP,UYU,PHP,PTE,GBP,BWP,QAR,GTQ,ZAR,OMR,KHR,MVR,IDR,RUB,RUR,RWF,SHP,SAR,ATS,XDR,SCR,SGD,SKK,SBD,KGS,SOS,ESP,LKR,SDD,SRG,SEK,CHF,SYP,TJR,BDT,WST,TZS,KZT,TPE,SIT,TTD,MNT,TND,TRL,AED,UGX,CLF,USD,UZS,VUV,KRW,YER,JPY,CNY,YUM,ZWD,PLN,AFA,DZD,ADP,ARS,AMD,AWG,AUD,AZM,BSD,BHD,THB,PAB,BBD,BYB,BYR,BEF,BZD,BMD,VEB,BOB,BRL,BND,BGN,'"/>
    <xsl:variable name="CurrencyCode_listID" select="'ISO 4217 Alpha'"/>
    <xsl:variable name="CurrencyCode_agencyID" select="'6'"/>
-   <xsl:variable name="Discrepancy"
-                 select="',Billing1,Billing2,Billing3,Condition1,Condition2,Condition3,Condition4,Condition5,Condition6,Delivery1,Delivery2,Delivery3,Quality1,Quality2,ZZZ,'"/>
-   <xsl:variable name="Discrepancy_listID"
-                 select="'urn:oioubl:codelist:discrepancyresponsecode-1.1'"/>
-   <xsl:variable name="Discrepancy_agencyID" select="'320'"/>
-   <xsl:variable name="DocTypeCode" select="'rule'"/>
-   <xsl:variable name="DocTypeCode_listID" select="'UN/ECE 1001'"/>
-   <xsl:variable name="DocTypeCode_agencyID" select="'6'"/>
-   <xsl:variable name="InvTypeCode" select="',325,380,393,'"/>
-   <xsl:variable name="InvTypeCode_listID"
-                 select="'urn:oioubl:codelist:invoicetypecode-1.1'"/>
-   <xsl:variable name="InvTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="InvTypeCode2" select="',325,380,390,393,'"/>
-   <xsl:variable name="InvTypeCode2_listID"
-                 select="'urn:oioubl:codelist:invoicetypecode-1.2'"/>
-   <xsl:variable name="UNSPSC" select="'rule'"/>
-   <xsl:variable name="UNSPSC_listID" select="'UNSPSC'"/>
-   <xsl:variable name="UNSPSC_agencyID" select="'113'"/>
    <xsl:variable name="LifeCycle"
                  select="',Available,DeletedAnnouncement,ItemDeleted,NewAnnouncement,NewAvailable,ItemTemporarilyUnavailable,'"/>
    <xsl:variable name="LifeCycle_listID"
                  select="'urn:oioubl:codelist:lifecyclestatuscode-1.1'"/>
    <xsl:variable name="LifeCycle_agencyID" select="'320'"/>
-   <xsl:variable name="LineResponse" select="',BusinessAccept,BusinessReject,'"/>
-   <xsl:variable name="LineResponse_listID"
-                 select="'urn:oioubl:codelist:lineresponsecode-1.1'"/>
-   <xsl:variable name="LineResponse_agencyID" select="'320'"/>
    <xsl:variable name="LineStatus"
                  select="',Added,Cancelled,Disputed,NoStatus,Revised,'"/>
    <xsl:variable name="LineStatus_listID"
@@ -86,37 +52,10 @@
                  select="',AAA,AAB,AAC,AAD,AAE,AAF,AAG,AAH,AAI,AAJ,AAK,AAL,AAM,AAN,AAO,AAP,AAQ,AAR,AAS,AAT,AAU,AAV,AAW,AAX,AAY,AAZ,ABA,ABB,ABC,ABD,ABE,ABF,ABG,ABH,ABI,ABJ,ABK,ABL,ABM,ABN,ABO,ABP,ABQ,ABR,ABS,ABT,ABU,ABV,AI,ALT,AP,BR,CAT,CDV,CON,CP,CU,CUP,CUS,DAP,DIS,DPR,DR,DSC,EC,ES,EUP,FCR,GRP,INV,LBL,MAX,MIN,MNR,MSR,MXR,NE,NQT,NTP,NW,OCR,OFR,PAQ,PBQ,PPD,PPR,PRO,PRP,PW,QTE,RES,RTP,SHD,SRP,SW,TB,TRF,TU,TW,WH,'"/>
    <xsl:variable name="PriceType_listID" select="'UN/ECE 5387'"/>
    <xsl:variable name="PriceType_agencyID" select="'6'"/>
-   <xsl:variable name="PriceListStat" select="',Original,Copy,Revision,Cancellation,'"/>
-   <xsl:variable name="PriceListStat_listID"
-                 select="'urn:oioubl.codelist:priceliststatuscode-1.1,urn:oioubl:codelist:priceliststatuscode-1.1'"/>
-   <xsl:variable name="PriceListStat_agencyID" select="'320'"/>
-   <xsl:variable name="RemType" select="',Reminder,Advis,'"/>
-   <xsl:variable name="RemType_listID"
-                 select="',urn:oioubl.codelist:remindertypecode-1.1,urn:oioubl:codelist:remindertypecode-1.1,'"/>
-   <xsl:variable name="RemType_agencyID" select="'320'"/>
-   <xsl:variable name="RemAlc" select="',PenaltyFee,PenaltyRate,'"/>
-   <xsl:variable name="RemAlc_listID"
-                 select="'urn:oioubl:codelist:reminderallowancechargereasoncode-1.0'"/>
-   <xsl:variable name="RemAlc_agencyID" select="'320'"/>
    <xsl:variable name="Response"
                  select="',BusinessAccept,BusinessReject,ProfileAccept,ProfileReject,TechnicalAccept,TechnicalReject,'"/>
    <xsl:variable name="Response_listID" select="'urn:oioubl:codelist:responsecode-1.1'"/>
    <xsl:variable name="Response_agencyID" select="'320'"/>
-   <xsl:variable name="ResponseDocType"
-                 select="',ApplicationResponse,Catalogue,CatalogueDeletion,CatalogueItemSpecificationUpdate,CatalogueItemUpdate,CataloguePricingUpdate,CataloguePriceUpdate,CatalogueRequest,CreditNote,Invoice,Order,OrderCancellation,OrderChange,OrderResponse,OrderResponseSimple,Reminder,Statement,Payment,PersonalSecure,ZZZ,'"/>
-   <xsl:variable name="ResponseDocType_listID"
-                 select="'urn:oioubl:codelist:responsedocumenttypecode-1.1'"/>
-   <xsl:variable name="ResponseDocType_agencyID" select="'320'"/>
-   <xsl:variable name="ResponseDocType2"
-                 select="',ApplicationResponse,Catalogue,CatalogueDeletion,CatalogueItemSpecificationUpdate,CatalogueItemUpdate,CataloguePricingUpdate,CataloguePriceUpdate,CatalogueRequest,CreditNote,Invoice,Order,OrderCancellation,OrderChange,OrderResponse,OrderResponseSimple,Reminder,Statement,Payment,UtilityStatement,PersonalSecure,ZZZ,'"/>
-   <xsl:variable name="ResponseDocType2_listID"
-                 select="'urn:oioubl:codelist:responsedocumenttypecode-1.2'"/>
-   <xsl:variable name="ResponseDocType2_agencyID" select="'320'"/>
-   <xsl:variable name="SubStatus"
-                 select="',DeliveryDateChanged,DeliveryDateNotPossible,DeliveryPartyUnknown,ItemDeleted,ItemNotFound,ItemNotInAssortment,ItemReplaced,ItemTemporarilyUnavailable,NewAnnouncement,OrderedQuantityChanged,OrderLineRejected,Original,SeasonalItemUnavailable,Substitution,'"/>
-   <xsl:variable name="SubStatus_listID"
-                 select="'urn:oioubl:codelist:substitutionstatuscode-1.1'"/>
-   <xsl:variable name="SubStatus_agencyID" select="'320'"/>
    <xsl:variable name="TaxExemption"
                  select="',AAA,AAB,AAC,AAE,AAF,AAG,AAH,AAI,AAJ,AAK,AAL,AAM,AAN,AAO,'"/>
    <xsl:variable name="TaxExemption_listID" select="'CWA 15577'"/>
@@ -126,122 +65,10 @@
    <xsl:variable name="TaxType_agencyID" select="'320'"/>
    <xsl:variable name="TaxType2" select="',StandardRated,ZeroRated,ReverseCharge,'"/>
    <xsl:variable name="TaxType_listID2" select="'urn:oioubl:codelist:taxtypecode-1.2'"/>
-   <xsl:variable name="UnitMeasure" select="'xsd'"/>
-   <xsl:variable name="UnitMeasure_listID" select="'UN/ECE rec 20'"/>
-   <xsl:variable name="UnitMeasure_agencyID" select="'6'"/>
-   <xsl:variable name="UtilityStatType"
-                 select="',MultiSettlement,Internet,Television,Fibernet,Lighting,OutdoorLighting,Cooling,DistantCooling,ChimneySweep,Antenna,Drain,Waste,Sewage,WasteWater,Water,Heating,DistrictHeating,Electricity,Tele,TeleExtended,Gas,Oil,Goods,Sprinkler,Assorted,'"/>
-   <xsl:variable name="UtilityStatType_listID"
-                 select="'urn:oioubl:codelist:utilitystatementtypecode-1.0'"/>
-   <xsl:variable name="UtilityStatType_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityPrivacyCode"
-                 select="',CompanyLevel,UserLevel,NotRelevant,'"/>
-   <xsl:variable name="UtilityPrivacyCode_listID"
-                 select="'urn:oioubl:codelist:privacycode-1.0'"/>
-   <xsl:variable name="UtilityPrivacyCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityTeleCatCode"
-                 select="',Subscription,OneTime,Consumption,Service900,SpecialServices,Assorted,'"/>
-   <xsl:variable name="UtilityTeleCatCode_listID"
-                 select="'urn:oioubl:codelist:telecategorycode-1.0'"/>
-   <xsl:variable name="UtilityTeleCatCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityTeleSupTypeCode"
-                 select="',Tele,Internet,Television,Assorted,'"/>
-   <xsl:variable name="UtilityTeleSupTypeCode_listID"
-                 select="'urn:oioubl:codelist:telecommunicationssupplytypecode-1.0'"/>
-   <xsl:variable name="UtilityTeleSupTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityTeleCallCode"
-                 select="',CallAttempt,Freephone,SwitchedCall,ZoneCall,ServiceNumber,Services,Streaming,Roaming,TastSelv,Data,Mobile,WiredPhone,FAX,SMS,MMS,WAP,GPRS,Assorted,'"/>
-   <xsl:variable name="UtilityTeleCallCode_listID"
-                 select="'urn:oioubl:codelist:telecallcode-1.0'"/>
-   <xsl:variable name="UtilityTeleCallCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityDutyCode"
-                 select="',CallAttempt,ConnectionFee,InternationalConnection,Freephone,ZoneCall,Roaming,Donation,Service900,SpecialServices,ServiceNumber,Services,TastSelv,Switched,Routed,ConsumptionFee,ConsumptionInternational,ConsumptionSpecialRate,Streaming,Charge,Discount,Assorted,'"/>
-   <xsl:variable name="UtilityDutyCode_listID"
-                 select="'urn:oioubl:codelist:dutycode-1.0'"/>
-   <xsl:variable name="UtilityDutyCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilitySpecTypeCode"
-                 select="',Onaccount,YearlyStatement,FinalSettlement,Statement,MonthlyStatement,QuarterlyStatement,SixMonthStatement,CurrentStatement,RelocationSettlement,ExtraordinaryStatement,Regulation,Cancellation,Assorted,'"/>
-   <xsl:variable name="UtilitySpecTypeCode_listID"
-                 select="'urn:oioubl:codelist:specificationtypecode-1.0'"/>
-   <xsl:variable name="UtilitySpecTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilitySubIDTypeCode"
-                 select="',APL,DPA,DSH,DX,ERH,FKR,FLX,FRS,IP,ISP,IWA,KPM,KT1,KT2,KT3,MOB,NAV,PBS,SIK,SUS,TIP,TKA,TLF,VAG,VSS,GSM,CDA,PBX,ISP,ZZZ,'"/>
-   <xsl:variable name="UtilitySubIDTypeCode_listID"
-                 select="'urn:oioubl:codelist:subscriberidtypecode-1.0'"/>
-   <xsl:variable name="UtilitySubIDTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityMeterConCode" select="',Factor,'"/>
-   <xsl:variable name="UtilityMeterConCode_listID"
-                 select="'urn:oioubl:codelist:meterconstantcode-1.0'"/>
-   <xsl:variable name="UtilityMeterConCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityReaMetCode"
-                 select="',Remote,ReadByInspector,Card,SMS,PDA,VoiceResponse,WEB,Estimated,EstimatedAutomatic,EstimatedOfficer,EstimatedAfterError,Reset,PieceCount,HourlyAmount,Manual,CustomerService,Calculated,Unknown,'"/>
-   <xsl:variable name="UtilityReaMetCode_listID"
-                 select="'urn:oioubl:codelist:meterreadingmethodcode-1.0'"/>
-   <xsl:variable name="UtilityReaMetCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityMRTypeCode"
-                 select="',Electricity,Water,Heating,Gas,Oil,Sewage,WasteWater,RefuseDisposal,DistantCooling,Assorted,'"/>
-   <xsl:variable name="UtilityMRTypeCode_listID"
-                 select="'urn:oioubl:codelist:meterreadingtypecode-1.0'"/>
-   <xsl:variable name="UtilityMRTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityConTypeCode"
-                 select="',Subscription,Consumption,Service900,SpecialServices,Assorted,'"/>
-   <xsl:variable name="UtilityConTypeCode_listID"
-                 select="'urn:oioubl:codelist:consumptiontypecode-1.0'"/>
-   <xsl:variable name="UtilityConTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityCELCode" select="',A,B,C,D,E,F,G,'"/>
-   <xsl:variable name="UtilityCELCode_listID"
-                 select="'urn:oioubl:codelist:consumersenergylevelcode-1.0'"/>
-   <xsl:variable name="UtilityCELCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityResTypeCode"
-                 select="',House,Apartment,IndustriProperty,Assorted,'"/>
-   <xsl:variable name="UtilityResTypeCode_listID"
-                 select="'urn:oioubl:codelist:residencetypecode-1.0'"/>
-   <xsl:variable name="UtilityResTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityHeaTypeCode"
-                 select="',Electricity,Gas,Oil,Coal,DistrictHeating,DistantCooling,SolarEnergy,WindEnergy,Wood,GeothermalHeat,Assorted,'"/>
-   <xsl:variable name="UtilityHeaTypeCode_listID"
-                 select="'urn:oioubl:codelist:heatingtypecode-1.0'"/>
-   <xsl:variable name="UtilityHeaTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityCorTypeCode"
-                 select="',HeatingCorrection,GasCorrection,OtherCorrection,'"/>
-   <xsl:variable name="UtilityCorTypeCode_listID"
-                 select="'urn:oioubl:codelist:correctiontypecode-1.0'"/>
-   <xsl:variable name="UtilityCorTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityCCTypeCode"
-                 select="',SubcriptionType1,SubcriptionType2,SubcriptionType3,ShortTermSubscription,ServiceSubscription,24HourServiceType1,24HourServiceType2,BasicService,3HourService,DeliveryService,CallInServiceType1,CallInServiceType2,RentalType1,RentalType2,Leasing,TeleTime,Attempt,Discount,EmployeeInternet,SalesSector,Sales,Administration,ShopService,Assorted,'"/>
-   <xsl:variable name="UtilityCCTypeCode_listID"
-                 select="'urn:oioubl:codelist:currentchargetypecode-1.0'"/>
-   <xsl:variable name="UtilityCCTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="UtilityOTCTypeCode"
-                 select="',InstallationCharge,ReInstallationCharge,Opening,ReOpening,Assumption,Installation,Connection,Change,NumberChange,Conversion,BuyBack,Reception,Relocation,Upgrade,Repair,Debugging,Compensation,MinConsumption,Charge,Discount,ServiceInformation,SpecialService,Blocking,Termination,Sealing,GoodsPayment,Assorted,'"/>
-   <xsl:variable name="UtilityOTCTypeCode_listID"
-                 select="'urn:oioubl:codelist:onetimechargetypecode-1.0'"/>
-   <xsl:variable name="UtilityOTCTypeCode_agencyID" select="'320'"/>
-   <xsl:variable name="Delivery_1"
-                 select="',EXW,FCA,FAS,FOB,CFR,CIF,CPT,CIP,DAF,DES,DEQ,DDU,DDP,'"/>
-   <xsl:variable name="Delivery_1_schemeID" select="'INCOTERMS 2000'"/>
-   <xsl:variable name="Delivery_1_agencyID" select="'NES'"/>
-   <xsl:variable name="Delivery_2"
-                 select="',001 EXW,002 FCA,003 FAS,004 FOB,005 FCA,006 CPT,007 CIP,008 CFR,009 CIF,010 CPT,011 CIP,012 CPT,013 CIP,014 CPT,015 CIP,016 DES,017 DRQ,018 DAF,019 DDU,021 DDP,022 DDU,023 DDP,'"/>
-   <xsl:variable name="Delivery_2_schemeID" select="'COMBITERMS 2000'"/>
-   <xsl:variable name="Delivery_2_agencyID" select="'NES'"/>
-   <xsl:variable name="Dimension"
-                 select="',A,AAA,AAB,AAC,AAD,AAE,AAF,AAJ,AAK,AAL,AAM,AAN,AAO,AAP,AAQ,AAR,AAS,AAT,AAU,AAV,AAW,AAX,AAY,AAZ,ABA,ABB,ABC,ABD,ABE,ABJ,ABS,ABX,ABY,ABZ,ACA,ACE,ACG,ACN,ACP,ACS,ACV,ACW,ACX,ADR,ADS,ADT,ADU,ADV,ADW,ADX,ADY,ADZ,AEA,AEB,AEC,AED,AEE,AEF,AEG,AEH,AEI,AEJ,AEK,AEM,AEN,AEO,AEP,AEQ,AER,AET,AEU,AEV,AEW,AEX,AEY,AEZ,AF,AFA,AFB,AFC,AFD,AFE,AFF,AFG,AFH,AFI,AFJ,AFK,B,BL,BMY,BMZ,BNA,BNB,BNC,BND,BNE,BNF,BNG,BNH,BNI,BNJ,BNK,BNL,BNM,BNN,BNO,BNP,BNQ,BNR,BNS,BNT,BR,BRA,BRE,BS,BSW,BW,CHN,CM,CT,CV,CZ,D,DI,DL,DN,DP,DR,DS,DW,E,EA,F,FI,FL,FN,FV,G,GG,GW,HF,HM,HT,IB,ID,L,LM,LN,LND,M,MO,MW,N,OD,PRS,PTN,RA,RF,RJ,RMW,RP,RUN,RY,SQ,T,TC,TH,TN,TT,U,VH,VW,WA,WD,WM,WT,WU,XH,XQ,XZ,YS,ZAL,ZAS,ZB,ZBI,ZC,ZCA,ZCB,ZCE,ZCL,ZCO,ZCR,ZCU,ZFE,ZFS,ZGE,ZH,ZK,ZMG,ZMN,ZMO,ZN,ZNA,ZNB,ZNI,ZO,ZP,ZPB,ZS,ZSB,ZSE,ZSI,ZSL,ZSN,ZTA,ZTE,ZTI,ZV,ZW,ZWA,ZZN,ZZR,ZZZ,'"/>
-   <xsl:variable name="Dimension_schemeID" select="'UN/ECE 6313'"/>
-   <xsl:variable name="Dimension_agencyID" select="'6'"/>
-   <xsl:variable name="BIC" select="'rule'"/>
-   <xsl:variable name="BIC_schemeID" select="'BIC'"/>
-   <xsl:variable name="BIC_agencyID" select="'17'"/>
-   <xsl:variable name="IBAN" select="'rule'"/>
-   <xsl:variable name="IBAN_schemeID" select="'IBAN'"/>
-   <xsl:variable name="IBAN_agencyID" select="'17'"/>
-   <xsl:variable name="LocID" select="'rule'"/>
-   <xsl:variable name="LocID_schemeID" select="'UN/ECE rec 16'"/>
-   <xsl:variable name="LocID_agencyID" select="'6'"/>
    <xsl:variable name="PaymentID" select="',01,04,15,71,73,75,'"/>
    <xsl:variable name="PaymentID_schemeID" select="'urn:oioubl:id:paymentid-1.1'"/>
    <xsl:variable name="PaymentID_agencyID" select="'320'"/>
-   <xsl:variable name="Profile1"
+   <xsl:variable name="Profile"
                  select="',NONE,Procurement-BilSim-1.0,Procurement-BilSimR-1.0,Procurement-PayBas-1.0,Procurement-PayBasR-1.0,Procurement-OrdSim-BilSim-1.0,Procurement-OrdSimR-BilSim-1.0,Procurement-OrdSim-BilSimR-1.0,Procurement-OrdSimR-BilSimR-1.0,Procurement-OrdAdv-BilSim-1.0,Procurement-OrdAdv-BilSimR-1.0,Procurement-OrdAdvR-BilSim-1.0,Procurement-OrdAdvR-BilSimR-1.0,Procurement-OrdSel-BilSim-1.0,Procurement-OrdSel-BilSimR-1.0,Catalogue-CatBas-1.0,Catalogue-CatBasR-1.0,Catalogue-CatSim-1.0,Catalogue-CatSimR-1.0,Catalogue-CatExt-1.0,Catalogue-CatExtR-1.0,Catalogue-CatAdv-1.0,Catalogue-CatAdvR-1.0,urn:www.nesubl.eu:profiles:profile1:ver1.0,urn:www.nesubl.eu:profiles:profile2:ver1.0,urn:www.nesubl.eu:profiles:profile5:ver1.0,urn:www.nesubl.eu:profiles:profile7:ver1.0,urn:www.nesubl.eu:profiles:profile8:ver1.0,'"/>
    <xsl:variable name="Profile1_schemeID" select="'urn:oioubl:id:profileid-1.1'"/>
    <xsl:variable name="Profile1_agencyID" select="'320'"/>
