@@ -30,7 +30,6 @@ print(codelist_list)
 
 
 with open("python_fuzzer//codelists//schematron.txt", "w", encoding="utf-8") as file:
-    # split the lines of feedback and make newlines
     file.write("names_list = [")
     name_write_to = ["\"" + name + ",\"\n" for name in names_list]
     file.writelines(name_write_to)
