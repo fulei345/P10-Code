@@ -9,6 +9,7 @@ from .mutator import Mutator
 import sys
 sys.path.append("..")
 from models import Invoice, invoice_type_dict, Party, InvoiceLine, GoodsItem, Package, PriceList
+from codelists import names_list, codelist_list
 from utils import TypeGenerator
 from config import PLACEMENT_PROB, OPT_PROB, MAX_RECUR_DEPTH
 
@@ -155,6 +156,14 @@ class StructureMutator(Mutator):
 
         #make element with the field name
         elem: Element = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" + "}" + field.name)
+
+        # Check if that field has a codelist and make it
+        for i, name in enumerate(names_list):
+            if field.name in name and "Code" in name:
+                elem.text = random.choice(codelist_list[i])
+                self.recur_level -= 1
+                return elem
+            
 
         field_type = None
 
