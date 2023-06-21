@@ -179,11 +179,11 @@ class FieldMutator(Mutator):
     def codelist_mutator(self, data: str) -> str:
         
         # Check if it has a codelist, if it does take one of those
-        for name, i in enumerate(names_list):
+        for i, name in enumerate(names_list):
             if self.field_name in name:
                 new_data = random.choice(codelist_list[i])
                 return new_data
             
         mutator = random.choice(self.string_mutators[:-1])
-        new_data: str = mutator(data.text)
+        new_data: str = mutator(data)
         return new_data
