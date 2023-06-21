@@ -8,8 +8,10 @@ import sys
 
 sys.path.append("..")
 from models import invoice_type_dict
+from codelists import names_list, codelist_list
 from utils import TypeGenerator
 from config import TYPE_PROB
+
 
 INTERESTING8 = [-128., -1., 0., 1., 16., 32., 64., 100., 127.]
 INTERESTING16 = [0., 128., 255., 256., 512., 1000., 1024., 4096., 32767., 65535.]
