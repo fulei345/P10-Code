@@ -38,7 +38,9 @@ with open("python_fuzzer//codelists//schematron.txt", "w", encoding="utf-8") as 
     file.write("codelist_list: List[List[str]] = [")
     for codelist in codelist_list:
         file.write("[")
-        code_write_to = ["\"" + code + ",\"" for code in codelist]
+        code_write_to = ["\"" + code + "\"," for code in codelist]
         file.writelines(code_write_to)
         file.write("],\n")
     file.write("]\n")
+
+# Remember to delete last two commas
