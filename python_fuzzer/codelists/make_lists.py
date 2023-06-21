@@ -42,5 +42,3 @@ with open("python_fuzzer//codelists//schematron.txt", "w", encoding="utf-8") as 
         file.writelines(code_write_to)
         file.write("],\n")
     file.write("]\n")
-
-# Remember to delete last two commas
