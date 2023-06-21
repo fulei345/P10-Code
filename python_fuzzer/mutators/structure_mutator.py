@@ -1,7 +1,7 @@
 import random
 from typing import Any, List, Callable, get_origin, Union, get_args, ForwardRef
 from xml.etree.cElementTree import ElementTree, Element
-from dataclasses import fields
+from dataclasses import fields, Field
 from datetime import date, time
 
 from .mutator import Mutator
@@ -115,7 +115,7 @@ class StructureMutator(Mutator):
             #choose random index
             index: int = random.randint(0, len(fields(Invoice)) - 1)
             #find field at the index
-            field = fields(Invoice)[index]
+            field: Field = fields(Invoice)[index]
             counter: int = 0
             
             # loop through elements in parent class
@@ -124,6 +124,7 @@ class StructureMutator(Mutator):
                 elem_name = elem.tag.split("}")[1]
                 #if elem is the chosen field, make element and insert in parent at index 
                 if elem_name == field:
+                    print("whooooooo")
                     subelement = self.make_element(field)
                     parent.insert(i, subelement)
                     return parent
@@ -138,7 +139,7 @@ class StructureMutator(Mutator):
                         return parent
         #insert random place in document
         else:
-            field = random.choice(fields(Invoice))
+            field: Field = random.choice(fields(Invoice))
             elem: Element = self.make_element(field)
             self.insert_field(parent, elem)
 
@@ -149,7 +150,7 @@ class StructureMutator(Mutator):
         return parent
 
     #make new element
-    def make_element(self, field) -> Element:
+    def make_element(self, field: Field) -> Element:
 
         self.recur_level += 1
 
