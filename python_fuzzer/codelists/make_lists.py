@@ -31,7 +31,7 @@ print(codelist_list)
 
 with open("python_fuzzer//codelists//schematron.txt", "w", encoding="utf-8") as file:
     file.write("names_list: List[str] = [")
-    name_write_to = ["\"" + name + ",\"\n" for name in names_list]
+    name_write_to = ["\"" + name + "\",\n" for name in names_list]
     file.writelines(name_write_to)
     file.write("]\n")
 
