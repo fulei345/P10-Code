@@ -159,7 +159,7 @@ class StructureMutator(Mutator):
 
         # Check if that field has a codelist and make it
         for i, name in enumerate(names_list):
-            if field.name in name and "Code" in name:
+            if field.name in name and "Code" in field.name:
                 elem.text = random.choice(codelist_list[i])
                 self.recur_level -= 1
                 return elem

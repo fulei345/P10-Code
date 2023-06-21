@@ -180,7 +180,7 @@ class FieldMutator(Mutator):
         
         # Check if it has a codelist, if it does take one of those
         for i, name in enumerate(names_list):
-            if self.field_name in name and "Code" in name:
+            if self.field_name in name and "Code" in self.field_name:
                 new_data = random.choice(codelist_list[i])
                 return new_data
             
