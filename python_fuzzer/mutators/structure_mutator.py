@@ -123,8 +123,7 @@ class StructureMutator(Mutator):
                 # find name of elem
                 elem_name = elem.tag.split("}")[1]
                 #if elem is the chosen field, make element and insert in parent at index 
-                if elem_name == field:
-                    print("whooooooo")
+                if elem_name == field.name:
                     subelement = self.make_element(field)
                     parent.insert(i, subelement)
                     return parent
