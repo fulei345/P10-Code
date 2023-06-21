@@ -40,5 +40,5 @@ with open("python_fuzzer//codelists//schematron.txt", "w", encoding="utf-8") as 
         file.write("[")
         code_write_to = ["\"" + code + ",\"" for code in codelist]
         file.writelines(code_write_to)
-        file.write("]\n")
+        file.write("],\n")
     file.write("]\n")
