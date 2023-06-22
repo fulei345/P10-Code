@@ -104,7 +104,7 @@ class TaxCategory():
     Name: Optional[str] #datatype: name
     Percent: Optional[str] #Percent Type
     BaseUnitMeasure: Optional[float] #measure Type
-    PerUnitAmount: Optional[float] #datatype: amoun
+    PerUnitAmount: Optional[float] #datatype: amount
     TaxExemptionReasonCode: Optional[str] #datatype: code
     TaxExemptionReason: Optional[str] 
     TierRange: Optional[str] 
