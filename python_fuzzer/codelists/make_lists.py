@@ -12,14 +12,14 @@ for line in Lines:
     if found_only_start_line:
         select = line.split("\'")
         select = select[1]
-        select = line.split(",")
+        select = select.split(",")
         codelist_list.append(select)
         found_only_start_line = False
     else:
         if "name=" in line and "select=" in line:
             select = line.split("\'")
             select = select[1]
-            select = line.split(",")
+            select = select.split(",")
             codelist_list.append(select)
             name = line.split("\"")[1]
             names_list.append(name)
