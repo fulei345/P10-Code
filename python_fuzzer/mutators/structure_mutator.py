@@ -168,10 +168,27 @@ class StructureMutator(Mutator):
 
             if field.name in name and ("Code" in field.name or "ID" in field.name):
                 elem.text = random.choice(codelist_list[i])
+                if field.name.endswith("Code"):
+                    for attrib in attributes[0]:
+                        if attrib == "listID":
+                            val: str = random.choice(codelist_list[i+1])
+                        elif attrib == "listAgencyID":
+                            val: str = random.choice(codelist_list[i+2])
+                        else:
+                            val: str = TypeGenerator.make_string()
+                        elem.set(attrib, val)
+                elif field.name.endswith("ID"):
+                    for attrib in attributes[1]:
+                        if attrib == "schemeID":
+                            val: str = random.choice(codelist_list[i+1])
+                        elif attrib == "schemeAgencyID":
+                            val: str = random.choice(codelist_list[i+2])
+                        else:
+                            val: str = TypeGenerator.make_string()
+                        elem.set(attrib, val)   
                 self.recur_level -= 1
-                return elem
+                return elem      
             
-
         field_type = None
 
         #check if the field is optional (as its type is then Union(type, None)) or list and set field_type to its type
@@ -183,6 +200,12 @@ class StructureMutator(Mutator):
         else:
             field_type = field.type
 
+        # [-5:-2]
+        # if "-" self.parent_class_name
+
+        #
+        #if field.name in name
+
         #makes text for element according to its field type
         if field_type == str:
             elem.text = TypeGenerator.make_string()
@@ -193,6 +216,10 @@ class StructureMutator(Mutator):
             elif field.name.endswith("ID"):
                 for attrib in attributes[1]:
                     val: str = TypeGenerator.make_string()
+                    for i, name in enumerate(names_list):  
+                        if attrib in name and field.name in name:
+                            if "-" not in name or self.parent_class_name in name:
+                                val = random.choice(codelist_list[i])         
                     elem.set(attrib, val)
             elif not field.name.endswith("Percent"):
                 for attrib in attributes[2]:
@@ -214,7 +241,7 @@ class StructureMutator(Mutator):
             elem.text = float_mut()
             if field.name.endswith(("Quantity", "Measure")):
                 for attrib in attributes[3]:
-                    val: str = TypeGenerator.make_string()
+                    val: str = random.choice(codelist_list[-1])
                     elem.set(attrib, val)
             elif field.name.endswith("Amount"):
                 for attrib in attributes[4]:
