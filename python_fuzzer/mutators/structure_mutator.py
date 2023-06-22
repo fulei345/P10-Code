@@ -170,6 +170,18 @@ class StructureMutator(Mutator):
         #makes text for element according to its field type
         if field_type == str:
             elem.text = TypeGenerator.make_string()
+            if field.name.endswith("Code"):
+                for attrib in attributes[0]:
+                    val: str = TypeGenerator.make_string()
+                    elem.set(attrib, val)
+            elif field.name.endswith("ID"):
+                for attrib in attributes[1]:
+                    val: str = TypeGenerator.make_string()
+                    elem.set(attrib, val)
+            elif not field.name.endswith("Percent"):
+                for attrib in attributes[2]:
+                    val: str = TypeGenerator.make_string()
+                    elem.set(attrib, val)
         elif field_type == bool:
             elem.text = TypeGenerator.make_bool()
         elif field_type == time:
@@ -178,9 +190,20 @@ class StructureMutator(Mutator):
             elem.text = TypeGenerator.make_date()
         elif field_type == bytes:
             elem.text = TypeGenerator.make_string()
+            for attrib in attributes[5]:
+                val: str = TypeGenerator.make_string()
+                elem.set(attrib, val)
         elif field_type == float:
             float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
             elem.text = float_mut()
+            if field.name.endswith(("Quantity", "Measure")):
+                for attrib in attributes[3]:
+                    val: str = TypeGenerator.make_string()
+                    elem.set(attrib, val)
+            elif field.name.endswith("Amount"):
+                for attrib in attributes[4]:
+                    val: str = TypeGenerator.make_string()
+                    elem.set(attrib, val)
         else:
             #change namespace to class namespace
             elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" + "}" + field.name)
