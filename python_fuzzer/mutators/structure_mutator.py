@@ -9,7 +9,7 @@ from .mutator import Mutator
 import sys
 sys.path.append("..")
 from models import Invoice, invoice_type_dict, Party, InvoiceLine, GoodsItem, Package, PriceList, attributes
-from codelists import names_list, codelist_list, attributes_list, attributes_names_list
+from codelists import names_list, codelist_list
 from utils import TypeGenerator
 from config import PLACEMENT_PROB, OPT_PROB, MAX_RECUR_DEPTH
 
@@ -163,7 +163,7 @@ class StructureMutator(Mutator):
         # Check if that field has a codelist and make it
         for i, name in enumerate(names_list):
             
-            if "-" in name and self.parent_class_name not in name:
+            if "_" in name or ("-" in name and self.parent_class_name not in name):
                 continue
 
             if field.name in name and ("Code" in field.name or "ID" in field.name):
