@@ -111,6 +111,9 @@ class StructureMutator(Mutator):
         #TODO make this general so it could be other types of documents as well
         #randomly choose one of the Invoice direct subelements to create
 
+        #set parent name
+        self.parent_class_name = parent.tag.split("}")[1]
+
         #insert at correct index
         if random.random() < PLACEMENT_PROB:
             #choose random index
@@ -159,6 +162,10 @@ class StructureMutator(Mutator):
 
         # Check if that field has a codelist and make it
         for i, name in enumerate(names_list):
+            
+            if "-" in name and self.parent_class_name not in name:
+                continue
+
             if field.name in name and ("Code" in field.name or "ID" in field.name):
                 elem.text = random.choice(codelist_list[i])
                 self.recur_level -= 1
@@ -191,6 +198,9 @@ class StructureMutator(Mutator):
             float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
             elem.text = float_mut()
         else:
+            #set parent name
+            self.parent_class_name = field.name
+
             #change namespace to class namespace
             elem = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" + "}" + field.name)
             elem = self.make_class(elem, field_type)
@@ -202,6 +212,7 @@ class StructureMutator(Mutator):
     def make_class(self, elem: Element, type) -> Element:
 
         self.recur_level += 1
+
 
         #if above max recursion level return without making elements of the class
         if(self.recur_level > MAX_RECUR_DEPTH):

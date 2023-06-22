@@ -56,15 +56,16 @@ class FieldMutator(Mutator):
                 if elem.text is None or elem.text == "":
                     return document
                 
+                #find name of parent class
+                self.parent_class_name: str = self.parent_map[elem].tag.split("}")[1]
+
                 # choose if type should not be taken into account
                 if random.random() < TYPE_PROB:
                     self.field_name: str = elem.tag.split("}")[1]
                     mutator = random.choice(self.string_mutators)
                 else:
-                    #find name of parent class
-                    parent_class_name: str = self.parent_map[elem].tag.split("}")[1]
                     # fiind the classtype of parent
-                    parent = invoice_type_dict[parent_class_name]
+                    parent = invoice_type_dict[self.parent_class_name]
                     field_type = None
                     # get name of the chosen element
                     class_name: str = elem.tag.split("}")[1]
@@ -177,9 +178,13 @@ class FieldMutator(Mutator):
     
     # Sets a field to one from its codelist or just call another mutator
     def codelist_mutator(self, data: str) -> str:
-        
+                
         # Check if it has a codelist, if it does take one of those
         for i, name in enumerate(names_list):
+
+            if "-" in name and self.parent_class_name not in name:
+                continue            
+
             if self.field_name in name and ("Code" in self.field_name or "ID" in self.field_name):
                 new_data = random.choice(codelist_list[i])
                 return new_data
