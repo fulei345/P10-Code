@@ -1,6 +1,6 @@
 # To make list from af part of the schematron document automatic
 
-file = open("python_fuzzer//codelists//schematron.xml", "r")
+file = open("python_fuzzer//codelists//invoice_schematron.xml", "r")
 
 names_list = []
 codelist_list = []
