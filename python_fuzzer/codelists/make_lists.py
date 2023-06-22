@@ -13,6 +13,8 @@ for line in Lines:
         select = line.split("\'")
         select = select[1]
         select = select.split(",")
+        if len(select) != 1:
+            select = select[1:-1]
         codelist_list.append(select)
         found_only_start_line = False
     else:
@@ -20,6 +22,8 @@ for line in Lines:
             select = line.split("\'")
             select = select[1]
             select = select.split(",")
+            if len(select) != 1:
+                select = select[1:-1]
             codelist_list.append(select)
             name = line.split("\"")[1]
             names_list.append(name)
