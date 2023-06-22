@@ -6,29 +6,33 @@ names_list = []
 codelist_list = []
 
 Lines = file.readlines()
- 
+
+is_attribute = False
 found_only_start_line = False
 for line in Lines:
     if found_only_start_line:
         select = line.split("\'")
         select = select[1]
         select = select.split(",")
-        if len(select) != 1:
+        if len(select) != 1 and not is_attribute:
             select = select[1:-1]
         codelist_list.append(select)
+        is_attribute = False
         found_only_start_line = False
     else:
         if "name=" in line and "select=" in line:
+            name = line.split("\"")[1]
             select = line.split("\'")
             select = select[1]
             select = select.split(",")
-            if len(select) != 1:
+            if len(select) != 1 and "_" not in name:
                 select = select[1:-1]
             codelist_list.append(select)
-            name = line.split("\"")[1]
             names_list.append(name)
         else:
             name = line.split("\"")[1]
+            if "_" in name:
+                is_attribute = True
             names_list.append(name)
             found_only_start_line = True
 
