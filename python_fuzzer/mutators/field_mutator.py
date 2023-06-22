@@ -8,8 +8,10 @@ import sys
 
 sys.path.append("..")
 from models import invoice_type_dict
+from codelists import names_list, codelist_list
 from utils import TypeGenerator
 from config import TYPE_PROB
+
 
 INTERESTING8 = [-128., -1., 0., 1., 16., 32., 64., 100., 127.]
 INTERESTING16 = [0., 128., 255., 256., 512., 1000., 1024., 4096., 32767., 65535.]
@@ -27,7 +29,8 @@ class FieldMutator(Mutator):
                                                      self.delete_sub_mutator,
                                                      self.delete_char_mutator,
                                                      self.add_sub_mutator,
-                                                     self.add_char_mutator
+                                                     self.add_char_mutator,
+                                                     self.codelist_mutator
                                                      ]
 
         self.interesting_floats: List[Callable[[], Any]] = [self.interesting8_mutator,
@@ -55,6 +58,7 @@ class FieldMutator(Mutator):
                 
                 # choose if type should not be taken into account
                 if random.random() < TYPE_PROB:
+                    self.field_name: str = elem.tag.split("}")[1]
                     mutator = random.choice(self.string_mutators)
                 else:
                     #find name of parent class
@@ -77,7 +81,7 @@ class FieldMutator(Mutator):
                                 field_type = f.type
                     self.field_type = field_type
 
-                    mutator = self.generate_type_mutator   
+                    mutator = self.generate_type_mutator
 
                 field: str = mutator(elem.text)
                 elem.text = field
@@ -169,4 +173,17 @@ class FieldMutator(Mutator):
 
             new_data = float_mut()
 
+        return new_data
+    
+    # Sets a field to one from its codelist or just call another mutator
+    def codelist_mutator(self, data: str) -> str:
+        
+        # Check if it has a codelist, if it does take one of those
+        for i, name in enumerate(names_list):
+            if self.field_name in name and ("Code" in self.field_name or "ID" in self.field_name):
+                new_data = random.choice(codelist_list[i])
+                return new_data
+            
+        mutator = random.choice(self.string_mutators[:-1])
+        new_data: str = mutator(data)
         return new_data

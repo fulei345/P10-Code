@@ -1,14 +1,15 @@
 import random
 from typing import Any, List, Callable, get_origin, Union, get_args, ForwardRef
 from xml.etree.cElementTree import ElementTree, Element
-from dataclasses import fields
+from dataclasses import fields, Field
 from datetime import date, time
 
 from .mutator import Mutator
 
 import sys
 sys.path.append("..")
-from models import *
+from models import Invoice, invoice_type_dict, Party, InvoiceLine, GoodsItem, Package, PriceList
+from codelists import names_list, codelist_list
 from utils import TypeGenerator
 from config import PLACEMENT_PROB, OPT_PROB, MAX_RECUR_DEPTH
 
@@ -115,7 +116,7 @@ class StructureMutator(Mutator):
             #choose random index
             index: int = random.randint(0, len(fields(Invoice)) - 1)
             #find field at the index
-            field = fields(Invoice)[index]
+            field: Field = fields(Invoice)[index]
             counter: int = 0
             
             # loop through elements in parent class
@@ -123,7 +124,7 @@ class StructureMutator(Mutator):
                 # find name of elem
                 elem_name = elem.tag.split("}")[1]
                 #if elem is the chosen field, make element and insert in parent at index 
-                if elem_name == field:
+                if elem_name == field.name:
                     subelement = self.make_element(field)
                     parent.insert(i, subelement)
                     return parent
@@ -138,7 +139,7 @@ class StructureMutator(Mutator):
                         return parent
         #insert random place in document
         else:
-            field = random.choice(fields(Invoice))
+            field: Field = random.choice(fields(Invoice))
             elem: Element = self.make_element(field)
             self.insert_field(parent, elem)
 
@@ -149,12 +150,20 @@ class StructureMutator(Mutator):
         return parent
 
     #make new element
-    def make_element(self, field) -> Element:
+    def make_element(self, field: Field) -> Element:
 
         self.recur_level += 1
 
         #make element with the field name
         elem: Element = Element("{" + "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" + "}" + field.name)
+
+        # Check if that field has a codelist and make it
+        for i, name in enumerate(names_list):
+            if field.name in name and ("Code" in field.name or "ID" in field.name):
+                elem.text = random.choice(codelist_list[i])
+                self.recur_level -= 1
+                return elem
+            
 
         field_type = None
 
