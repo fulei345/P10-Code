@@ -8,7 +8,7 @@ from .mutator import Mutator
 
 import sys
 sys.path.append("..")
-from models import Invoice, invoice_type_dict, Party, InvoiceLine, GoodsItem, Package, PriceList
+from models import Invoice, invoice_type_dict, Party, InvoiceLine, GoodsItem, Package, PriceList, attributes
 from codelists import names_list, codelist_list
 from utils import TypeGenerator
 from config import PLACEMENT_PROB, OPT_PROB, MAX_RECUR_DEPTH
