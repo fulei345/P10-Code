@@ -182,8 +182,8 @@ class FieldMutator(Mutator):
         # Check if it has a codelist, if it does take one of those
         for i, name in enumerate(names_list):
 
-            if "-" in name and self.parent_class_name not in name:
-                continue            
+            if "_" in name or ("-" in name and self.parent_class_name not in name):
+                continue
 
             if self.field_name in name and ("Code" in self.field_name or "ID" in self.field_name):
                 new_data = random.choice(codelist_list[i])

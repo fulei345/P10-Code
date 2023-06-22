@@ -163,7 +163,7 @@ class StructureMutator(Mutator):
         # Check if that field has a codelist and make it
         for i, name in enumerate(names_list):
             
-            if "-" in name and self.parent_class_name not in name:
+            if "_" in name or ("-" in name and self.parent_class_name not in name):
                 continue
 
             if field.name in name and ("Code" in field.name or "ID" in field.name):
