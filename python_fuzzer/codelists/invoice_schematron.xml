@@ -64,7 +64,7 @@
    <xsl:variable name="TaxType" select="',StandardRated,ZeroRated,ReverseCharge,'"/>
    <xsl:variable name="TaxType_listID" select="'urn:oioubl:codelist:taxtypecode-1.1'"/>
    <xsl:variable name="TaxType_agencyID" select="'320'"/>
-   <xsl:variable name="PaymentMeansCode" select="'1,10,20,31,42,48,49,50,93,97,'"/>
+   <xsl:variable name="PaymentMeansCode" select="',1,10,20,31,42,48,49,50,93,97,'"/>
    <xsl:variable name="PaymentMeansCode_listID"
                  select="'urn:oioubl:codelist:paymentmeanscode-1.1'"/>
    <xsl:variable name="PaymentMeansCode_agencyID" select="'320'"/>
@@ -81,7 +81,7 @@
    <xsl:variable name="ProfileID_agencyID" select="'320'"/>
    <xsl:variable name="TaxCategory-ID"
                  select="',ZeroRated,StandardRated,ReverseCharge,Excise,3010,3020,3021,3022,3023,3024,3025,3030,3040,3041,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3070,3071,3072,3073,3075,3077,3080,3081,3082,3083,3084,3085,3086,3090,3091,3092,3093,3094,3095,3096,3100,3101,3102,3104,3120,3121,3122,3123,3130,3140,3141,3160,3161,3162,3163,3170,3171,3240,3241,3242,3245,3246,3247,3250,3251,3260,3271,3272,3273,3276,3277,3280,3281,3282,3283,3290,3291,3292,3293,3294,3295,3296,3297,3300,3301,3302,3303,3304,3305,3310,3311,3320,3321,3330,3331,3340,3341,3350,3351,3360,3370,3380,3400,3403,3404,3405,3406,3410,3420,3430,3440,3441,3451,3452,3453,3500,3501,3502,3503,3600,3620,3621,3622,3623,3624,3630,3631,3632,3633,3634,3635,3636,3637,3638,3640,3641,3645,3650,3660,3661,3670,3671,310301,310302,310303,310304,310305,310306,310307,3671,3639,'"/>
-   <xsl:variable name="TaxCategory-ID_schemeID" select="'urn:oioubl:id:taxcategoryid-1.1,urn:oioubl:id:taxcategoryid-1.2,urn:oioubl:id:taxcategoryid-1.3,'"/>
+   <xsl:variable name="TaxCategory-ID_schemeID" select="',urn:oioubl:id:taxcategoryid-1.1,urn:oioubl:id:taxcategoryid-1.2,urn:oioubl:id:taxcategoryid-1.3,'"/>
    <xsl:variable name="TaxCategory-ID_agencyID" select="'320'"/>
    <xsl:variable name="TaxScheme-ID"
                  select="',9,10,11,16,17,18,19,21,21a,21b,21c,21d,21e,21f,24,25,27,28,30,31,32,33,39,40,41,53,54,56,57,61,61a,62,63,68,69,70,71,72,75,76,77,79,85,86,87,91,94,95,97,98,99,99a,100,108,109,110,110a,110b,110c,111,112,112a,112b,112c,112d,112e,112f,127,127a,127b,127c,128,130,133,134,135,136,137,138,139,140,142,146,151,152,171,VAT,0,94a,156,160,161,162,163,164,167,168,184,185,186,'"/>
