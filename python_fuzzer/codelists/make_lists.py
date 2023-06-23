@@ -25,7 +25,7 @@ for line in Lines:
             select = select[1]
             select = select.split(",")
             # IF there is empty at both ends trim that
-            if select [0] == "" and select [-1] == "":
+            if select [0]== "" and select[-1] == "":
                 select = select[1:-1]
             codelist_list.append(select)
             names_list.append(name)
