@@ -223,7 +223,7 @@ class StructureMutator(Mutator):
                     elem.set(attrib, val)
             elif not field.name.endswith("Percent"):
                 for attrib in attributes[2]:
-                    val: str = TypeGenerator.make_string()
+                    val: str = random.choice(codelist_list[-2])
                     elem.set(attrib, val)
         elif field_type == bool:
             elem.text = TypeGenerator.make_bool()
@@ -234,18 +234,18 @@ class StructureMutator(Mutator):
         elif field_type == bytes:
             elem.text = TypeGenerator.make_string()
             for attrib in attributes[5]:
-                val: str = TypeGenerator.make_string()
+                val: str = random.choice(codelist_list[-1])
                 elem.set(attrib, val)
         elif field_type == float:
             float_mut = random.choice([TypeGenerator.make_float, TypeGenerator.make_float_thousands])
             elem.text = float_mut()
             if field.name.endswith(("Quantity", "Measure")):
                 for attrib in attributes[3]:
-                    val: str = random.choice(codelist_list[-1])
+                    val: str = random.choice(codelist_list[-4]) 
                     elem.set(attrib, val)
             elif field.name.endswith("Amount"):
                 for attrib in attributes[4]:
-                    val: str = TypeGenerator.make_string()
+                    val: str = random.choice(codelist_list[-3])
                     elem.set(attrib, val)
         else:
             #set parent name
