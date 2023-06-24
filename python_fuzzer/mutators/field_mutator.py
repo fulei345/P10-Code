@@ -58,10 +58,11 @@ class FieldMutator(Mutator):
                 
                 #find name of parent class
                 self.parent_class_name: str = self.parent_map[elem].tag.split("}")[1]
+                #find field name
+                self.field_name: str = elem.tag.split("}")[1]
 
                 # choose if type should not be taken into account
                 if random.random() < TYPE_PROB:
-                    self.field_name: str = elem.tag.split("}")[1]
                     mutator = random.choice(self.string_mutators)
                 else:
                     # fiind the classtype of parent
